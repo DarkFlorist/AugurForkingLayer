@@ -27,10 +27,6 @@
 			"treatment": "adapted"
 		},
 		{
-			"path": "UPSTREAM.md",
-			"treatment": "local addition"
-		},
-		{
 			"path": "biome.json",
 			"upstreamPath": "biome.json",
 			"upstreamSha256": "5dc4d6bc681c8e09b75179fb7e6c376995eddcf5bac646341d9540cc313e7bb4",

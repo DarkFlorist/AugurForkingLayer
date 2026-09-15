@@ -1,3 +1,4 @@
+import { WORKER_BANNER } from './workerBanner.mts'
 import { promises as fs } from 'fs'
 import * as path from 'path'
 import * as process from 'node:process'
@@ -12,21 +13,6 @@ const paths = getUiAppPaths(appId)
 // comments and source maps. Normalize it so root and package scripts produce
 // byte-identical deployable artifacts.
 process.chdir(paths.appRoot)
-
-const WORKER_BANNER = `
-const process = globalThis.process ?? {
-	env: {},
-	nextTick(callback, ...args) {
-		queueMicrotask(() => {
-			callback(...args)
-		})
-	},
-	stderr: undefined,
-	stdout: undefined,
-}
-globalThis.process ??= process
-globalThis.global ??= globalThis
-`.trim()
 
 const APP_TITLES: Record<string, string> = {
 	zoltar: 'Zoltar',

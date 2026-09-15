@@ -171,21 +171,10 @@ export function createBrowserSmokeCommandSender(socket: DevToolsSocket, browser:
 	)
 }
 
-export function isBrowserSmokeReady(state: BrowserSmokeState, applicationTitle: string, readyText: string | undefined, viewport: { readonly height: number; readonly width: number }) {
+export function isBrowserSmokeReady(state: BrowserSmokeState, applicationTitle: string, viewport: { readonly height: number; readonly width: number }) {
 	const normalizedBody = state.body.toLocaleLowerCase()
 	const includesText = (text: string) => normalizedBody.includes(text.toLocaleLowerCase())
-	const explicitReadyStateReached = readyText !== undefined && includesText(readyText)
-	return (
-		state.hasMain &&
-		state.readyState === 'complete' &&
-		state.width === viewport.width &&
-		state.height === viewport.height &&
-		state.body !== '' &&
-		state.body !== 'Loading...' &&
-		includesText(applicationTitle) &&
-		(explicitReadyStateReached || (!state.body.includes('BOOTSTRAPPING') && !state.body.includes('Starting simulation bootstrap'))) &&
-		(readyText === undefined || includesText(readyText))
-	)
+	return state.hasMain && state.readyState === 'complete' && state.width === viewport.width && state.height === viewport.height && state.body !== '' && state.body !== 'Loading...' && includesText(applicationTitle) && !state.body.includes('BOOTSTRAPPING') && !state.body.includes('Starting simulation bootstrap')
 }
 
 function parseViewport(candidate: string | undefined) {
@@ -406,7 +395,6 @@ async function runBrowserSmokeUnlocked(appId: UiAppId, baseUrl: string, options:
 		const { send, issues } = session
 		const applicationTitles: Record<UiAppId, string> = { zoltar: 'Zoltar' }
 		const applicationTitle = applicationTitles[appId]
-		const readyText = process.env['UI_BROWSER_READY_TEXT']
 		await send('Runtime.enable')
 		await send('Page.enable')
 		await send('Network.enable')
@@ -429,15 +417,14 @@ async function runBrowserSmokeUnlocked(appId: UiAppId, baseUrl: string, options:
 			if (typeof raw === 'string') {
 				const state = JSON.parse(raw) as BrowserSmokeState
 				lastObservedState = state
-				if (isBrowserSmokeReady(state, applicationTitle, readyText, viewport)) {
+				if (isBrowserSmokeReady(state, applicationTitle, viewport)) {
 					mounted = true
 					break
 				}
 			}
 			await Bun.sleep(100)
 		}
-		if (!mounted)
-			issues.push({ kind: 'mount', detail: `The ${appId} application root did not reach its expected ${applicationTitle}${readyText === undefined ? '' : ` / ${readyText}`} state within ${(mountTimeoutMilliseconds / 1000).toFixed(0)}s at ${pageUrl}. Last observed state: ${JSON.stringify(lastObservedState)}` })
+		if (!mounted) issues.push({ kind: 'mount', detail: `The ${appId} application root did not reach its expected ${applicationTitle} state within ${(mountTimeoutMilliseconds / 1000).toFixed(0)}s at ${pageUrl}. Last observed state: ${JSON.stringify(lastObservedState)}` })
 
 		if (mounted) {
 			const settleDeadline = Date.now() + Math.min(5_000, mountTimeoutMilliseconds)

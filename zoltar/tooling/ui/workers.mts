@@ -1,3 +1,4 @@
+import { WORKER_BANNER } from './workerBanner.mts'
 import * as path from 'path'
 import { getUiAppPaths, parseUiAppIdFromProcess } from './appPaths.mts'
 import { normalizeBundlerPath } from './bundlerPaths.mts'
@@ -5,21 +6,6 @@ import { createTevmBufferImportPlugin } from './tevmBufferImport.mts'
 
 const appId = parseUiAppIdFromProcess('worker build')
 const appPaths = getUiAppPaths(appId)
-
-const WORKER_BANNER = `
-const process = globalThis.process ?? {
-	env: {},
-	nextTick(callback, ...args) {
-		queueMicrotask(() => {
-			callback(...args)
-		})
-	},
-	stderr: undefined,
-	stdout: undefined,
-}
-globalThis.process ??= process
-globalThis.global ??= globalThis
-`.trim()
 
 const result = await Bun.build({
 	banner: WORKER_BANNER,

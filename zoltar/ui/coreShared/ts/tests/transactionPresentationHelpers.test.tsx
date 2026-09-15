@@ -3,7 +3,7 @@ import { getPoolUniverseTransactionRows, humanizeTransactionAction } from '../tr
 
 describe('shared transaction presentation helpers', () => {
 	test('humanizes camel-case actions with protocol units', () => {
-		expect(humanizeTransactionAction('depositRepToWethVault')).toBe('Deposit REP To WETH Vault')
+		expect(humanizeTransactionAction('migrateRepToUniverse')).toBe('Migrate REP To Universe')
 	})
 
 	test('builds the common security-pool identity row', () => {

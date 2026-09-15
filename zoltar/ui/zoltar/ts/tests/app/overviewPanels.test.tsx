@@ -45,7 +45,6 @@ describe('OverviewPanels', () => {
 				address: undefined,
 				chainId: '0xaa36a7',
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			},
 			isConnectingWallet: false,
 			isManagingWallet: false,
@@ -188,7 +187,6 @@ describe('OverviewPanels', () => {
 					address: undefined,
 					chainId: SEPOLIA_NETWORK_PROFILE.chainIdHex,
 					ethBalanceAttoEth: undefined,
-					wethBalanceAttoEth: undefined,
 				},
 			})
 
@@ -243,7 +241,6 @@ describe('OverviewPanels', () => {
 				address: '0x1234567890123456789012345678901234567890',
 				chainId: '0x1',
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			},
 			onChangeWallet,
 			onDisconnectWallet,
@@ -270,7 +267,6 @@ describe('OverviewPanels', () => {
 				address,
 				chainId: '0xaa36a7',
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			},
 		})
 
@@ -291,7 +287,6 @@ describe('OverviewPanels', () => {
 				address: '0x1234567890123456789012345678901234567890',
 				chainId: '0x2105',
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			},
 		})
 
@@ -305,7 +300,6 @@ describe('OverviewPanels', () => {
 				address: '0x1234567890123456789012345678901234567890',
 				chainId: '0xcc6b',
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			},
 		})
 
@@ -322,7 +316,7 @@ describe('OverviewPanels', () => {
 
 		if (!(connectButton instanceof HTMLButtonElement)) throw new Error('Expected connect button')
 		expect(connectButton.disabled).toBe(false)
-		expect([...document.body.querySelectorAll('.overview-inline-metrics .metric-field-value')].slice(0, 3).map(value => value.textContent?.trim())).toEqual(['Loading…', 'Loading…', 'Loading…'])
+		expect([...document.body.querySelectorAll('.overview-inline-metrics .metric-field-value')].slice(0, 2).map(value => value.textContent?.trim())).toEqual(['Loading…', 'Loading…'])
 	})
 
 	test('renders the REP/ETH panel from the canonical REP per ETH quote', async () => {
@@ -453,7 +447,7 @@ describe('OverviewPanels', () => {
 	})
 
 	test('keeps every header metric slot rendered while the wallet bootstraps or stays disconnected', async () => {
-		const expectedSlots = ['overview-simulation-secondary', 'overview-metric-secondary', 'overview-simulation-secondary', 'overview-metric-secondary', 'overview-metric-secondary']
+		const expectedSlots = ['overview-simulation-secondary', 'overview-simulation-secondary', 'overview-metric-secondary', 'overview-metric-secondary']
 		const readSlots = () => [...document.body.querySelectorAll('.overview-inline-metrics .overview-metric-group-items > div')].map(cell => cell.className)
 		const readMetricValues = () => [...document.body.querySelectorAll('.overview-inline-metrics .metric-field-value')].map(value => value.textContent?.trim())
 		const readGroups = () =>
@@ -464,9 +458,9 @@ describe('OverviewPanels', () => {
 
 		await renderOverviewPanels({ walletBootstrapComplete: false })
 		expect(readSlots()).toEqual(expectedSlots)
-		expect(readMetricValues().slice(0, 3)).toEqual(['Loading…', 'Loading…', 'Loading…'])
+		expect(readMetricValues().slice(0, 2)).toEqual(['Loading…', 'Loading…'])
 		expect(readGroups()).toEqual([
-			{ label: 'Balances', columns: '3', secondary: false },
+			{ label: 'Balances', columns: '2', secondary: false },
 			{ label: 'Prices', columns: '2', secondary: true },
 		])
 		expect(document.body.querySelector('.overview-metric-group.is-secondary .overview-metric-group-caption button')?.getAttribute('aria-label')).toBe('Refresh REP prices')
@@ -475,8 +469,8 @@ describe('OverviewPanels', () => {
 		await cleanupRenderedComponent?.()
 
 		await renderOverviewPanels({ walletBootstrapComplete: false, showRepPrices: false })
-		expect(readSlots()).toEqual(['overview-simulation-secondary', 'overview-metric-secondary', 'overview-simulation-secondary'])
-		expect(readGroups()).toEqual([{ label: 'Balances', columns: '3', secondary: false }])
+		expect(readSlots()).toEqual(['overview-simulation-secondary', 'overview-simulation-secondary'])
+		expect(readGroups()).toEqual([{ label: 'Balances', columns: '2', secondary: false }])
 		await cleanupRenderedComponent?.()
 
 		const childUniverseId = 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdn
@@ -487,20 +481,20 @@ describe('OverviewPanels', () => {
 
 		await renderOverviewPanels({ walletBootstrapComplete: true })
 		expect(readSlots()).toEqual(expectedSlots)
-		expect(readMetricValues().slice(0, 3)).toEqual(['—', '—', '—'])
+		expect(readMetricValues().slice(0, 2)).toEqual(['—', '—'])
 		expect(document.body.querySelector('.header-toolbar-controls .wallet-button')?.textContent).toBe('Connect wallet')
 		await cleanupRenderedComponent?.()
 
 		await renderOverviewPanels({
-			accountState: { address: '0x1234567890123456789012345678901234567890', chainId: '0xaa36a7', ethBalanceAttoEth: 2n * 10n ** 18n, wethBalanceAttoEth: 10n ** 18n },
+			accountState: { address: '0x1234567890123456789012345678901234567890', chainId: '0xaa36a7', ethBalanceAttoEth: 2n * 10n ** 18n },
 			universeRepBalanceAttoRep: 5n * 10n ** 18n,
 		})
 		expect(readSlots()).toEqual(expectedSlots)
-		expect(readMetricValues().slice(0, 3)).toEqual(['≈ 2.00', '≈ 1.00', '≈ 5.00'])
+		expect(readMetricValues().slice(0, 2)).toEqual(['≈ 2.00', '≈ 5.00'])
 		expect(document.body.querySelector('.header-toolbar-controls .wallet-chip .address-value-abbreviated')?.textContent).toBe('0x123456…567890')
 	})
 
-	test('compacts a large ETH balance without affecting the adjacent WETH metric', async () => {
+	test('compacts a large ETH balance', async () => {
 		// Widths belong to the metric cell around each shrink-to-fit value.
 		setClientWidthResolver(element => {
 			if (element.classList.contains('currency-value') || element.classList.contains('currency-value-wrap')) return 0
@@ -522,7 +516,6 @@ describe('OverviewPanels', () => {
 				address: '0x1234567890123456789012345678901234567890',
 				chainId: '0xaa36a7',
 				ethBalanceAttoEth: 999999990000n * 10n ** 18n,
-				wethBalanceAttoEth: 10000n * 10n ** 18n,
 			},
 			universeRepBalanceAttoRep: 5n * 10n ** 18n,
 		})
@@ -532,9 +525,7 @@ describe('OverviewPanels', () => {
 		})
 
 		const ethButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
-		const wethButton = documentQueries.getByRole('button', { name: 'Copy exact value 10 000' })
 
 		expect(ethButton.textContent).toBe('≈ 1T')
-		expect(wethButton.textContent).toBe('≈ 10 000.00')
 	})
 })

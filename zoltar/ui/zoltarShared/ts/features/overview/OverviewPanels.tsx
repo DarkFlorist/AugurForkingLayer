@@ -193,9 +193,6 @@ export function OverviewPanels({
 						<MetricField className='overview-simulation-secondary' label={commonCopy.eth}>
 							<CurrencyValue value={showAccountBalances ? accountState.ethBalanceAttoEth : undefined} loading={isWalletAddressLoading || (showAccountBalances && isRefreshing && accountState.ethBalanceAttoEth === undefined)} compactWhenOverflow />
 						</MetricField>
-						<MetricField className='overview-metric-secondary' label={commonCopy.weth}>
-							<CurrencyValue value={showAccountBalances ? accountState.wethBalanceAttoEth : undefined} loading={isWalletAddressLoading || (showAccountBalances && isRefreshing && accountState.wethBalanceAttoEth === undefined)} compactWhenOverflow />
-						</MetricField>
 						<MetricField className='overview-simulation-secondary' label={commonCopy.rep}>
 							<CurrencyValue value={showAccountBalances ? universeRepBalanceAttoRep : undefined} loading={isWalletAddressLoading || (showAccountBalances && isLoadingUniverseRepBalance)} compactWhenOverflow />
 						</MetricField>

@@ -3,7 +3,3 @@ import { getRuntimeNetworkProfile } from '@zoltar/ui-core-shared/wallet/networkP
 export function getGenesisReputationTokenAddress() {
 	return getRuntimeNetworkProfile().genesisRepTokenAddress
 }
-
-export function getWethAddress() {
-	return getRuntimeNetworkProfile().wethAddress
-}

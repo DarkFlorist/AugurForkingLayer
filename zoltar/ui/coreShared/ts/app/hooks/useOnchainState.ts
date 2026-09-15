@@ -26,9 +26,7 @@ export type UseOnchainStateOptions = {
 
 export type UseOnchainStateDependencies = {
 	getDeploymentSteps: () => ReadonlyArray<DeploymentStep>
-	getWethAddress: () => Address
 	loadDeploymentStatusOracleSnapshot: (readClient: ReadClient) => Promise<{ applicationDeploymentComplete: boolean; deploymentStatuses: DeploymentStatus[] }>
-	loadErc20Balance: (readClient: ReadClient, tokenAddress: Address, accountAddress: Address) => Promise<bigint>
 }
 
 export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock = true, onSupportedNetworkChange }: UseOnchainStateOptions = {}, dependencies: UseOnchainStateDependencies) {
@@ -36,7 +34,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 		address: undefined,
 		chainId: undefined,
 		ethBalanceAttoEth: undefined,
-		wethBalanceAttoEth: undefined,
 	})
 	const deploymentStatuses = useSignal<DeploymentStatus[]>(
 		dependencies.getDeploymentSteps().map(step => ({
@@ -79,12 +76,11 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 	const errorMessage = useSignal<string | undefined>(undefined)
 	const deploymentStatusError = useSignal<string | undefined>(undefined)
 	const ethBalanceAttoEthError = useSignal<string | undefined>(undefined)
-	const wethBalanceAttoEthError = useSignal<string | undefined>(undefined)
 	const chainClockError = useSignal<string | undefined>(undefined)
 	const readBackendMessage = useSignal<string | undefined>(undefined)
 	const readBackendValidated = useSignal(false)
 	const readBackendStatus = useSignal<ReadBackendStatus>(getReadBackendStatus(getActiveBackend()))
-	const errorMessages = useComputed(() => [errorMessage.value, deploymentStatusError.value, ethBalanceAttoEthError.value, wethBalanceAttoEthError.value].filter((message): message is string => message !== undefined))
+	const errorMessages = useComputed(() => [errorMessage.value, deploymentStatusError.value, ethBalanceAttoEthError.value].filter((message): message is string => message !== undefined))
 	const clearChainClock = () => {
 		batch(() => {
 			currentBlockNumber.value = undefined
@@ -175,7 +171,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 			address: undefined,
 			chainId: undefined,
 			ethBalanceAttoEth: undefined,
-			wethBalanceAttoEth: undefined,
 		}
 		invalidateDeploymentState()
 		clearChainClock()
@@ -184,7 +179,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 			errorMessage.value = undefined
 			deploymentStatusError.value = undefined
 			ethBalanceAttoEthError.value = undefined
-			wethBalanceAttoEthError.value = undefined
 			chainClockError.value = undefined
 			readBackendMessage.value = undefined
 			readBackendValidated.value = false
@@ -217,7 +211,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 		if (shouldLoadWalletState) {
 			batch(() => {
 				ethBalanceAttoEthError.value = undefined
-				wethBalanceAttoEthError.value = undefined
 			})
 		}
 		if (shouldLoadChainClock) chainClockError.value = undefined
@@ -232,7 +225,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 				address: undefined,
 				chainId: undefined,
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			}
 			if (shouldLoadDeploymentState) {
 				invalidateDeploymentState()
@@ -348,7 +340,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 						address: connectedAddress,
 						chainId: accountState.value.chainId,
 						ethBalanceAttoEth: undefined,
-						wethBalanceAttoEth: undefined,
 					}
 
 					walletBootstrapComplete.value = true
@@ -357,7 +348,6 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 				if (connectedAddress !== undefined && walletOnExpectedChain) {
 					const readClient = createConnectedReadClient()
 					const ethBalanceAttoEthPromise = readClient.getBalance({ address: connectedAddress })
-					const wethBalanceAttoEthPromise = dependencies.loadErc20Balance(readClient, dependencies.getWethAddress(), connectedAddress)
 					void loadWalletState({
 						chainIdPromise: Promise.resolve(connectedChainId ?? backend.profile.chainIdHex),
 						connectedAddress,
@@ -374,16 +364,12 @@ export function useOnchainState({ activeEnvironmentNonce = 0, enableChainClock =
 						setEthBalanceErrorMessage: message => {
 							ethBalanceAttoEthError.value = message
 						},
-						setWethBalanceAttoEthErrorMessage: message => {
-							wethBalanceAttoEthError.value = message
-						},
 						trackLoad: walletStateLoad.track,
-						wethBalanceAttoEthPromise,
 					})
 				} else if (connectedAddress !== undefined) {
-					accountState.value = { ...accountState.value, chainId: connectedChainId ?? backend.profile.chainIdHex, ethBalanceAttoEth: undefined, wethBalanceAttoEth: undefined }
+					accountState.value = { ...accountState.value, chainId: connectedChainId ?? backend.profile.chainIdHex, ethBalanceAttoEth: undefined }
 				} else {
-					accountState.value = { ...accountState.value, chainId: backend.profile.chainIdHex, ethBalanceAttoEth: undefined, wethBalanceAttoEth: undefined }
+					accountState.value = { ...accountState.value, chainId: backend.profile.chainIdHex, ethBalanceAttoEth: undefined }
 				}
 			} catch (error) {
 				if (!isCurrent()) return

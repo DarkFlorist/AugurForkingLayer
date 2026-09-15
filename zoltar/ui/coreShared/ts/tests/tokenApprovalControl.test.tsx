@@ -62,10 +62,10 @@ describe('TokenApprovalControl', () => {
 				guardMessage={undefined}
 				onApprove={() => undefined}
 				pending={false}
-				pendingLabel='Approving WETH…'
+				pendingLabel='Approving REP…'
 				requiredAmount={30n * 10n ** 18n}
-				resetKey='weth-approval'
-				tokenSymbol='WETH'
+				resetKey='rep-approval'
+				tokenSymbol='REP'
 				tokenUnits={18}
 			/>,
 		)
@@ -78,7 +78,7 @@ describe('TokenApprovalControl', () => {
 			})
 		})
 
-		const approveButton = documentQueries.getByRole('button', { name: 'Approve 25 WETH' }) as HTMLButtonElement
+		const approveButton = documentQueries.getByRole('button', { name: 'Approve 25 REP' }) as HTMLButtonElement
 		expect(approveButton.disabled).toBe(true)
 		expect(documentQueries.queryByText(/must be greater than the current approved/i)).toBeNull()
 	})
@@ -93,17 +93,17 @@ describe('TokenApprovalControl', () => {
 				guardMessage='Connect a wallet before approving.'
 				onApprove={() => undefined}
 				pending={false}
-				pendingLabel='Approving WETH…'
+				pendingLabel='Approving REP…'
 				requiredAmount={10n * 10n ** 18n}
-				resetKey='weth-approval-guard'
-				tokenSymbol='WETH'
+				resetKey='rep-approval-guard'
+				tokenSymbol='REP'
 				tokenUnits={18}
 			/>,
 		)
 		cleanupRenderedComponent = renderedComponent.cleanup
 
 		const documentQueries = within(document.body)
-		const approveButton = documentQueries.getByRole('button', { name: 'Approve WETH' }) as HTMLButtonElement
+		const approveButton = documentQueries.getByRole('button', { name: 'Approve REP' }) as HTMLButtonElement
 
 		expect(approveButton.disabled).toBe(true)
 		expect(approveButton.title).toBe('Connect a wallet before approving.')
@@ -113,24 +113,24 @@ describe('TokenApprovalControl', () => {
 		const renderedComponent = await renderIntoDocument(
 			<TokenApprovalControl
 				actionLabel='submitting the initial report'
-				allowanceError='Unable to read current WETH allowance.'
+				allowanceError='Unable to read current REP allowance.'
 				allowanceLoading={false}
 				approvedAmount={0n}
 				guardMessage={undefined}
 				onApprove={() => undefined}
 				pending={false}
-				pendingLabel='Approving WETH…'
+				pendingLabel='Approving REP…'
 				requiredAmount={10n * 10n ** 18n}
-				resetKey='weth-approval-error'
-				tokenSymbol='WETH'
+				resetKey='rep-approval-error'
+				tokenSymbol='REP'
 				tokenUnits={18}
 			/>,
 		)
 		cleanupRenderedComponent = renderedComponent.cleanup
 
 		const documentQueries = within(document.body)
-		const approveButton = documentQueries.getByRole('button', { name: 'Approve 10 WETH' }) as HTMLButtonElement
-		const expectedMessage = 'Unable to verify WETH approval before submitting the initial report. Reason: Unable to read current WETH allowance. Retry loading the approval status before continuing.'
+		const approveButton = documentQueries.getByRole('button', { name: 'Approve 10 REP' }) as HTMLButtonElement
+		const expectedMessage = 'Unable to verify REP approval before submitting the initial report. Reason: Unable to read current REP allowance. Retry loading the approval status before continuing.'
 
 		expect(approveButton.disabled).toBe(true)
 		expect(approveButton.title).toBe(expectedMessage)
@@ -151,17 +151,17 @@ describe('TokenApprovalControl', () => {
 					approveCalls += 1
 				}}
 				pending={true}
-				pendingLabel='Approving WETH…'
+				pendingLabel='Approving REP…'
 				requiredAmount={10n * 10n ** 18n}
-				resetKey='weth-approval-pending'
-				tokenSymbol='WETH'
+				resetKey='rep-approval-pending'
+				tokenSymbol='REP'
 				tokenUnits={18}
 			/>,
 		)
 		cleanupRenderedComponent = renderedComponent.cleanup
 
 		const documentQueries = within(document.body)
-		const approveButton = documentQueries.getByRole('button', { name: 'Approving WETH…' }) as HTMLButtonElement
+		const approveButton = documentQueries.getByRole('button', { name: 'Approving REP…' }) as HTMLButtonElement
 
 		expect(approveButton.disabled).toBe(true)
 		fireEvent.click(approveButton)
@@ -178,10 +178,10 @@ describe('TokenApprovalControl', () => {
 				guardMessage={undefined}
 				onApprove={() => undefined}
 				pending={false}
-				pendingLabel='Approving WETH…'
+				pendingLabel='Approving REP…'
 				requiredAmount={10n * 10n ** 18n}
-				resetKey='weth-approval-invalid'
-				tokenSymbol='WETH'
+				resetKey='rep-approval-invalid'
+				tokenSymbol='REP'
 				tokenUnits={18}
 			/>,
 		)
@@ -194,7 +194,7 @@ describe('TokenApprovalControl', () => {
 			})
 		})
 
-		const approveButton = documentQueries.getByRole('button', { name: 'Approve WETH' }) as HTMLButtonElement
+		const approveButton = documentQueries.getByRole('button', { name: 'Approve REP' }) as HTMLButtonElement
 		const amountInput = documentQueries.getByPlaceholderText('Leave blank for required total')
 		const validationMessage = documentQueries.getByText('Approval amount must be a decimal number.')
 		expect(approveButton.disabled).toBe(true)

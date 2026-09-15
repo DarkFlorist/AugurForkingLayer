@@ -7,6 +7,6 @@ const CONTRACT_LABEL_BY_ABI = new Map<readonly unknown[], string>([
 	[Zoltar_Zoltar.abi, 'Zoltar'],
 ])
 
-export function getContractLabel(abi: readonly unknown[], functionName: string) {
-	return CONTRACT_LABEL_BY_ABI.get(abi) ?? (functionName === 'deposit' ? 'WETH' : undefined)
+export function getContractLabel(abi: readonly unknown[]) {
+	return CONTRACT_LABEL_BY_ABI.get(abi)
 }

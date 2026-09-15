@@ -7,7 +7,7 @@ import { Address } from '@zoltar/core-shared/evm/ethereum'
 import { ABIS } from '../../../abi/abis'
 import { AnvilWindowEthereum } from '../AnvilWindowEthereum'
 import { QuestionOutcome } from '../types/types'
-import { ReputationToken_ReputationToken, infrastructure_WETH9_WETH9 } from '../../../types/contractArtifact'
+import { ReputationToken_ReputationToken } from '../../../types/contractArtifact'
 export { sortStringArrayByKeccak } from '@zoltar/core-shared/serialization/sortStringArrayByKeccak'
 const TOTAL_REP_SUPPLY_ATTO_REP = 11_000_000n * 10n ** 18n
 const ETH_AMOUNT_TO_MINT = 10n ** 30n
@@ -137,22 +137,6 @@ export const setupTestAccounts = async (anvilWindowEthereum: AnvilWindowEthereum
 			stateDiff: {
 				[storageSlot(2n)]: TOTAL_REP_SUPPLY_ATTO_REP,
 				[theoreticalSupplySlot]: TOTAL_REP_SUPPLY_ATTO_REP,
-			},
-		},
-	})
-
-	// Deploy WETH9 at its expected address
-	const wethAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-	const wethBytecodeHex = infrastructure_WETH9_WETH9.evm.deployedBytecode.object
-	const wethBytes = hexToBytes(wethBytecodeHex.startsWith('0x') ? wethBytecodeHex : `0x${wethBytecodeHex}`)
-	if (!wethBytes) throw new Error('Failed to convert WETH bytecode to bytes')
-	await anvilWindowEthereum.addStateOverrides({
-		[wethAddress]: {
-			code: wethBytes,
-			stateDiff: {
-				[storageSlot(0n)]: shortStringStorageValue('Wrapped Ether'),
-				[storageSlot(1n)]: shortStringStorageValue('WETH'),
-				[storageSlot(2n)]: 18n,
 			},
 		},
 	})

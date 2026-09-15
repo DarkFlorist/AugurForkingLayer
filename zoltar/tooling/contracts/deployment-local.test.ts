@@ -15,7 +15,7 @@ test('deploys only Zoltar on a fresh local chain and skips verified contracts on
 			log: () => undefined,
 			writeGitHubSummary: false,
 		}
-		const expectedIds: Array<ReturnType<typeof createCompleteDeploymentPlan>[number]['id']> = ['proxyDeployer', 'deploymentStatusOracle', 'weth', 'reputationToken', 'multicall3', 'zoltarQuestionData', 'zoltar']
+		const expectedIds: Array<ReturnType<typeof createCompleteDeploymentPlan>[number]['id']> = ['proxyDeployer', 'deploymentStatusOracle', 'reputationToken', 'multicall3', 'zoltarQuestionData', 'zoltar']
 		expect(createCompleteDeploymentPlan(SEPOLIA_NETWORK_PROFILE).map(step => step.id)).toEqual(expectedIds)
 		const first = await deployTestnet(parameters)
 		expect(first.results).toHaveLength(expectedIds.length)

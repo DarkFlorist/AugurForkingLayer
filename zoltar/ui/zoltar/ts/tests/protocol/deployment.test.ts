@@ -4,7 +4,7 @@ import { describe, expect, mock, test } from 'bun:test'
 // The funding bytecode fixture is pinned to this compiler; main contracts use 0.8.35.
 import solc from 'solc'
 import { type Address, type Hash, type Hex, type TransactionReceipt, encodeDeployData, getAddress, getCreate2Address, keccak256 } from '@zoltar/core-shared/evm/ethereum'
-import { getDeploymentSteps, loadDeploymentStatusOracleSnapshot, loadErc20Balance } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
+import { getDeploymentSteps, loadDeploymentStatusOracleSnapshot } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
 import { getGenesisReputationTokenAddress } from '@zoltar/ui-zoltar-shared/protocol/activeProtocolAddresses.js'
 import { PROXY_DEPLOYER_ADDRESS, ZERO_SALT } from '@zoltar/ui-zoltar-shared/protocol/zoltarDeploymentHelpers.js'
 import type { ReadClient, WriteClient } from '@zoltar/ui-core-shared/types/contracts.js'
@@ -12,7 +12,7 @@ import { installActiveEnvironmentForTesting } from '@zoltar/ui-core-shared/lib/a
 import { createInitialTransactionTrayState, markTransactionPrepared, markTransactionRequested } from '@zoltar/ui-core-shared/transactions/transactionTray.js'
 import { createFakeBackend, createFakeSimulationProfile } from '@zoltar/ui-core-shared/tests/testUtils/fakeBackend.js'
 import { MAINNET_NETWORK_PROFILE, SEPOLIA_NETWORK_PROFILE } from '@zoltar/ui-core-shared/wallet/networkProfile.js'
-import { SEPOLIA_GENESIS_REP_INIT_CODE, SEPOLIA_WETH_INIT_CODE } from '@zoltar/ui-core-shared/lib/sepoliaDeploymentConfig.js'
+import { SEPOLIA_GENESIS_REP_INIT_CODE } from '@zoltar/ui-core-shared/lib/sepoliaDeploymentConfig.js'
 import { DeploymentStatusOracle_DeploymentStatusOracle, ZoltarQuestionData_ZoltarQuestionData } from '@zoltar/ui-core-shared/contractArtifact.js'
 import { PROXY_DEPLOYER_RUNTIME_CODE, assertStaticDeploymentArtifactRuntimeCodeHashes, fundCanonicalDeployerSigner } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
 
@@ -80,7 +80,7 @@ contract AtomicFunding {
 
 describe('contract deployment internals', () => {
 	test('rejects generated deployment artifacts that do not match the pinned runtime hashes', () => {
-		expect(assertStaticDeploymentArtifactRuntimeCodeHashes()).toEqual(['deploymentStatusOracle', 'multicall3', 'weth', 'zoltarQuestionData'])
+		expect(assertStaticDeploymentArtifactRuntimeCodeHashes()).toEqual(['deploymentStatusOracle', 'multicall3', 'zoltarQuestionData'])
 		expect(() =>
 			assertStaticDeploymentArtifactRuntimeCodeHashes({
 				expectedRuntimeCodeHashes: { zoltarQuestionData: keccak256('0x01') },
@@ -131,18 +131,15 @@ describe('contract deployment internals', () => {
 		expect(bytecode['object']).toBe(sentBytecode)
 	})
 
-	test('adds WETH and allocated genesis REP ahead of Sepolia protocol dependencies', () => {
+	test('adds allocated genesis REP ahead of Sepolia protocol dependencies', () => {
 		const resetEnvironment = installActiveEnvironmentForTesting(createFakeBackend({ profile: SEPOLIA_NETWORK_PROFILE }))
 		try {
 			const steps = createDeploymentSteps()
-			const wethStep = steps.find(step => step.id === 'weth')
 			const repStep = steps.find(step => step.id === 'reputationToken')
 			const zoltarStep = steps.find(step => step.id === 'zoltar')
 
-			expect(wethStep?.address).toBe(SEPOLIA_NETWORK_PROFILE.wethAddress)
 			expect(repStep?.address).toBe(SEPOLIA_NETWORK_PROFILE.genesisRepTokenAddress)
 			expect(zoltarStep?.dependencies).toContain('reputationToken')
-			expect(SEPOLIA_WETH_INIT_CODE).toStartWith('0x')
 			expect(SEPOLIA_GENESIS_REP_INIT_CODE).toStartWith('0x')
 		} finally {
 			resetEnvironment()
@@ -1183,35 +1180,5 @@ describe('contract deployment internals', () => {
 			expect(seenAddress).not.toBeUndefined()
 			expect(seenAddress?.length).toBe(42)
 		}
-	})
-
-	test('ERC20 balance reader calls the expected contract method', async () => {
-		const tokenAddress = getAddress('0x1111111111111111111111111111111111111111')
-		const ownerAddress = getAddress('0x2222222222222222222222222222222222222222')
-		const seen: Array<{ functionName: string; address: Address; args: readonly unknown[] }> = []
-		const readClient: MockReadClient = {
-			getCode: async () => '0x',
-			readContract: async request => {
-				if (request.address === undefined) {
-					throw new Error('Expected token address')
-				}
-				seen.push({
-					address: request.address,
-					args: Array.isArray(request.args) ? request.args : [],
-					functionName: request.functionName,
-				})
-				if (request.functionName === 'balanceOf') return 2_000n as never
-				throw new Error(`Unexpected function name: ${request.functionName}`)
-			},
-		}
-
-		expect(await loadErc20Balance(readClient as ReadClient, tokenAddress, ownerAddress)).toBe(2_000n)
-		expect(seen).toEqual([
-			{
-				functionName: 'balanceOf',
-				address: tokenAddress,
-				args: [ownerAddress],
-			},
-		])
 	})
 })

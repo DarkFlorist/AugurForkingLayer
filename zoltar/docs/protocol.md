@@ -5,7 +5,7 @@
 - `ZoltarQuestionData.sol` registers reusable questions, validates categorical/scalar outcome encodings, and exposes question pagination.
 - `Zoltar.sol` manages universes, fork thresholds, child-universe creation, and migration accounting.
 - `GenesisReputationToken.sol` provides genesis REP; `ReputationToken.sol` implements child REP and authorization behavior.
-- `DeploymentStatusOracle.sol` reports the installed infrastructure. WETH9 and Multicall3 provide token wrapping and read batching.
+- `DeploymentStatusOracle.sol` reports the installed infrastructure. Multicall3 provides read batching.
 
 ## UI workflow
 

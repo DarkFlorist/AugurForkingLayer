@@ -34,7 +34,6 @@ export const CONSERVATIVE_DEPLOYMENT_GAS: Readonly<Record<string, bigint>> = {
 	uniswapV4Quoter: 2_250_000n,
 	deploymentStatusOracle: 1_000_000n,
 	zoltarDeploymentStatusOracle: 1_000_000n,
-	weth: 1_000_000n,
 	reputationToken: 1_250_000n,
 	multicall3: 1_250_000n,
 	uniformPriceDualCapBatchAuctionFactory: 4_750_000n,
@@ -606,7 +605,7 @@ Pass RPC and cost limits as uppercase assignments after --, for example:
   --max-fee-per-gas-gwei=100  Rejects higher RPC fee suggestions
   --max-total-cost-eth=20     Caps the preflight estimate and transaction costs
 
-Custom testnets receive the same deterministic WETH and genesis REP deployment
+Custom testnets receive the same deterministic genesis REP deployment
 used by Sepolia. The RPC must support Cancun, EIP-1559, and the canonical
 unprotected legacy deployer transactions. Ethereum mainnet chain ID 1 is
 intentionally rejected.`

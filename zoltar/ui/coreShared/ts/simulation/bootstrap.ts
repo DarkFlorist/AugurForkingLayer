@@ -1,9 +1,9 @@
 import { createMemoryClient } from '@tevm/memory-client'
 import { encodeAbiParameters, encodeDeployData, getCreateAddress, keccak256, toHex, type Address, type Hex } from '@zoltar/core-shared/evm/ethereum'
-import { ReputationToken_ReputationToken, Zoltar_Zoltar, infrastructure_WETH9_WETH9 } from '../contractArtifact.js'
+import { ReputationToken_ReputationToken, Zoltar_Zoltar } from '../contractArtifact.js'
 import type { ReadClient, WriteClient } from '../wallet/chainBackend.js'
 import type { DeploymentStep } from '../types/contracts.js'
-import { MAINNET_WETH_ADDRESS, setRuntimeNetworkProfile, type NetworkProfile } from '../wallet/networkProfile.js'
+import { setRuntimeNetworkProfile, type NetworkProfile } from '../wallet/networkProfile.js'
 import { initializeSimulationClock } from './clock.js'
 import type { SimulationScenario } from './scenarios.js'
 import { withTimeout } from '../lib/promise.js'
@@ -16,10 +16,6 @@ export type BootstrapProgressHandler = (progress: { label: string; value: number
 const ETH_BALANCE_AMOUNT = 10n ** 30n
 const GENESIS_UNIVERSE_ID = 0n
 const REP_TOKEN_MINT_AMOUNT = 3_000_000n * 10n ** 18n
-const WETH_TOKEN_MINT_AMOUNT = 10_000n * 10n ** 18n
-const WETH_NAME_SLOT = 0n
-const WETH_SYMBOL_SLOT = 1n
-const WETH_DECIMALS_SLOT = 2n
 const ZOLTAR_GENESIS_REPUTATION_TOKEN_OFFSET = 3n
 const ZOLTAR_UNIVERSE_THEORETICAL_SUPPLIES_SLOT = 2n
 const ZOLTAR_UNIVERSES_SLOT = 0n
@@ -48,13 +44,6 @@ function storageIndex(slot: bigint) {
 
 function storageValue(value: bigint) {
 	return toHex(value, { size: 32 })
-}
-
-function shortStringStorageValue(value: string) {
-	const valueHex = toHex(value).slice(2)
-	const byteLength = valueHex.length / 2
-	if (byteLength > 31) throw new Error('Simulation token metadata exceeds Solidity short-string storage')
-	return storageValue(BigInt(`0x${valueHex.padEnd(62, '0')}${(byteLength * 2).toString(16).padStart(2, '0')}`))
 }
 
 function requireReceiptContractAddress(code: Hex | undefined, address: Address, label: string) {
@@ -253,14 +242,6 @@ async function deploySimulationTokens({
 
 	await deployContract(writeClient, profile.genesisRepTokenAddress, 'simulation REP token', repDeploymentData)
 	await reportBootstrapProgress(onProgress, 'Deploying simulation REP token', 0.18)
-	await memoryClient.setCode({
-		address: profile.wethAddress,
-		bytecode: `0x${infrastructure_WETH9_WETH9.evm.deployedBytecode.object}`,
-	})
-	await memoryClient.setStorageAt({ address: profile.wethAddress, index: storageIndex(WETH_NAME_SLOT), value: shortStringStorageValue('Wrapped Ether') })
-	await memoryClient.setStorageAt({ address: profile.wethAddress, index: storageIndex(WETH_SYMBOL_SLOT), value: shortStringStorageValue('WETH') })
-	await memoryClient.setStorageAt({ address: profile.wethAddress, index: storageIndex(WETH_DECIMALS_SLOT), value: storageValue(18n) })
-	await reportBootstrapProgress(onProgress, 'Installing simulation WETH token', 0.2)
 	await seedGenesisRepTokenState({
 		accounts,
 		createWriteClient,
@@ -271,22 +252,9 @@ async function deploySimulationTokens({
 	})
 }
 
-export function predictSimulationTokenAddresses(accountAddress: Address): { genesisRepTokenAddress: Address; wethAddress: Address } {
+export function predictSimulationTokenAddresses(accountAddress: Address): { genesisRepTokenAddress: Address } {
 	return {
 		genesisRepTokenAddress: getCreateAddress({ from: accountAddress, nonce: 0n }),
-		wethAddress: MAINNET_WETH_ADDRESS,
-	}
-}
-
-async function seedWrappedEthBalances(createWriteClient: (accountAddress: Address) => WriteClient, accounts: readonly Address[], wethAddress: Address, onProgress: BootstrapProgressHandler | undefined) {
-	for (const [index, account] of accounts.entries()) {
-		const writeClient = createWriteClient(account)
-		const hash = await writeClient.sendTransaction({
-			to: wethAddress,
-			value: WETH_TOKEN_MINT_AMOUNT,
-		})
-		await writeClient.waitForTransactionReceipt({ hash })
-		await reportBootstrapProgress(onProgress, `Wrapping ETH for QA account ${index + 1} of ${accounts.length}`, 0.24 + ((index + 1) / Math.max(accounts.length, 1)) * 0.06)
 	}
 }
 
@@ -391,7 +359,6 @@ export async function bootstrapSimulationChain({
 		profile,
 		zoltarAddress: zoltarStep.address,
 	})
-	await seedWrappedEthBalances(createWriteClient, accounts, profile.wethAddress, onProgress)
 	const extendedApplied =
 		applyScenario === undefined
 			? false

@@ -37,5 +37,4 @@ export type AccountState = {
 	address: Address | undefined
 	chainId: string | undefined
 	ethBalanceAttoEth: bigint | undefined
-	wethBalanceAttoEth: bigint | undefined
 }

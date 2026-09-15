@@ -39,7 +39,7 @@ bun run test:browser
 
 - `check`: TypeScript, import boundaries, formatting, lint, and both Knip modes. CI runs this command.
 - `test`: contract tests, isolated UI/runtime tests, deployment and boundary tests. UI tests use file isolation to prevent mock leakage.
-- `check:artifacts`: compares all 19 production ABIs and creation/runtime bytecodes against the recorded contract baseline. Intentional future protocol changes require reviewing and updating that baseline.
+- `check:artifacts`: compares all 18 production ABIs and creation/runtime bytecodes against the recorded contract baseline. Intentional future protocol changes require reviewing and updating that baseline.
 - `test:browser`: runs desktop/mobile smoke checks and the full browser workflow against production assets. CI runs this command on pull requests. Set `CHROMIUM_PATH` if Chromium is not auto-detected.
 - `test:browser:smoke` and `test:browser:workflow`: run the smoke checks or the question creation, fork approval, forking, and migration workflow separately.
 
@@ -61,7 +61,7 @@ bun run deploy:testnet -- --help
 
 The deployment command requires `RPC_URL` and `PRIVATE_KEY`; `CHAIN_ID` defaults to Sepolia (`11155111`). `MAX_FEE_PER_GAS_GWEI` and `MAX_TOTAL_COST_ETH` bound spending. Load the signing key through your local secret-management mechanism.
 
-Once activated, the **Zoltar Testnet Deployment** workflow runs manually from `main`, requires the `DEPLOY` input, and uses the `zoltar-testnet` environment with `TESTNET_DEPLOYER_PRIVATE_KEY`. Configure that environment before use. The workflow deploys only the deterministic proxy, deployment-status oracle, WETH, genesis REP, Multicall3, question registry, and Zoltar. It validates chain capabilities, fees, dependencies, receipts, and runtime code, and is safe to rerun against already-verified contracts.
+Once activated, the **Zoltar Testnet Deployment** workflow runs manually from `main`, requires the `DEPLOY` input, and uses the `zoltar-testnet` environment with `TESTNET_DEPLOYER_PRIVATE_KEY`. Configure that environment before use. The workflow deploys only the deterministic proxy, deployment-status oracle, genesis REP, Multicall3, question registry, and Zoltar. It validates chain capabilities, fees, dependencies, receipts, and runtime code, and is safe to rerun against already-verified contracts.
 
 Runtime verification is included. Explorer source publication is not configured; no Etherscan secret is required. REP pricing uses configured external quote infrastructure; this deployment does not deploy Uniswap or seed liquidity.
 
@@ -69,7 +69,7 @@ Runtime verification is included. Explorer source publication is not configured;
 
 Other AugurForkingLayer components may consume `shared/core` and `shared/zoltar` package exports, contract interfaces/ABIs, and documented addresses. Keep application bootstrap, routes, private UI modules, and build tooling private to Zoltar. Zoltar must never import code from a sibling component.
 
-WETH9 and Multicall3 are neutral infrastructure in `solidity/contracts/infrastructure/` (relative to the Zoltar workspace). Production Solidity contents are preserved; infrastructure source paths are normalized.
+Multicall3 is read-batching infrastructure in `solidity/contracts/infrastructure/` (relative to the Zoltar workspace). Retained production contracts are checked against the recorded ABI and bytecode baseline.
 
 See [protocol and operator notes](docs/protocol.md) and the [contract baseline](import-manifest.json).
 

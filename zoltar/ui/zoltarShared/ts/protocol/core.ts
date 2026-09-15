@@ -14,7 +14,7 @@ type ContractLabelResolver = (abi: readonly unknown[], functionName: string) => 
 let appContractLabelResolver: ContractLabelResolver | undefined
 
 function resolveContractLabel(abi: readonly unknown[], functionName: string) {
-	return getContractLabel(abi, functionName) ?? appContractLabelResolver?.(abi, functionName)
+	return getContractLabel(abi) ?? appContractLabelResolver?.(abi, functionName)
 }
 
 export type RpcStateRetryWait = (milliseconds: number) => Promise<void>

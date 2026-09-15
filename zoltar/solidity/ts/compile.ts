@@ -19,10 +19,6 @@ const allowedImmutableContractWarnings = [
 		sourcePath: 'contracts/infrastructure/Multicall3.sol',
 		message: 'Since the VM version paris, "difficulty" was replaced by "prevrandao"',
 	},
-	{
-		sourcePath: 'contracts/infrastructure/WETH9.sol',
-		message: "'transfer' is deprecated and scheduled for removal",
-	},
 ]
 
 const CompileError = funtypes.ReadonlyObject({

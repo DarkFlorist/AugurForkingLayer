@@ -1,8 +1,11 @@
+import type { Address } from '@zoltar/core-shared/evm/ethereum'
+import type { ReadClient } from '@zoltar/ui-core-shared/types/contracts.js'
+import { ABIS } from '@zoltar/ui-core-shared/abis.js'
 /// <reference types="bun-types" />
 
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'bun:test'
 import { getAddress } from '@zoltar/core-shared/evm/ethereum'
-import { loadDeploymentStatusOracleSnapshot, loadErc20Balance } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
+import { loadDeploymentStatusOracleSnapshot } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
 import { getChainDisplayLabel, getChainIdDecimalLabel, getWalletScopedAccountAddress, getWrongNetworkReason, isActiveAppChain, isSupportedAppChain } from '@zoltar/ui-core-shared/wallet/network.js'
 import { getActiveBackend, initializeActiveEnvironment, installActiveEnvironmentForTesting, resetActiveEnvironmentForTesting } from '@zoltar/ui-core-shared/lib/activeEnvironment.js'
 import { getSavedSimulationStateEnvelope, persistSavedSimulationState, serializeSavedSimulationStateEnvelope } from '@zoltar/ui-core-shared/simulation/savedStates.js'
@@ -560,7 +563,7 @@ void describe('simulation backend', () => {
 		unsubscribe()
 	})
 
-	void test('bootstraps with funded REP and WETH but without deployed app infrastructure', async () => {
+	void test('bootstraps with funded REP but without deployed app infrastructure', async () => {
 		const backend = warmBaselineBackend
 
 		const primaryAccount = backend.accounts[0]
@@ -570,17 +573,11 @@ void describe('simulation backend', () => {
 		const repCode = await readClient.getCode({
 			address: backend.profile.genesisRepTokenAddress,
 		})
-		const wethCode = await readClient.getCode({
-			address: backend.profile.wethAddress,
-		})
 		const repBalanceAttoRep = await loadErc20Balance(readClient, backend.profile.genesisRepTokenAddress, primaryAccount)
-		const wethBalanceAttoEth = await loadErc20Balance(readClient, backend.profile.wethAddress, primaryAccount)
 		const deploymentSnapshot = await loadDeploymentStatusOracleSnapshot(readClient)
 
 		expect(repCode).not.toBe('0x')
-		expect(wethCode).not.toBe('0x')
 		expect(repBalanceAttoRep > 0n).toBe(true)
-		expect(wethBalanceAttoEth > 0n).toBe(true)
 		expect(deploymentSnapshot.applicationDeploymentComplete).toBe(false)
 		expect(deploymentSnapshot.deploymentStatuses.every(step => step.deployed === false)).toBe(true)
 	}, 30_000)
@@ -767,3 +764,13 @@ void describe('simulation backend', () => {
 		}
 	}, 60_000)
 })
+
+async function loadErc20Balance(client: ReadClient, tokenAddress: Address, ownerAddress: Address): Promise<bigint> {
+	const balance = await client.readContract({
+		abi: ABIS.mainnet.erc20,
+		functionName: 'balanceOf',
+		address: tokenAddress,
+		args: [ownerAddress],
+	})
+	return typeof balance === 'bigint' ? balance : BigInt(balance)
+}

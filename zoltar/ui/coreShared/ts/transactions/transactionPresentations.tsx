@@ -18,7 +18,6 @@ export function humanizeTransactionAction(action: string) {
 		.replace(/^./, value => value.toUpperCase())
 		.replaceAll(/\bRep\b/g, commonCopy.rep)
 		.replaceAll(/\bEth\b/g, commonCopy.eth)
-		.replaceAll(/\bWeth\b/g, commonCopy.weth)
 }
 
 export function getPoolUniverseTransactionRows(context: PoolUniverseTransactionContext | undefined): GlobalTransactionRow[] | undefined {

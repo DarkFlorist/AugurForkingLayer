@@ -36,7 +36,7 @@ describe('Zoltar App route validation', () => {
 		mock.module('@zoltar/ui-core-shared/app/hooks/useHashRoute.js', () => ({ useHashRoute: () => ({ navigate: () => undefined, route }) }))
 		mock.module('@zoltar/ui-core-shared/app/hooks/useProtocolOnchainRuntime.js', () => ({
 			useProtocolOnchainRuntime: () => ({
-				accountState: { address: undefined, chainId: undefined, ethBalanceAttoEth: 0n, wethBalanceAttoEth: 0n },
+				accountState: { address: undefined, chainId: undefined, ethBalanceAttoEth: 0n },
 				activeEnvironmentNonce: 0,
 				applicationDeploymentComplete: true,
 				baseHookConfig: {},

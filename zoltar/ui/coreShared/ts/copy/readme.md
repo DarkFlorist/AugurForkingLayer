@@ -13,6 +13,6 @@ Use `common.ts` only when the same concept is shared across multiple features. T
 
 ## Style
 
-- Use sentence case for actions and prose. Preserve protocol names and established acronyms such as REP, ETH, WETH, and RPC.
+- Use sentence case for actions and prose. Preserve protocol names and established acronyms such as REP, ETH, and RPC.
 - End prose descriptions and errors with punctuation. Labels and titles do not need terminal punctuation.
 - Use the single ellipsis character (`…`) for pending text. Three periods are reserved for literal truncation examples such as `0x...`.

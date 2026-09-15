@@ -17,14 +17,8 @@ import { MAINNET_NETWORK_PROFILE, createSimulationProfile, type NetworkProfile }
 import { fireEvent, waitFor, within } from '../testUtils/queries'
 import { renderIntoDocument } from '../testUtils/renderIntoDocument.js'
 
-const FAKE_WETH_ADDRESS = '0x0000000000000000000000000000000000000ee1' as const
-
 function getDeploymentSteps() {
 	return [{ address: '0x00000000000000000000000000000000000000d1', dependencies: [], deploy: async () => '0x00000000000000000000000000000000000000000000000000000000000000d1', id: 'zoltar', label: 'Zoltar' }] as const satisfies ReadonlyArray<DeploymentStep>
-}
-
-function getWethAddress() {
-	return FAKE_WETH_ADDRESS
 }
 
 type UseOnchainStateState = ReturnType<typeof useOnchainState>
@@ -140,7 +134,6 @@ function createBackend({
 function createOnchainStateDependencies(overrides: Partial<UseOnchainStateDependencies> = {}): UseOnchainStateDependencies {
 	return {
 		getDeploymentSteps,
-		getWethAddress,
 		loadDeploymentStatusOracleSnapshot: mock(async () => ({
 			applicationDeploymentComplete: false,
 			deploymentStatuses: getDeploymentSteps().map(step => ({
@@ -148,7 +141,7 @@ function createOnchainStateDependencies(overrides: Partial<UseOnchainStateDepend
 				deployed: false,
 			})),
 		})),
-		loadErc20Balance: mock(async () => 0n),
+
 		...overrides,
 	}
 }
@@ -235,12 +228,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => 555n)
 
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -257,7 +248,6 @@ describe('useOnchainState (integration)', () => {
 				address: account,
 				chainId: '0x01',
 				ethBalanceAttoEth: 123n,
-				wethBalanceAttoEth: 555n,
 			})
 			expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true)
 			expect(requireHookState(hookState).currentBlockNumber).toBe(100n)
@@ -265,7 +255,6 @@ describe('useOnchainState (integration)', () => {
 		})
 		expect(subscriptionState.readTransportModes).toEqual(['provider'])
 		expect(loadDeploymentStatusOracleSnapshot).toHaveBeenCalledTimes(1)
-		expect(loadErc20Balance).toHaveBeenCalledTimes(1)
 
 		resetEnvironment()
 	})
@@ -285,12 +274,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => 0n)
 
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		let resetEnvironment = installActiveEnvironmentForTesting(backendA)
 		let hookState: UseOnchainStateState | undefined
@@ -365,7 +352,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 
 		try {
@@ -422,7 +408,6 @@ describe('useOnchainState (integration)', () => {
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const wrongChainReadClient = {
 			...createReadClient(),
@@ -519,11 +504,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => 777n)
+
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		const rpcBlockTimestamp = BigInt(Math.floor(Date.now() / 1000))
 		const rpcReadClient = {
@@ -550,7 +534,6 @@ describe('useOnchainState (integration)', () => {
 			address: account,
 			chainId: '0xaa36a7',
 			ethBalanceAttoEth: undefined,
-			wethBalanceAttoEth: undefined,
 		})
 		expect(requireHookState(hookState).readBackendMessage).toBeUndefined()
 		expect(requireHookState(hookState).currentBlockNumber).toBe(321n)
@@ -639,7 +622,6 @@ describe('useOnchainState (integration)', () => {
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const wrongChainReadClient = {
 			...createReadClient(),
@@ -647,7 +629,6 @@ describe('useOnchainState (integration)', () => {
 		} as ReadClient
 		const profile = createSimulationProfile({
 			genesisRepTokenAddress: getAddress('0x00000000000000000000000000000000000000f1'),
-			wethAddress: getAddress('0x00000000000000000000000000000000000000f2'),
 		})
 		const { backend } = createBackend({ hasWallet: false, profile, readClient: wrongChainReadClient })
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
@@ -675,7 +656,6 @@ describe('useOnchainState (integration)', () => {
 			loadDeploymentStatusOracleSnapshot: mock(async () => {
 				throw new Error('deployment status RPC failed')
 			}),
-			loadErc20Balance: mock(async () => 111n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -709,10 +689,6 @@ describe('useOnchainState (integration)', () => {
 					deploymentStatuses: deploymentStatuses.map(step => ({ ...step, deployed: true })),
 				}
 			}),
-			loadErc20Balance: mock(async () => {
-				if (failRefresh) throw new Error('WETH balance refresh failed')
-				return 456n
-			}),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -722,18 +698,16 @@ describe('useOnchainState (integration)', () => {
 		const renderedComponent = await renderIntoDocument(h(Harness, {}))
 		cleanupRenderedComponent = renderedComponent.cleanup
 
-		await waitFor(() => expect(requireHookState(hookState).accountState.wethBalanceAttoEth).toBe(456n))
-		expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true)
+		await waitFor(() => expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true))
 		expect(requireHookState(hookState).applicationDeploymentComplete).toBe(true)
 
 		failRefresh = true
 		await act(async () => {
 			await requireHookState(hookState).refreshState()
 		})
-		await waitFor(() => expect(requireHookState(hookState).errorMessages).toHaveLength(3))
+		await waitFor(() => expect(requireHookState(hookState).errorMessages).toHaveLength(2))
 
 		expect(requireHookState(hookState).accountState.ethBalanceAttoEth).toBeUndefined()
-		expect(requireHookState(hookState).accountState.wethBalanceAttoEth).toBeUndefined()
 		expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(false)
 		expect(requireHookState(hookState).applicationDeploymentComplete).toBeUndefined()
 		expect(requireHookState(hookState).deploymentStatuses.every(step => !step.deployed)).toBe(true)
@@ -759,7 +733,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: true,
 				deploymentStatuses: deploymentStatuses.map(step => ({ ...step, deployed: true })),
 			})),
-			loadErc20Balance: mock(async () => 456n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -770,8 +743,7 @@ describe('useOnchainState (integration)', () => {
 		cleanupRenderedComponent = renderedComponent.cleanup
 
 		const waitForTrustedState = async () => {
-			await waitFor(() => expect(requireHookState(hookState).accountState.wethBalanceAttoEth).toBe(456n))
-			expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true)
+			await waitFor(() => expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true))
 			expect(requireHookState(hookState).applicationDeploymentComplete).toBe(true)
 		}
 		const expectTrustedStateInvalidated = () => {
@@ -779,7 +751,6 @@ describe('useOnchainState (integration)', () => {
 				address: undefined,
 				chainId: undefined,
 				ethBalanceAttoEth: undefined,
-				wethBalanceAttoEth: undefined,
 			})
 			expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(false)
 			expect(requireHookState(hookState).applicationDeploymentComplete).toBeUndefined()
@@ -829,7 +800,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: true,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -854,7 +824,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -896,7 +865,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 222n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -941,7 +909,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 333n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -990,11 +957,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => 0n)
+
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1035,7 +1001,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1119,7 +1084,7 @@ describe('useOnchainState (integration)', () => {
 		resetEnvironment()
 	})
 
-	test('keeps simultaneous deployment, ETH, and WETH failures distinct', async () => {
+	test('keeps simultaneous deployment and ETH failures distinct', async () => {
 		const account = getAddress('0x00000000000000000000000000000000000000a9')
 		const readClient = {
 			getBalance: async () => {
@@ -1135,9 +1100,6 @@ describe('useOnchainState (integration)', () => {
 			loadDeploymentStatusOracleSnapshot: async () => {
 				throw new Error('deployment RPC failed')
 			},
-			loadErc20Balance: async () => {
-				throw new Error('weth RPC failed')
-			},
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1147,8 +1109,8 @@ describe('useOnchainState (integration)', () => {
 		const renderedComponent = await renderIntoDocument(h(Harness, {}))
 		cleanupRenderedComponent = renderedComponent.cleanup
 
-		await waitFor(() => expect(requireHookState(hookState).errorMessages).toHaveLength(3))
-		expect(requireHookState(hookState).errorMessages).toEqual(['Failed to refresh deployment status. Reason: deployment RPC failed', 'Failed to refresh ETH balance. Reason: eth RPC failed', 'Failed to refresh WETH balance. Reason: weth RPC failed'])
+		await waitFor(() => expect(requireHookState(hookState).errorMessages).toHaveLength(2))
+		expect(requireHookState(hookState).errorMessages).toEqual(['Failed to refresh deployment status. Reason: deployment RPC failed', 'Failed to refresh ETH balance. Reason: eth RPC failed'])
 		resetEnvironment()
 	})
 
@@ -1169,7 +1131,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetSuccessEnvironment = installActiveEnvironmentForTesting(backend)
 		let successState: UseOnchainStateState | undefined
@@ -1206,7 +1167,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetFailureEnvironment = installActiveEnvironmentForTesting(failureBackend)
 		let failureState: UseOnchainStateState | undefined
@@ -1292,7 +1252,6 @@ describe('useOnchainState (integration)', () => {
 					}
 				return await replacementSnapshot.promise
 			}),
-			loadErc20Balance: mock(async () => 33n),
 		})
 		let resetEnvironment = installActiveEnvironmentForTesting(firstBackend)
 		let hookState: UseOnchainStateState | undefined
@@ -1316,7 +1275,6 @@ describe('useOnchainState (integration)', () => {
 			address: undefined,
 			chainId: undefined,
 			ethBalanceAttoEth: undefined,
-			wethBalanceAttoEth: undefined,
 		})
 		expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(false)
 		expect(requireHookState(hookState).deploymentStatuses.every(step => !step.deployed)).toBe(true)
@@ -1437,11 +1395,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => 0n)
+
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1455,14 +1412,12 @@ describe('useOnchainState (integration)', () => {
 
 		await waitFor(() => expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true))
 		getAccounts.mockClear()
-		loadErc20Balance.mockClear()
 
 		await act(async () => {
 			fireEvent.click(noWalletButton)
 		})
 
 		expect(getAccounts).toHaveBeenCalledTimes(0)
-		expect(loadErc20Balance).toHaveBeenCalledTimes(0)
 		expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true)
 		expect(requireHookState(hookState).isRefreshing).toBe(false)
 		expect(requireHookState(hookState).walletBootstrapComplete).toBe(true)
@@ -1472,7 +1427,6 @@ describe('useOnchainState (integration)', () => {
 	test('wallet-only refresh updates balances without rereading deployment status or chain clock', async () => {
 		const account = getAddress('0x00000000000000000000000000000000000000a6')
 		let ethBalanceAttoEth = 123n
-		let wethBalanceAttoEth = 555n
 		let blockNumber = 100n
 		let blockTimestamp = 200n
 		let getBlockCalls = 0
@@ -1494,11 +1448,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => wethBalanceAttoEth)
+
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1511,16 +1464,13 @@ describe('useOnchainState (integration)', () => {
 		await waitFor(() => {
 			expect(requireHookState(hookState).walletBootstrapComplete).toBe(true)
 			expect(requireHookState(hookState).accountState.ethBalanceAttoEth).toBe(123n)
-			expect(requireHookState(hookState).accountState.wethBalanceAttoEth).toBe(555n)
 			expect(requireHookState(hookState).currentBlockNumber).toBe(100n)
 			expect(requireHookState(hookState).currentTimestamp).toBe(200n)
 		})
 		expect(loadDeploymentStatusOracleSnapshot).toHaveBeenCalledTimes(1)
-		expect(loadErc20Balance).toHaveBeenCalledTimes(1)
 		const initialGetBlockCalls = getBlockCalls
 
 		ethBalanceAttoEth = 999n
-		wethBalanceAttoEth = 777n
 		blockNumber = 999n
 		blockTimestamp = 888n
 
@@ -1533,12 +1483,10 @@ describe('useOnchainState (integration)', () => {
 
 		await waitFor(() => {
 			expect(requireHookState(hookState).accountState.ethBalanceAttoEth).toBe(999n)
-			expect(requireHookState(hookState).accountState.wethBalanceAttoEth).toBe(777n)
 		})
 		expect(requireHookState(hookState).currentBlockNumber).toBe(100n)
 		expect(requireHookState(hookState).currentTimestamp).toBe(200n)
 		expect(loadDeploymentStatusOracleSnapshot).toHaveBeenCalledTimes(1)
-		expect(loadErc20Balance).toHaveBeenCalledTimes(2)
 		expect(getBlockCalls).toBe(initialGetBlockCalls)
 		resetEnvironment()
 	})
@@ -1661,7 +1609,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1696,7 +1643,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1732,7 +1678,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1770,7 +1715,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 0n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1819,11 +1763,10 @@ describe('useOnchainState (integration)', () => {
 			applicationDeploymentComplete: false,
 			deploymentStatuses,
 		}))
-		const loadErc20Balance = mock(async () => 654n)
+
 		const dependencies = createOnchainStateDependencies({
 			getDeploymentSteps,
 			loadDeploymentStatusOracleSnapshot,
-			loadErc20Balance,
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined
@@ -1841,12 +1784,10 @@ describe('useOnchainState (integration)', () => {
 			expect(requireHookState(hookState).walletBootstrapComplete).toBe(true)
 			expect(requireHookState(hookState).hasLoadedDeploymentStatuses).toBe(true)
 			expect(requireHookState(hookState).accountState.ethBalanceAttoEth).toBe(321n)
-			expect(requireHookState(hookState).accountState.wethBalanceAttoEth).toBe(654n)
 		})
 		expect(requireHookState(hookState).currentBlockNumber).toBeUndefined()
 		expect(requireHookState(hookState).currentTimestamp).toBeUndefined()
 		expect(loadDeploymentStatusOracleSnapshot).toHaveBeenCalledTimes(1)
-		expect(loadErc20Balance).toHaveBeenCalledTimes(1)
 		expect(getBlockCalls).toBe(0)
 		expect(setIntervalMock).toHaveBeenCalledTimes(0)
 		resetEnvironment()
@@ -1869,7 +1810,6 @@ describe('useOnchainState (integration)', () => {
 				applicationDeploymentComplete: false,
 				deploymentStatuses,
 			})),
-			loadErc20Balance: mock(async () => 654n),
 		})
 		const resetEnvironment = installActiveEnvironmentForTesting(backend)
 		let hookState: UseOnchainStateState | undefined

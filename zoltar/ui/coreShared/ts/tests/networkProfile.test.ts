@@ -2,8 +2,8 @@
 
 import { describe, expect, test } from 'bun:test'
 import { getAddress } from '@zoltar/core-shared/evm/ethereum'
-import { MAINNET_NETWORK_PROFILE, MAINNET_WETH_ADDRESS, SEPOLIA_NETWORK_PROFILE, buildTransactionExplorerUrl, createSimulationProfile, formatTransactionNetworkLabel, getDefaultNetworkProfile, getPublicNetworkProfile, getPublicNetworkProfileForChainId, getRuntimeNetworkProfile } from '../wallet/networkProfile.js'
-import { SEPOLIA_GENESIS_REP_ADDRESS, SEPOLIA_WETH_ADDRESS } from '../lib/sepoliaDeploymentConfig.js'
+import { MAINNET_NETWORK_PROFILE, SEPOLIA_NETWORK_PROFILE, buildTransactionExplorerUrl, createSimulationProfile, formatTransactionNetworkLabel, getDefaultNetworkProfile, getPublicNetworkProfile, getPublicNetworkProfileForChainId, getRuntimeNetworkProfile } from '../wallet/networkProfile.js'
+import { SEPOLIA_GENESIS_REP_ADDRESS } from '../lib/sepoliaDeploymentConfig.js'
 
 describe('network profile helpers', () => {
 	test('defaults to Sepolia and excludes mainnet from wallet network discovery', () => {
@@ -23,25 +23,22 @@ describe('network profile helpers', () => {
 		expect(MAINNET_NETWORK_PROFILE.displayName).toBe('Ethereum Mainnet')
 		expect(MAINNET_NETWORK_PROFILE.repPricingMode).toBe('uniswap')
 		expect(MAINNET_NETWORK_PROFILE.transactionExplorerBaseUrl).toBe('https://etherscan.io/tx/')
-		expect(MAINNET_NETWORK_PROFILE.wethAddress).toBe(getAddress(MAINNET_WETH_ADDRESS))
 		expect(buildTransactionExplorerUrl(MAINNET_NETWORK_PROFILE, '0xabc')).toBe('https://etherscan.io/tx/0xabc')
 	})
 
 	test('returns undefined explorer url when URL base is not configured', () => {
 		const profile = createSimulationProfile({
 			genesisRepTokenAddress: getAddress('0x0000000000000000000000000000000000000101'),
-			wethAddress: getAddress('0x0000000000000000000000000000000000000202'),
 		})
 
 		expect(buildTransactionExplorerUrl(profile, '0xabc')).toBeUndefined()
 	})
 
-	test('defines Sepolia with deterministically deployable WETH and genesis REP', () => {
+	test('defines Sepolia with deterministically deployable genesis REP', () => {
 		expect(SEPOLIA_NETWORK_PROFILE.id).toBe('sepolia')
 		expect(SEPOLIA_NETWORK_PROFILE.chainIdHex).toBe('0xaa36a7')
 		expect(SEPOLIA_NETWORK_PROFILE.chain.id).toBe(11155111)
 		expect(SEPOLIA_NETWORK_PROFILE.genesisRepTokenAddress).toBe(SEPOLIA_GENESIS_REP_ADDRESS)
-		expect(SEPOLIA_NETWORK_PROFILE.wethAddress).toBe(SEPOLIA_WETH_ADDRESS)
 		expect(SEPOLIA_NETWORK_PROFILE.repPricingMode).toBe('uniswap')
 		expect(SEPOLIA_NETWORK_PROFILE.uniswapV4QuoterAddress).toBe(getAddress('0x61b3f2011a92d183c7dbadbda940a7555ccf9227'))
 		expect(SEPOLIA_NETWORK_PROFILE.uniswapV3FactoryAddress).toBe(getAddress('0x0227628f3F023bb0B980b67D528571c95c6DaC1c'))
@@ -57,7 +54,6 @@ describe('network profile helpers', () => {
 	test('creates a deterministic simulation profile from constructor inputs', () => {
 		const profile = createSimulationProfile({
 			genesisRepTokenAddress: getAddress('0x0000000000000000000000000000000000000101'),
-			wethAddress: getAddress('0x0000000000000000000000000000000000000202'),
 		})
 
 		expect(profile.id).toBe('simulation')

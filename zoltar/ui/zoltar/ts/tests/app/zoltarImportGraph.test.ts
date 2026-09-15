@@ -114,7 +114,6 @@ function collectForbiddenProductReferences(source: string, modulePath: string) {
 
 function isAllowedTechnicalProductString(modulePath: string, value: string) {
 	if (value === 'infrastructure_Multicall3_Multicall3') return modulePath.endsWith('/protocol/deployment.ts') || modulePath.endsWith('/protocol/zoltarDeploymentHelpers.ts')
-	if (value === 'infrastructure_WETH9_WETH9') return modulePath.endsWith('/lib/sepoliaDeploymentConfig.ts') || modulePath.endsWith('/simulation/bootstrap.ts') || modulePath.endsWith('/protocol/deployment.ts')
 	return false
 }
 
@@ -237,7 +236,7 @@ describe('Zoltar production module graph', () => {
 		const externalappArtifactImports = modules
 			.filter(modulePath => !modulePath.endsWith('/contractArtifact.ts'))
 			.flatMap(modulePath => readFileSync(modulePath, 'utf8').match(/\bexternalapp_[A-Za-z0-9_]+/g) ?? [])
-			.filter(identifier => identifier !== 'infrastructure_Multicall3_Multicall3' && identifier !== 'infrastructure_WETH9_WETH9')
+			.filter(identifier => identifier !== 'infrastructure_Multicall3_Multicall3')
 		expect([...new Set(externalappArtifactImports)]).toEqual([])
 	})
 

@@ -1,6 +1,6 @@
 import { defineChain, getAddress, type Address, type Hash } from '@zoltar/core-shared/evm/ethereum'
 import { mainnet, type Chain } from '@zoltar/core-shared/evm/ethereum'
-import { SEPOLIA_GENESIS_REP_ADDRESS, SEPOLIA_WETH_ADDRESS } from '../lib/sepoliaDeploymentConfig.js'
+import { SEPOLIA_GENESIS_REP_ADDRESS } from '../lib/sepoliaDeploymentConfig.js'
 import { DEFAULT_NETWORK, MAINNET_ENABLED } from './networkAvailability.js'
 import { sameChainId } from './chainId.js'
 
@@ -18,10 +18,8 @@ export type NetworkProfile = {
 	uniswapV3QuoterAddress: Address
 	uniswapV4QuoterAddress: Address
 	usdcAddress: Address
-	wethAddress: Address
 }
 
-export const MAINNET_WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' satisfies Address
 const MAINNET_USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' satisfies Address
 const MAINNET_UNISWAP_V3_FACTORY_ADDRESS = '0x1F98431c8aD98523631AE4a59f267346ea31F984' satisfies Address
 const MAINNET_UNISWAP_V3_QUOTER_ADDRESS = '0x61fFE014bA17989E743c5F6cB21bF9697530B21e' satisfies Address
@@ -76,7 +74,6 @@ export const MAINNET_NETWORK_PROFILE: NetworkProfile = {
 	uniswapV3QuoterAddress: MAINNET_UNISWAP_V3_QUOTER_ADDRESS,
 	uniswapV4QuoterAddress: MAINNET_UNISWAP_V4_QUOTER_ADDRESS,
 	usdcAddress: MAINNET_USDC_ADDRESS,
-	wethAddress: MAINNET_WETH_ADDRESS,
 }
 
 export const SEPOLIA_NETWORK_PROFILE: NetworkProfile = {
@@ -93,7 +90,6 @@ export const SEPOLIA_NETWORK_PROFILE: NetworkProfile = {
 	uniswapV3QuoterAddress: SEPOLIA_UNISWAP_V3_QUOTER_ADDRESS,
 	uniswapV4QuoterAddress: SEPOLIA_UNISWAP_V4_QUOTER_ADDRESS,
 	usdcAddress: SEPOLIA_USDC_ADDRESS,
-	wethAddress: SEPOLIA_WETH_ADDRESS,
 }
 
 export function getPublicNetworkProfile(network: string | undefined): NetworkProfile {
@@ -134,7 +130,7 @@ export function resetRuntimeNetworkProfile() {
 	globalThis.__zoltarRuntimeNetworkProfile__ = undefined
 }
 
-export function createSimulationProfile({ genesisRepTokenAddress, wethAddress }: { genesisRepTokenAddress: Address; wethAddress: Address }): NetworkProfile {
+export function createSimulationProfile({ genesisRepTokenAddress }: { genesisRepTokenAddress: Address }): NetworkProfile {
 	return {
 		chain: simulationChain,
 		chainIdHex: '0x539',
@@ -148,7 +144,6 @@ export function createSimulationProfile({ genesisRepTokenAddress, wethAddress }:
 		uniswapV3QuoterAddress: MAINNET_NETWORK_PROFILE.uniswapV3QuoterAddress,
 		uniswapV4QuoterAddress: MAINNET_NETWORK_PROFILE.uniswapV4QuoterAddress,
 		usdcAddress: MAINNET_NETWORK_PROFILE.usdcAddress,
-		wethAddress,
 	}
 }
 

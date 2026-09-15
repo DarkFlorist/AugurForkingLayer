@@ -78,7 +78,7 @@ CI runs these checks on pull requests, including browser smoke tests and the ful
 
 ## Integration
 
-The production artifact check compares all 19 contract ABIs and creation/runtime bytecodes with the recorded [contract baseline](zoltar/import-manifest.json).
+The production artifact check compares all 18 contract ABIs and creation/runtime bytecodes with the recorded [contract baseline](zoltar/import-manifest.json).
 
 Future integrations should use Zoltar's Solidity interfaces, generated ABIs, and runtime package exports. The UI application and private build tools remain internal to the Zoltar workspace.
 

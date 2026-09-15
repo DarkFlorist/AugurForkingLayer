@@ -16,8 +16,6 @@
 	},
 	"devDependencies": {
 		"funtypes": "5.1.1",
-		"knip": "6.17.1",
-		"micro-eth-signer": "0.18.1",
 		"solc": "0.8.35",
 		"typescript": "5.8.2",
 		"@zoltar/zoltar-shared": "workspace:1.0.0"

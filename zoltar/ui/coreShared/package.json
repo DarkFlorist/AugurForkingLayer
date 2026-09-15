@@ -13,10 +13,6 @@
 	"dependencies": {
 		"@tevm/actions": "1.0.0-rc.151",
 		"@preact/signals": "2.0.1",
-		"@noble/curves": "2.2.0",
-		"@noble/hashes": "2.2.0",
-		"micro-eth-signer": "0.18.1",
-		"micro-packed": "0.8.0",
 		"preact": "10.26.4",
 		"@tevm/memory-client": "1.0.0-rc.151",
 		"@tevm/common": "1.0.0-rc.151",
@@ -27,7 +23,6 @@
 		"build": "bun x tsc --project tsconfig.json",
 		"typecheck": "bun x tsc --project tsconfig.json --noEmit"
 	},
-	"types": "./js/index.d.ts",
 	"exports": {
 		"./*.js": {
 			"bun": "./ts/*.ts",

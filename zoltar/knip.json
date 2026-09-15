@@ -33,7 +33,6 @@
 				"@zoltar/core-shared/*": ["../../shared/core/ts/*"],
 				"@zoltar/zoltar-shared/*": ["../../shared/zoltar/ts/*"]
 			},
-			"ignoreDependencies": ["@noble/curves", "@noble/hashes", "micro-eth-signer", "micro-packed"],
 			"ignore": ["ts/tests/testUtils/**", "ts/tests/simulation/testUtils.ts"]
 		},
 		"ui/zoltarShared": {
@@ -57,8 +56,7 @@
 				"@zoltar/ui-zoltar/*": ["./ts/*"],
 				"@zoltar/core-shared/*": ["../../shared/core/ts/*"],
 				"@zoltar/zoltar-shared/*": ["../../shared/zoltar/ts/*"]
-			},
-			"ignoreDependencies": ["@tevm/memory-client", "@tevm/common"]
+			}
 		},
 		"solidity": {
 			"entry": ["ts/compile.ts!", "ts/abi/abis.ts!", "ts/tests/**/*.ts", "ts/types/*.d.ts"],

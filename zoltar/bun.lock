@@ -63,8 +63,6 @@
       "devDependencies": {
         "@zoltar/zoltar-shared": "workspace:1.0.0",
         "funtypes": "5.1.1",
-        "knip": "6.17.1",
-        "micro-eth-signer": "0.18.1",
         "solc": "0.8.35",
         "typescript": "5.8.2",
       },
@@ -73,16 +71,12 @@
       "name": "@zoltar/ui-core-shared",
       "version": "1.0.0",
       "dependencies": {
-        "@noble/curves": "2.2.0",
-        "@noble/hashes": "2.2.0",
         "@preact/signals": "2.0.1",
         "@tevm/actions": "1.0.0-rc.151",
         "@tevm/common": "1.0.0-rc.151",
         "@tevm/memory-client": "1.0.0-rc.151",
         "@zoltar/core-shared": "workspace:1.0.0",
         "@zoltar/zoltar-shared": "workspace:1.0.0",
-        "micro-eth-signer": "0.18.1",
-        "micro-packed": "0.8.0",
         "preact": "10.26.4",
       },
       "devDependencies": {
@@ -96,8 +90,6 @@
       "version": "1.0.0",
       "dependencies": {
         "@preact/signals": "2.0.1",
-        "@tevm/common": "1.0.0-rc.151",
-        "@tevm/memory-client": "1.0.0-rc.151",
         "@zoltar/core-shared": "workspace:1.0.0",
         "@zoltar/ui-core-shared": "workspace:1.0.0",
         "@zoltar/ui-zoltar-shared": "workspace:1.0.0",
@@ -115,8 +107,6 @@
       "version": "1.0.0",
       "dependencies": {
         "@preact/signals": "2.0.1",
-        "@tevm/common": "1.0.0-rc.151",
-        "@tevm/memory-client": "1.0.0-rc.151",
         "@zoltar/core-shared": "workspace:1.0.0",
         "@zoltar/ui-core-shared": "workspace:1.0.0",
         "@zoltar/zoltar-shared": "workspace:1.0.0",

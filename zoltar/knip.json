@@ -18,7 +18,7 @@
 				"tooling/ui/{vendor,workers}.mts!"
 			],
 			"project": ["tooling/**/*.{ts,mts}!", "bun-test-setup*.ts"],
-			"ignoreDependencies": ["@preact/signals", "@tevm/memory-client", "@tevm/common", "@zoltar/core-shared", "@preact/signals-core", "abitype", "@noble/hashes", "@noble/curves", "@scure/base", "isows", "micro-eth-signer", "micro-packed", "ox", "pino"],
+			"ignoreDependencies": ["@preact/signals", "@tevm/memory-client", "@tevm/common", "@zoltar/core-shared", "@preact/signals-core", "@noble/hashes", "@noble/curves", "@scure/base", "micro-eth-signer", "micro-packed", "pino"],
 			"paths": {
 				"@zoltar/core-shared/*": ["shared/core/ts/*"],
 				"@zoltar/zoltar-shared/*": ["shared/zoltar/ts/*"]
@@ -44,8 +44,7 @@
 				"@zoltar/ui-zoltar-shared/*": ["./ts/*"],
 				"@zoltar/core-shared/*": ["../../shared/core/ts/*"],
 				"@zoltar/zoltar-shared/*": ["../../shared/zoltar/ts/*"]
-			},
-			"ignoreDependencies": ["bun-types"]
+			}
 		},
 		"ui/zoltar": {
 			"entry": ["ts/tests/**/*.{ts,tsx}", "ts/index.ts!", "ts/index.dev.ts!", "ts/simulation/tevmWorker.ts!"],

@@ -43,14 +43,11 @@ const dependencyPaths: Dependency[] = [
 	{ packageName: 'preact/compat', mainEntrypointFile: 'compat.module.js' },
 	{ packageName: '@preact/signals', mainEntrypointFile: 'signals.module.js' },
 	{ packageName: '@preact/signals-core', mainEntrypointFile: 'signals-core.module.js' },
-	{ packageName: 'abitype', mainEntrypointFile: 'exports/index.js' },
 	{ packageName: '@noble/hashes', mainEntrypointFile: 'index.js' },
 	{ packageName: '@noble/curves', mainEntrypointFile: 'index.js' },
 	{ packageName: '@scure/base', mainEntrypointFile: 'index.js' },
-	{ packageName: 'isows', mainEntrypointFile: 'native.js' },
 	{ packageName: 'micro-eth-signer', mainEntrypointFile: 'index.js' },
 	{ packageName: 'micro-packed', mainEntrypointFile: 'index.js' },
-	{ packageName: 'ox', mainEntrypointFile: 'index.js' },
 ]
 
 async function vendorDependencies(vendorOutputPath = getVendorOutputPath()) {

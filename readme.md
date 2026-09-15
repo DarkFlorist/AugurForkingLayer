@@ -46,7 +46,7 @@ See the [Zoltar README](zoltar/readme.md) for wallet connections, local-chain se
 | `zoltar/shared/` | Shared runtime and Zoltar protocol libraries |
 | `zoltar/ui/` | Zoltar application, shared UI components, and browser simulation |
 | `zoltar/tooling/` | Build, validation, browser, and deployment tools |
-| `zoltar/docs/` | Protocol notes and validation record |
+| `zoltar/docs/` | Protocol and operator notes |
 | `.github/` | CI, browser workflow, release builds, and manual testnet deployment |
 
 ## Validate
@@ -65,7 +65,7 @@ bun run test:browser:workflow
 
 `check` runs TypeScript, formatting, lint, import-boundary checks, and Knip in normal and production modes. `test` runs the contract, UI/runtime, and tooling suites. Browser checks require Chromium; set `CHROMIUM_PATH` if it is not detected automatically.
 
-CI runs these checks and browser smoke tests on pull requests. The full browser workflow also runs on pushes to `main` or by manual dispatch. See the [validation record](zoltar/docs/validation.md).
+CI runs these checks and browser smoke tests on pull requests. The full browser workflow also runs on pushes to `main` or by manual dispatch.
 
 ## Integration
 

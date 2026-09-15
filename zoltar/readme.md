@@ -72,7 +72,7 @@ Other AugurForkingLayer components may consume `shared/core` and `shared/zoltar`
 
 WETH9 and Multicall3 are neutral infrastructure in `solidity/contracts/infrastructure/` (relative to the Zoltar workspace). Production Solidity contents are preserved; infrastructure source paths are normalized.
 
-See [protocol and operator notes](docs/protocol.md), [contract baseline](import-manifest.json), and the [validation record](docs/validation.md).
+See [protocol and operator notes](docs/protocol.md) and the [contract baseline](import-manifest.json).
 
 ## Unused-code checks
 

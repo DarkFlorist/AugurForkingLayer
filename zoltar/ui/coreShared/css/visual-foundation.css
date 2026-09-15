@@ -70,14 +70,13 @@ a.secondary-action,
 
 .section,
 .section-block,
-.overview-panel,
-.route-workflow-panel {
+.overview-panel {
 	border-radius: var(--radius-section);
 	box-shadow: none;
 }
 
-.section :where(.section, .section-block, .overview-panel, .route-workflow-panel),
-.section-block :where(.section, .section-block, .overview-panel, .route-workflow-panel) {
+.section :where(.section, .section-block, .overview-panel),
+.section-block :where(.section, .section-block, .overview-panel) {
 	border-inline: 0;
 	border-radius: 0;
 	background: transparent;

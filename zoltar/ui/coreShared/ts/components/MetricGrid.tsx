@@ -7,10 +7,6 @@ function getMetricGridVariantClassName(variant: MetricGridProps['variant'] = 'de
 			return 'workflow-metric-grid'
 		case 'question':
 			return 'question-summary-grid'
-		case 'summary':
-			return 'overview-summary-grid'
-		case 'vault':
-			return 'workflow-vault-grid'
 		default:
 			return 'workflow-metric-grid'
 	}

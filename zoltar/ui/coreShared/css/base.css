@@ -2204,38 +2204,33 @@ button.wallet-asset-action-pending:disabled {
 }
 
 .workflow-metric-grid,
-.workflow-question-grid,
-.workflow-vault-grid {
+.workflow-question-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 	gap: 1rem 1.25rem;
 }
 
 .workflow-metric-grid > div,
-.workflow-question-grid > div,
-.workflow-vault-grid > div {
+.workflow-question-grid > div {
 	min-width: 0;
 	padding-top: 0.65rem;
 	border-top: 1px solid var(--divider-subtle);
 }
 
 .workflow-metric-grid .metric-label,
-.workflow-question-grid .metric-label,
-.workflow-vault-grid .metric-label {
+.workflow-question-grid .metric-label {
 	display: block;
 	margin-bottom: 0.2rem;
 }
 
 .workflow-metric-grid .metric-field-value,
-.workflow-question-grid .metric-field-value,
-.workflow-vault-grid .metric-field-value {
+.workflow-question-grid .metric-field-value {
 	display: block;
 	overflow-wrap: anywhere;
 }
 
 .workflow-metric-grid strong.metric-field-value,
-.workflow-question-grid strong.metric-field-value,
-.workflow-vault-grid strong.metric-field-value {
+.workflow-question-grid strong.metric-field-value {
 	display: block;
 	font-family: var(--font-family-mono);
 	font-size: var(--font-value);
@@ -2246,20 +2241,17 @@ button.wallet-asset-action-pending:disabled {
 }
 
 .workflow-metric-grid strong.metric-value-success,
-.workflow-question-grid strong.metric-value-success,
-.workflow-vault-grid strong.metric-value-success {
+.workflow-question-grid strong.metric-value-success {
 	color: var(--success);
 }
 
 .workflow-metric-grid strong.metric-value-warning,
-.workflow-question-grid strong.metric-value-warning,
-.workflow-vault-grid strong.metric-value-warning {
+.workflow-question-grid strong.metric-value-warning {
 	color: var(--warning);
 }
 
 .workflow-metric-grid strong.metric-value-danger,
-.workflow-question-grid strong.metric-value-danger,
-.workflow-vault-grid strong.metric-value-danger {
+.workflow-question-grid strong.metric-value-danger {
 	color: var(--danger);
 }
 
@@ -2403,138 +2395,9 @@ button.wallet-asset-action-pending:disabled {
 	padding-top: 0.25rem;
 }
 
-.overview-summary-grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 0.5rem 1rem;
-	margin-top: 0.75rem;
-}
-
-.overview-summary-grid .detail {
-	min-width: 0;
-}
-
 .entity-card-list {
 	display: grid;
 	gap: 1.15rem;
-}
-
-.comparison-record-list {
-	display: grid;
-	gap: var(--space-2);
-}
-
-.comparison-record {
-	display: grid;
-	grid-template-columns: minmax(15rem, 1.35fr) minmax(0, 3fr);
-	gap: var(--space-3) var(--space-4);
-	padding: var(--space-4);
-	border: 1px solid var(--border-default);
-	border-radius: var(--radius-section);
-	background: var(--surface-record);
-	box-shadow: var(--glow-inset-subtle);
-}
-
-.comparison-record-header {
-	display: flex;
-	align-items: start;
-	justify-content: space-between;
-	gap: var(--space-3);
-	min-width: 0;
-}
-
-.comparison-record-identity {
-	display: grid;
-	gap: var(--space-2);
-	min-width: 0;
-}
-
-.comparison-record-identity h3 {
-	margin: 0;
-	font-size: var(--font-h3-section);
-	line-height: 1.25;
-	overflow-wrap: anywhere;
-}
-
-.comparison-record-badge {
-	display: flex;
-}
-
-.comparison-record-action {
-	flex: 0 0 auto;
-}
-
-.comparison-record-metrics {
-	display: grid;
-	grid-template-columns: repeat(5, minmax(0, 1fr));
-	gap: var(--space-2);
-	margin: 0;
-}
-
-.comparison-record-metrics > div {
-	display: grid;
-	align-content: start;
-	gap: var(--space-1);
-	min-width: 0;
-	padding-left: var(--space-3);
-	border-left: 1px solid var(--divider-subtle);
-}
-
-.comparison-record-metrics dt {
-	color: var(--muted);
-	font-family: var(--font-family-mono);
-	font-size: var(--font-label);
-	letter-spacing: 0.06em;
-	text-transform: uppercase;
-}
-
-.comparison-record-metrics dd {
-	min-width: 0;
-	margin: 0;
-	color: var(--value);
-	font-family: var(--font-family-mono);
-	font-size: var(--font-body);
-	font-weight: 650;
-	font-variant-numeric: tabular-nums;
-	line-height: 1.3;
-	overflow-wrap: anywhere;
-}
-
-.comparison-record-metrics .currency-value {
-	overflow: visible;
-	text-overflow: clip;
-	white-space: normal;
-}
-
-.comparison-record-metrics .timestamp-value {
-	display: grid;
-	gap: var(--space-1);
-}
-
-.comparison-record-metrics .timestamp-value-relative {
-	white-space: normal;
-}
-
-.comparison-record-value-stack {
-	display: grid;
-	gap: var(--space-1);
-}
-
-.comparison-record-value-stack .detail {
-	font-family: var(--font-family-sans);
-	font-size: var(--font-label);
-	font-weight: 500;
-}
-
-.comparison-record-details {
-	grid-column: 1 / -1;
-	padding-top: var(--space-1);
-	border-top: 1px solid var(--divider-subtle);
-}
-
-.comparison-record-expanded {
-	display: grid;
-	gap: var(--space-3);
 }
 
 .entity-card-subsection {

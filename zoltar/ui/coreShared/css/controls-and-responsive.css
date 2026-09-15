@@ -967,20 +967,6 @@
 		white-space: nowrap;
 	}
 
-	.comparison-record {
-		padding: var(--space-3);
-	}
-
-	.comparison-record-header {
-		flex-direction: column;
-		align-items: stretch;
-	}
-
-	.comparison-record-action .primary,
-	.comparison-record-action .secondary {
-		width: 100%;
-	}
-
 	.app-nav-stack {
 		padding: 0.5rem 0.55rem;
 	}

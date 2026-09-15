@@ -137,10 +137,6 @@ strong.metric-value-danger {
 	gap: 0.7rem;
 }
 
-.entity-card.compact .overview-summary-grid {
-	margin-top: 0.25rem;
-}
-
 .fork-summary-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
@@ -597,8 +593,6 @@ strong.metric-value-danger {
 }
 
 .environment-gate,
-.sticky-object-context,
-.lifecycle-stage-banner,
 .result-banner,
 .workflow-summary-strip {
 	border: 1px solid var(--border-default);
@@ -608,7 +602,6 @@ strong.metric-value-danger {
 }
 
 .environment-gate,
-.lifecycle-stage-banner,
 .result-banner,
 .workflow-summary-strip {
 	padding: 1rem 1.1rem;
@@ -623,73 +616,12 @@ strong.metric-value-danger {
 	box-shadow: none;
 }
 
-.environment-gate.critical,
-.lifecycle-stage-banner.critical {
+.environment-gate.critical {
 	border-color: var(--danger-border);
 }
 
 .environment-gate.warning {
 	border-color: var(--warning-border);
-}
-
-.lifecycle-stage-banner.success {
-	border-color: var(--success-border);
-}
-
-.sticky-object-context {
-	position: sticky;
-	top: 0.8rem;
-	z-index: 3;
-	padding: 0.95rem 1.1rem;
-	display: grid;
-	gap: 0.9rem;
-}
-
-.sticky-object-context.context-strip {
-	position: sticky;
-	top: 0.8rem;
-	z-index: 3;
-	padding: var(--space-2) var(--space-3);
-	border-radius: var(--radius-control);
-	background: var(--surface-section-opaque);
-}
-
-.sticky-object-context.embedded-context-strip {
-	border-width: 1px 0;
-	border-color: var(--divider-subtle);
-	border-radius: 0;
-	background: var(--surface-section-opaque);
-	box-shadow: none;
-}
-
-.sticky-object-context.context-strip .sticky-object-context-summary {
-	display: grid;
-	grid-template-columns: minmax(12rem, 0.8fr) minmax(20rem, 1.2fr);
-	align-items: center;
-	gap: var(--space-2);
-}
-
-.sticky-object-context.context-strip .sticky-object-context-items {
-	grid-template-columns: minmax(7rem, 0.45fr) minmax(12rem, 1fr);
-	gap: var(--space-2);
-}
-
-.sticky-object-context.context-strip .sticky-object-context-item {
-	padding: var(--space-2) 0 0;
-}
-
-.sticky-object-context.context-strip .sticky-object-context-item .address-value,
-.sticky-object-context.context-strip .sticky-object-context-item .universe-link {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.sticky-object-context.static {
-	position: static;
-	top: auto;
-	z-index: auto;
 }
 
 .selected-fork-question-summary {
@@ -736,39 +668,12 @@ strong.metric-value-danger {
 	display: none;
 }
 
-.sticky-object-context-header {
-	display: flex;
-	align-items: start;
-	justify-content: space-between;
-	gap: 0.75rem;
-}
-
-.sticky-object-context-summary {
-	display: grid;
-	gap: 0.9rem;
-}
-
-.sticky-object-context-copy,
-.lifecycle-stage-banner-main {
-	display: grid;
-	gap: 0.3rem;
-}
-
-.sticky-object-context-badge {
-	display: flex;
-	align-items: start;
-	justify-content: flex-end;
-}
-
-.sticky-object-context h3,
-.lifecycle-stage-banner h3,
 .result-banner h3,
 .environment-gate h3 {
 	margin: 0;
 	font-size: var(--font-h3-section);
 }
 
-.sticky-object-context-items,
 .action-readiness-grid,
 .workflow-summary-strip-steps {
 	display: grid;
@@ -975,22 +880,6 @@ main.global-transaction-tray-open :is(a, button, input, select, summary, textare
 	line-height: 1;
 }
 
-.sticky-object-context-body {
-	display: grid;
-	gap: 0.9rem;
-	padding-top: 0.15rem;
-	border-top: 1px solid var(--border-subtle);
-}
-
-.sticky-object-context.context-strip .sticky-object-context-body {
-	border-top-color: var(--divider-subtle);
-}
-
-.sticky-object-context-items {
-	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-}
-
-.sticky-object-context-item,
 .action-launcher-card {
 	border: 0;
 	border-top: 1px solid var(--divider-subtle);
@@ -999,75 +888,11 @@ main.global-transaction-tray-open :is(a, button, input, select, summary, textare
 	padding: 0.8rem 0;
 }
 
-.sticky-object-context-item {
-	display: grid;
-	gap: 0.25rem;
-	min-width: 0;
-}
-
-.sticky-object-context-item span,
 .panel-label {
 	font-size: var(--font-label);
 	color: var(--muted);
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
-}
-
-.sticky-object-context-item strong {
-	font-size: var(--font-body);
-	display: block;
-	min-width: 0;
-	overflow-wrap: anywhere;
-}
-
-.sticky-object-context-item .address-value {
-	display: block;
-	width: 100%;
-	text-align: left;
-}
-
-.lifecycle-stage-banner {
-	display: grid;
-	gap: 0.9rem;
-}
-
-.lifecycle-stage-banner-actions {
-	display: grid;
-	gap: 0.7rem;
-	padding-top: 0.8rem;
-	border-top: 1px solid var(--border-subtle);
-}
-
-.lifecycle-stage-banner-action-group {
-	display: grid;
-	gap: 0.35rem;
-}
-
-.lifecycle-stage-banner-action-row {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem;
-}
-
-.lifecycle-stage-banner-action-chip {
-	display: inline-flex;
-	align-items: center;
-	border-radius: 999px;
-	padding: 0.38rem 0.7rem;
-	font-size: var(--font-caption);
-	line-height: 1.25;
-}
-
-.lifecycle-stage-banner-action-chip.available {
-	border: 1px solid var(--success-border);
-	background: var(--success-soft);
-	color: var(--text);
-}
-
-.lifecycle-stage-banner-action-chip.blocked {
-	border: 1px solid var(--warning-border);
-	background: var(--warning-soft);
-	color: var(--text);
 }
 
 .reporting-header-stack {
@@ -1206,8 +1031,7 @@ main.global-transaction-tray-open :is(a, button, input, select, summary, textare
 	border-radius: var(--radius-record);
 }
 
-.warning-surface.flat,
-.lifecycle-stage-banner.flat {
+.warning-surface.flat {
 	padding: 0.8rem 0 0.8rem 0.9rem;
 	border: 0;
 	border-radius: 0;
@@ -1217,22 +1041,6 @@ main.global-transaction-tray-open :is(a, button, input, select, summary, textare
 
 .warning-surface.flat {
 	border-left: 3px solid var(--warning-border-strong);
-}
-
-.lifecycle-stage-banner.flat {
-	border-left: 3px solid var(--border-default);
-}
-
-.warning-surface.lifecycle-stage-banner.flat {
-	border-left-color: var(--warning-border-strong);
-}
-
-.lifecycle-stage-banner.flat.critical {
-	border-left-color: var(--danger-border);
-}
-
-.lifecycle-stage-banner.flat.success {
-	border-left-color: var(--success-border);
 }
 
 .warning-surface.flat::before {
@@ -1362,58 +1170,6 @@ main.global-transaction-tray-open :is(a, button, input, select, summary, textare
 }
 
 @media (max-width: 50rem) {
-	.comparison-record {
-		grid-template-columns: 1fr;
-	}
-
-	.comparison-record-metrics {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.comparison-record-metrics > div {
-		padding: var(--space-2) 0 0;
-		border-top: 1px solid var(--divider-subtle);
-		border-left: 0;
-	}
-
-	.comparison-record-details {
-		grid-column: auto;
-	}
-
-	.sticky-object-context {
-		top: 0;
-	}
-
-	.sticky-object-context.context-strip {
-		padding: var(--space-2);
-	}
-
-	.sticky-object-context.context-strip h3 {
-		font-size: var(--font-body);
-		overflow-wrap: anywhere;
-	}
-
-	.sticky-object-context.context-strip .sticky-object-context-summary {
-		grid-template-columns: minmax(0, 1fr);
-	}
-
-	.sticky-object-context.context-strip .sticky-object-context-items {
-		grid-template-columns: minmax(6rem, 0.42fr) minmax(0, 1fr);
-	}
-
-	.sticky-object-context.context-strip .sticky-object-context-item {
-		padding-top: var(--space-1);
-	}
-
-	.sticky-object-context.context-strip .sticky-object-context-item .address-value,
-	.sticky-object-context.context-strip .sticky-object-context-item .universe-link {
-		max-width: 100%;
-		overflow: visible;
-		overflow-wrap: anywhere;
-		text-overflow: clip;
-		white-space: normal;
-	}
-
 	.action-readiness-panel-header {
 		grid-template-columns: 1fr;
 	}

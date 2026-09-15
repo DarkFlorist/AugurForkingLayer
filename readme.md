@@ -47,7 +47,7 @@ See the [Zoltar README](zoltar/readme.md) for wallet connections, local-chain se
 | `zoltar/ui/` | Zoltar application, shared UI components, and browser simulation |
 | `zoltar/tooling/` | Build, validation, browser, and deployment tools |
 | `zoltar/docs/` | Protocol and operator notes |
-| `.github/` | CI, browser workflow, release builds, and manual testnet deployment |
+| `.github/` | CI with browser checks, release builds, and manual testnet deployment |
 
 ## Validate
 

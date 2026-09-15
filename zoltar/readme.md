@@ -79,4 +79,4 @@ See [protocol and operator notes](docs/protocol.md) and the [contract baseline](
 
 Dependency exceptions cover packages loaded by the vendor/bundler scripts, shared workspace runtime dependencies, and the automatically selected `better-typescript-lib` definitions. Bun preload and compiler-command exceptions account for commands resolved from the workspace root. Review these exceptions when changing build tooling.
 
-To refresh the root README screenshots after a production build, run `bun tooling/ui/run-browser.mts --screenshots`. This captures desktop and mobile views from the local browser simulation into `../docs/images/`.
+To refresh the root README screenshots after a production build, run `bun tooling/ui/run-browser.mts --screenshots`. This captures question creation, forking after REP approval, and completed REP migration from the local browser simulation into `../docs/images/`.

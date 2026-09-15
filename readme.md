@@ -14,15 +14,25 @@ Zoltar is kept in its own [`zoltar/`](zoltar/) workspace. Its dependencies, cont
 
 ## UI screenshots
 
-These screenshots show the production UI running locally with simulated contracts and two sample questions. They do not represent a public-chain deployment.
+These screenshots show the production UI completing question creation, forking, and REP migration with simulated contracts.
 
-### Desktop
+### Create a question
 
-![Zoltar desktop interface in browser simulation](docs/images/zoltar-desktop.png)
+Define the question, outcomes, and resolution time before submitting it.
 
-### Mobile
+![Zoltar question creation form](docs/images/zoltar-question-creation.png)
 
-<img src="docs/images/zoltar-mobile.png" alt="Zoltar mobile interface in browser simulation" width="390" />
+### Fork a universe
+
+Approve the required REP and fork the universe around the selected question.
+
+![Zoltar fork form after REP approval](docs/images/zoltar-forking.png)
+
+### Migrate REP
+
+Split REP into outcome-specific child universes and view the resulting token balances.
+
+![Zoltar REP migration with a completed split and child universe balances](docs/images/zoltar-migration.png)
 
 ## Run locally
 

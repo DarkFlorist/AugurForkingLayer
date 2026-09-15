@@ -39,6 +39,11 @@
 		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
 		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 	},
+	"contracts/IZoltar.sol:IZoltar": {
+		"abi": "0cf4fc95becf523eb2e1a7b30e36e8ded988536a70fdb0a58d8c26e137f1892a",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
 	"contracts/ReputationToken.sol:ReputationToken": {
 		"abi": "1f1e3be75415cf7d734df647d4bb35fe3afb5650e074ee578e7bc9d1ecff19c1",
 		"creation": "515788c475c25e8ef4264971c5793cdcdeca963b6a8b5096e427b9200100f2d9",
@@ -55,7 +60,7 @@
 		"runtime": "404760f93266d9513faeb5d141a820e9cff5d24c78deff83cbeb78b45983fb20"
 	},
 	"contracts/Zoltar.sol:Zoltar": {
-		"abi": "decbe831d3825f4cb0b7b02fd63bbe721599a44910bc41eb39ed958dcb7bc63b",
+		"abi": "99ab5bbabf5952c428c18fcb3ed684548b6655a53fc396e3ecb3ac5fb482b6b2",
 		"creation": "6f4895eb54ef00fb0ce02239f97254f34ab1eeaa31dbdbb9cf200ad08c852557",
 		"runtime": "689c60d60ce1bed25f24d73a56a37cd23efe1f1d9d25785450ab48ed269fa5c0"
 	},

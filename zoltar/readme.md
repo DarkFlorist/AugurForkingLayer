@@ -39,7 +39,7 @@ bun run test:browser
 
 - `check`: TypeScript, import boundaries, formatting, lint, and both Knip modes. CI runs this command.
 - `test`: contract tests, isolated UI/runtime tests, deployment and boundary tests. UI tests use file isolation to prevent mock leakage.
-- `check:artifacts`: compares all 18 production ABIs and creation/runtime bytecodes against the recorded contract baseline. Intentional future protocol changes require reviewing and updating that baseline.
+- `check:artifacts`: compares all 19 production ABIs and creation/runtime bytecodes against the recorded contract baseline. Intentional future protocol changes require reviewing and updating that baseline.
 - `test:browser`: runs desktop/mobile smoke checks and the full browser workflow against production assets. CI runs this command on pull requests. Set `CHROMIUM_PATH` if Chromium is not auto-detected.
 - `test:browser:smoke` and `test:browser:workflow`: run the smoke checks or the question creation, fork approval, forking, and migration workflow separately.
 
@@ -80,3 +80,16 @@ See [protocol and operator notes](docs/protocol.md) and the [contract baseline](
 Dependency exceptions cover packages loaded by the vendor/bundler scripts, shared workspace runtime dependencies, and the automatically selected `better-typescript-lib` definitions. Bun preload and compiler-command exceptions account for commands resolved from the workspace root. Review these exceptions when changing build tooling.
 
 To refresh the root README screenshots after a production build, run `bun tooling/ui/run-browser.mts --screenshots`. This captures question creation, forking after REP approval, and completed REP migration from the local browser simulation into `../docs/images/`.
+
+## Contract interface and addresses
+
+Use [`IZoltar.sol`](solidity/contracts/IZoltar.sol) to integrate with Zoltar. Compilation enforces implementation of the interface; the tooling suite checks that it covers every public function, getter, and event.
+
+The generated [mainnet](docs/mainnet-deployment-addresses.json) and [Sepolia](docs/sepolia-deployment-addresses.json) manifests contain network details, genesis REP, fork parameters, and deployment addresses with their dependencies. They are derived from the same compiled contracts and network profiles used by the UI and deployer. They describe deterministic addresses for the current build; they do not assert that those contracts have been deployed on a public chain.
+
+```sh
+bun run addresses:update
+bun run addresses:check
+```
+
+Both commands compile current contract artifacts before deriving addresses. After changing contracts or deployment configuration, run `addresses:update` and commit the reviewed JSON changes. `addresses:check` fails if either file is missing or stale and runs through `bun run check` in CI. Neither command sends transactions or needs RPC credentials.

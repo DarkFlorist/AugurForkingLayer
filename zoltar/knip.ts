@@ -12,6 +12,7 @@ export default {
 				'tooling/contracts/{build-app-contracts,deploy-testnet,deployment-plan,run-deploy-testnet}.mts!',
 				'tooling/ui/projectArtifacts.mts!',
 				'tooling/contracts/check-artifacts.mts!',
+				'tooling/contracts/deployment-addresses.mts!',
 				'tooling/repo/build-shared.mts!',
 				'tooling/repo/check-boundaries.mts!',
 				'tooling/ui/apps.mts!',

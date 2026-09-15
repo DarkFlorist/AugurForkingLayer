@@ -78,8 +78,12 @@ CI runs these checks on pull requests, including browser smoke tests and the ful
 
 ## Integration
 
-The production artifact check compares all 18 contract ABIs and creation/runtime bytecodes with the recorded [contract baseline](zoltar/import-manifest.json).
+The production artifact check compares all 19 contract ABIs and creation/runtime bytecodes with the recorded [contract baseline](zoltar/import-manifest.json).
 
-Future integrations should use Zoltar's Solidity interfaces, generated ABIs, and runtime package exports. The UI application and private build tools remain internal to the Zoltar workspace.
+Future integrations should use [`IZoltar.sol`](zoltar/solidity/contracts/IZoltar.sol), generated ABIs, and runtime package exports. The UI application and private build tools remain internal to the Zoltar workspace.
 
 See [protocol and operator notes](zoltar/docs/protocol.md) and the [Zoltar license](zoltar/LICENSE).
+
+### Network addresses
+
+Generated deterministic addresses are listed for [mainnet](zoltar/docs/mainnet-deployment-addresses.json) and [Sepolia](zoltar/docs/sepolia-deployment-addresses.json). Run `bun run addresses:update` from `zoltar/` after contract or configuration changes. CI checks that both files are current. These files do not confirm on-chain deployment.

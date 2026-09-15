@@ -60,7 +60,7 @@
 		"deploy:testnet": "bun run build && bun tooling/contracts/run-deploy-testnet.mts",
 		"test:tooling": "bun test --isolate --timeout 60000 tooling/repo tooling/contracts",
 		"check:boundaries": "bun tooling/repo/check-boundaries.mts",
-		"check": "bun run typecheck && bun run check:boundaries && bun run format:check && bun run lint && bun run knip",
+		"check": "bun run typecheck && bun run check:boundaries && bun run format:check && bun run lint && bun run knip && bun run addresses:check",
 		"test:browser": "bun run test:browser:smoke && bun run test:browser:workflow",
 		"test:browser:workflow": "bun tooling/ui/run-browser.mts --workflow",
 		"check:artifacts": "bun tooling/contracts/check-artifacts.mts",
@@ -68,7 +68,9 @@
 		"lint": "bun x biome lint .",
 		"knip": "bun run knip:normal && bun run knip:production",
 		"knip:normal": "bun x knip --tsConfig tsconfig.json --no-config-hints",
-		"knip:production": "bun x knip --tsConfig tsconfig.json --production --include files,exports,dependencies --no-config-hints"
+		"knip:production": "bun x knip --tsConfig tsconfig.json --production --include files,exports,dependencies --no-config-hints",
+		"addresses:update": "bun tooling/contracts/build-app-contracts.mts zoltar && bun tooling/contracts/deployment-addresses.mts --write && bun x biome format --write docs/mainnet-deployment-addresses.json docs/sepolia-deployment-addresses.json",
+		"addresses:check": "bun tooling/contracts/build-app-contracts.mts zoltar && bun tooling/contracts/deployment-addresses.mts --check"
 	},
 	"workspaces": [
 		"shared/core",

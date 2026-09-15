@@ -1,0 +1,93 @@
+/// <reference types="bun-types" />
+
+import { installDomTestLifecycle } from './testUtils/domTestLifecycle.js'
+import { describe, expect, test } from 'bun:test'
+import { StateHint } from '../components/StateHint.js'
+import { within } from './testUtils/queries'
+import { renderIntoDocument } from './testUtils/renderIntoDocument.js'
+
+describe('StateHint', () => {
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+
+	installDomTestLifecycle({
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+		},
+	})
+
+	test('suppresses loading badges while keeping loading detail text visible', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<StateHint
+				presentation={{
+					badgeLabel: 'Loading',
+					badgeTone: 'pending',
+					detail: 'Refreshing report summaries.',
+					key: 'loading',
+				}}
+			/>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		expect(documentQueries.getByText('Refreshing report summaries.')).not.toBeNull()
+		expect(documentQueries.queryByText('Loading')).toBeNull()
+		expect(document.body.querySelector('.state-hint .badge')).toBeNull()
+	})
+
+	test('adds a spinner when loading copy is supplied without loading metadata', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<StateHint
+				presentation={{
+					badgeLabel: 'Pending',
+					badgeTone: 'pending',
+					detail: 'Loading truth auction status…',
+					key: 'loading',
+				}}
+			/>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const loadingStatus = within(document.body).getByRole('status')
+		expect(loadingStatus.textContent).toContain('Loading truth auction status…')
+		expect(loadingStatus.querySelector('.spinner')).not.toBeNull()
+	})
+
+	test('does not render non-card badges for non-loading state hints', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<StateHint
+				presentation={{
+					actionHint: 'Try another address.',
+					badgeLabel: 'Not found',
+					badgeTone: 'blocked',
+					detail: 'This item is unavailable.',
+					key: 'not_found',
+				}}
+			/>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		expect(documentQueries.getByText('This item is unavailable.')).not.toBeNull()
+		expect(documentQueries.getByText('Try another address.')).not.toBeNull()
+		expect(documentQueries.queryByText('Not found')).toBeNull()
+		expect(document.body.querySelector('.state-hint .badge')).toBeNull()
+	})
+
+	test('uses the badge label as fallback copy when a state has no other visible message', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<StateHint
+				presentation={{
+					badgeLabel: 'None',
+					badgeTone: 'muted',
+					key: 'empty',
+				}}
+			/>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		expect(documentQueries.getByRole('heading', { name: 'None' })).not.toBeNull()
+		expect(document.body.querySelector('.state-hint .badge')).toBeNull()
+	})
+})

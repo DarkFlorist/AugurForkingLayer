@@ -1,0 +1,61 @@
+/// <reference types="bun-types" />
+
+import { describe, expect, test } from 'bun:test'
+import { formatRefreshErrorMessage, formatWriteErrorMessage, getErrorMessage, isCloseableErrorMessage } from '../lib/errors.js'
+
+void describe('error helpers', () => {
+	void test('marks user-rejected wallet errors as closeable', () => {
+		expect(getErrorMessage(new Error('User rejected the request.'), 'Couldn’t deploy SecurityPoolUtils.')).toBe('Action canceled in wallet.')
+		expect(isCloseableErrorMessage(getErrorMessage(new Error('User rejected the request.'), 'Couldn’t deploy SecurityPoolUtils.'))).toBe(true)
+		expect(isCloseableErrorMessage('Wallet connection failed: User denied account authorization')).toBe(true)
+	})
+
+	void test('recognizes serialized EIP-1193 rejection codes', () => {
+		expect(isCloseableErrorMessage('Failed to deploy SecurityPoolUtils: {"code":4001,"message":"Request rejected"}')).toBe(true)
+	})
+
+	void test('recognizes structured wallet rejection codes through causes without relying on message text', () => {
+		for (const error of [{ code: 4001, message: 'Request declined' }, Object.assign(new Error('Request declined'), { code: '4001' }), new Error('Provider failed', { cause: { code: 4001 } })]) {
+			expect(getErrorMessage(error, 'Connection failed')).toBe('Action canceled in wallet.')
+			expect(formatWriteErrorMessage(error, 'Failed to submit')).toBe('Action canceled in wallet.')
+			expect(formatRefreshErrorMessage(error, 'Refresh failed')).toBe('Action canceled in wallet.')
+		}
+		const cycle = new Error('RPC unavailable')
+		cycle.cause = cycle
+		expect(getErrorMessage(cycle, 'Refresh failed')).toContain('RPC unavailable')
+	})
+
+	void test('appends sanitized technical details to load failures', () => {
+		expect(getErrorMessage(new Error('execution reverted: bad stuff'), 'Couldn’t refresh pools.')).toBe('Couldn’t refresh pools. Reason: bad stuff')
+	})
+
+	void test('rewrites no-data contract read failures with recovery guidance', () => {
+		expect(getErrorMessage(new Error('The contract function "nextReportId" returned no data ("0x").'), 'Failed to load oracle reports')).toBe('Failed to load oracle reports. Reason: No contract data was returned. Check that the selected network or simulation scenario has deployed contracts, then refresh.')
+	})
+
+	void test('falls through nested error details when wrapper messages are useless', () => {
+		expect(getErrorMessage({ cause: { shortMessage: 'RPC unavailable' }, message: 'execution reverted' }, 'Failed to refresh wallet state')).toBe('Failed to refresh wallet state. Reason: RPC unavailable')
+	})
+
+	void test('formats write failures with transaction-oriented wording', () => {
+		expect(formatWriteErrorMessage(new Error('execution reverted: insufficient funds for gas * price + value'), 'Failed to report on outcome')).toBe('Transaction failed while attempting to report on outcome. Reason: insufficient funds for gas * price + value')
+		expect(formatWriteErrorMessage(new Error('No question found for that ID'), 'Failed to create security pool')).toBe('No question found for that ID')
+	})
+
+	void test('maps stale-price provider failures to an actionable recovery step', () => {
+		const error = {
+			message: 'An unknown RPC error occurred. Details: execution reverted: Stale price Version: viem@2.53.1',
+			shortMessage: 'An unknown RPC error occurred.',
+		}
+		expect(formatWriteErrorMessage(error, 'Failed to report on outcome')).toBe("The pool's oracle price expired. Request a new price in Price Oracle, then retry.")
+	})
+
+	void test('formats refresh failures with appended reasons', () => {
+		expect(formatRefreshErrorMessage(new Error('RPC unavailable'), 'Reporting transaction succeeded, but refreshing reporting details failed')).toBe('Reporting transaction succeeded, but refreshing reporting details failed. Reason: RPC unavailable')
+	})
+
+	void test('keeps blocking guidance errors non-closeable', () => {
+		expect(isCloseableErrorMessage('Zoltar contracts are not deployed yet. Deploy them before the application works.')).toBe(false)
+		expect(isCloseableErrorMessage('Deploy SecurityPoolUtils first')).toBe(false)
+	})
+})

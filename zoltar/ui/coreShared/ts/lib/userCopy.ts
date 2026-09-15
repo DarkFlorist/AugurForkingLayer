@@ -1,0 +1,114 @@
+import * as commonCopy from '../copy/common.js'
+import * as userMessagesCopy from '../copy/userMessages.js'
+import type { Address } from '@zoltar/core-shared/evm/ethereum'
+import { assertNever } from './assert.js'
+import { getWrongNetworkReason } from '../wallet/network.js'
+import type { LoadableValueState } from './loadState.js'
+
+export type UserMessageKey = 'not_checked' | 'loading' | 'not_found' | 'empty' | 'action_needed' | 'wrong_network' | 'wallet_disconnected' | 'unavailable' | 'load_failed'
+
+type UserMessageTone = 'muted' | 'pending' | 'blocked' | 'error' | 'ok'
+
+export type UserMessagePresentation = {
+	actionHint?: string
+	badgeLabel?: string
+	badgeTone?: UserMessageTone
+	detail?: string
+	detailIsLoading?: boolean
+	key: UserMessageKey
+	placeholder?: string
+}
+
+const METRIC_PLACEHOLDER = commonCopy.metricUnavailablePlaceholder
+
+function createPresentation(key: UserMessageKey, presentation: Omit<UserMessagePresentation, 'key'>): UserMessagePresentation {
+	return { key, ...presentation }
+}
+
+export function getMetricPlaceholderPresentation(value: unknown, options?: { loading?: boolean }) {
+	if (value !== undefined) return undefined
+	if (options?.loading === true)
+		return createPresentation('loading', {
+			badgeLabel: commonCopy.loading,
+			badgeTone: 'pending',
+			placeholder: commonCopy.loadingWithEllipsis,
+		})
+	return createPresentation('unavailable', {
+		placeholder: METRIC_PLACEHOLDER,
+	})
+}
+
+export function getUniversePresentation(state: LoadableValueState) {
+	switch (state) {
+		case 'loading':
+			return createPresentation('loading', {
+				badgeLabel: commonCopy.loading,
+				badgeTone: 'pending',
+				detail: commonCopy.loadingUniverseDetails,
+			})
+		case 'unknown':
+			return createPresentation('not_checked', {
+				badgeLabel: userMessagesCopy.notChecked,
+				badgeTone: 'muted',
+				detail: userMessagesCopy.uncheckedUniverseDetail,
+			})
+		case 'missing':
+			return createPresentation('not_found', {
+				actionHint: commonCopy.goToGenesisUniverse,
+				badgeLabel: commonCopy.notFound,
+				badgeTone: 'blocked',
+				detail: userMessagesCopy.missingUniverseDetail,
+			})
+		case 'ready':
+			return undefined
+		default:
+			return assertNever(state)
+	}
+}
+
+export function getWalletPresentation({ accountAddress, hasInjectedWallet, hasWallet, isOnActiveAppChain, isSupportedChain }: { accountAddress: Address | undefined; hasInjectedWallet?: boolean; hasWallet?: boolean; isOnActiveAppChain?: boolean; isSupportedChain?: boolean }) {
+	const walletAvailable = hasWallet ?? hasInjectedWallet ?? true
+	const supportedChain = isSupportedChain ?? isOnActiveAppChain ?? true
+
+	if (!walletAvailable)
+		return createPresentation('wallet_disconnected', {
+			badgeLabel: commonCopy.connectWallet,
+			badgeTone: 'blocked',
+			detail: userMessagesCopy.walletInstallationRequired,
+		})
+	if (accountAddress === undefined)
+		return createPresentation('wallet_disconnected', {
+			badgeLabel: commonCopy.connectWallet,
+			badgeTone: 'blocked',
+			detail: commonCopy.walletConnectionRequired,
+		})
+	if (!supportedChain)
+		return createPresentation('wrong_network', {
+			badgeLabel: userMessagesCopy.wrongNetwork,
+			badgeTone: 'blocked',
+			detail: getWrongNetworkReason(),
+		})
+	return undefined
+}
+
+export function getReportPresentation({ kind, state }: { kind: 'question' | 'report'; state: LoadableValueState }) {
+	switch (state) {
+		case 'loading':
+			return createPresentation('loading', {
+				detail: userMessagesCopy.retrieving,
+				detailIsLoading: true,
+			})
+		case 'unknown':
+			return undefined
+		case 'missing':
+			return createPresentation('not_found', {
+				badgeLabel: commonCopy.notFound,
+				badgeTone: 'blocked',
+				detail: userMessagesCopy.formatMissingLookupDetail(kind),
+			})
+		case 'ready':
+			return undefined
+		default:
+			return assertNever(state)
+	}
+}

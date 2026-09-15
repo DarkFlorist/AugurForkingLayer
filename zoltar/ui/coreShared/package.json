@@ -1,0 +1,181 @@
+{
+	"description": "Shared UI primitives, shell framework, and simulation engine",
+	"name": "@zoltar/ui-core-shared",
+	"private": true,
+	"license": "Unlicense",
+	"type": "module",
+	"devDependencies": {
+		"better-typescript-lib": "2.11.0",
+		"bun-types": "1.4.2",
+		"typescript": "5.8.2"
+	},
+	"dependencies": {
+		"@tevm/actions": "1.0.0-rc.151",
+		"@preact/signals": "2.0.1",
+		"preact": "10.26.4",
+		"@tevm/memory-client": "1.0.0-rc.151",
+		"@tevm/common": "1.0.0-rc.151",
+		"@zoltar/core-shared": "workspace:1.0.0",
+		"@zoltar/zoltar-shared": "workspace:1.0.0"
+	},
+	"scripts": {
+		"build": "bun x tsc --project tsconfig.json",
+		"typecheck": "bun x tsc --project tsconfig.json --noEmit"
+	},
+	"exports": {
+		"./*.js": {
+			"bun": "./ts/*.ts",
+			"default": "./js/*.js"
+		},
+		"./lib/repPriceSource.js": {
+			"bun": "./ts/lib/repPriceSource.tsx",
+			"default": "./js/lib/repPriceSource.js"
+		},
+		"./tests/*.js": {
+			"bun": "./ts/tests/*.tsx",
+			"default": "./js/tests/*.js"
+		},
+		"./tests/cssOwnership.test.js": {
+			"bun": "./ts/tests/cssOwnership.test.ts",
+			"default": "./js/tests/cssOwnership.test.js"
+		},
+		"./tests/injectedEthereum.test.js": {
+			"bun": "./ts/tests/injectedEthereum.test.ts",
+			"default": "./js/tests/injectedEthereum.test.js"
+		},
+		"./tests/assert.test.js": {
+			"bun": "./ts/tests/assert.test.ts",
+			"default": "./js/tests/assert.test.js"
+		},
+		"./tests/formatters.test.js": {
+			"bun": "./ts/tests/formatters.test.ts",
+			"default": "./js/tests/formatters.test.js"
+		},
+		"./tests/tokenApproval.test.js": {
+			"bun": "./ts/tests/tokenApproval.test.ts",
+			"default": "./js/tests/tokenApproval.test.js"
+		},
+		"./tests/viewState.test.js": {
+			"bun": "./ts/tests/viewState.test.ts",
+			"default": "./js/tests/viewState.test.js"
+		},
+		"./tests/writeAction.test.js": {
+			"bun": "./ts/tests/writeAction.test.ts",
+			"default": "./js/tests/writeAction.test.js"
+		},
+		"./tests/visualMetrics.test.js": {
+			"bun": "./ts/tests/visualMetrics.test.ts",
+			"default": "./js/tests/visualMetrics.test.js"
+		},
+		"./tests/chainBackend.test.js": {
+			"bun": "./ts/tests/chainBackend.test.ts",
+			"default": "./js/tests/chainBackend.test.js"
+		},
+		"./tests/transactionReceipt.test.js": {
+			"bun": "./ts/tests/transactionReceipt.test.ts",
+			"default": "./js/tests/transactionReceipt.test.js"
+		},
+		"./tests/address.test.js": {
+			"bun": "./ts/tests/address.test.ts",
+			"default": "./js/tests/address.test.js"
+		},
+		"./tests/decimal.test.js": {
+			"bun": "./ts/tests/decimal.test.ts",
+			"default": "./js/tests/decimal.test.js"
+		},
+		"./tests/actionGuards.test.js": {
+			"bun": "./ts/tests/actionGuards.test.ts",
+			"default": "./js/tests/actionGuards.test.js"
+		},
+		"./tests/rpcConfig.test.js": {
+			"bun": "./ts/tests/rpcConfig.test.ts",
+			"default": "./js/tests/rpcConfig.test.js"
+		},
+		"./tests/signalValues.test.js": {
+			"bun": "./ts/tests/signalValues.test.ts",
+			"default": "./js/tests/signalValues.test.js"
+		},
+		"./tests/errors.test.js": {
+			"bun": "./ts/tests/errors.test.ts",
+			"default": "./js/tests/errors.test.js"
+		},
+		"./tests/networkProfile.test.js": {
+			"bun": "./ts/tests/networkProfile.test.ts",
+			"default": "./js/tests/networkProfile.test.js"
+		},
+		"./tests/loadState.test.js": {
+			"bun": "./ts/tests/loadState.test.ts",
+			"default": "./js/tests/loadState.test.js"
+		},
+		"./tests/urlParams.test.js": {
+			"bun": "./ts/tests/urlParams.test.ts",
+			"default": "./js/tests/urlParams.test.js"
+		},
+		"./tests/actionFeedback.test.js": {
+			"bun": "./ts/tests/actionFeedback.test.ts",
+			"default": "./js/tests/actionFeedback.test.js"
+		},
+		"./tests/pagination.test.js": {
+			"bun": "./ts/tests/pagination.test.ts",
+			"default": "./js/tests/pagination.test.js"
+		},
+		"./tests/walletAsset.test.js": {
+			"bun": "./ts/tests/walletAsset.test.ts",
+			"default": "./js/tests/walletAsset.test.js"
+		},
+		"./tests/routing.test.js": {
+			"bun": "./ts/tests/routing.test.ts",
+			"default": "./js/tests/routing.test.js"
+		},
+		"./tests/transactionTray.test.js": {
+			"bun": "./ts/tests/transactionTray.test.ts",
+			"default": "./js/tests/transactionTray.test.js"
+		},
+		"./tests/userCopy.test.js": {
+			"bun": "./ts/tests/userCopy.test.ts",
+			"default": "./js/tests/userCopy.test.js"
+		},
+		"./components/*.js": {
+			"bun": "./ts/components/*.tsx",
+			"default": "./js/components/*.js"
+		},
+		"./transactions/transactionPresentations.js": {
+			"bun": "./ts/transactions/transactionPresentations.tsx",
+			"default": "./js/transactions/transactionPresentations.js"
+		},
+		"./tests/app/supportedNetworkChange.test.js": {
+			"bun": "./ts/tests/app/supportedNetworkChange.test.ts",
+			"default": "./js/tests/app/supportedNetworkChange.test.js"
+		},
+		"./tests/app/useOnchainState.test.js": {
+			"bun": "./ts/tests/app/useOnchainState.test.ts",
+			"default": "./js/tests/app/useOnchainState.test.js"
+		},
+		"./tests/app/appRouteGate.test.js": {
+			"bun": "./ts/tests/app/appRouteGate.test.ts",
+			"default": "./js/tests/app/appRouteGate.test.js"
+		},
+		"./app/components/*.js": {
+			"bun": "./ts/app/components/*.tsx",
+			"default": "./js/app/components/*.js"
+		},
+		"./tests/testUtils/*.js": {
+			"bun": "./ts/tests/testUtils/*.ts",
+			"default": "./js/tests/testUtils/*.js"
+		},
+		"./tests/testUtils/renderIntoDocument.js": {
+			"bun": "./ts/tests/testUtils/renderIntoDocument.tsx",
+			"default": "./js/tests/testUtils/renderIntoDocument.js"
+		},
+		"./tests/simulation/*.js": {
+			"bun": "./ts/tests/simulation/*.ts",
+			"default": "./js/tests/simulation/*.js"
+		},
+		"./tests/simulationTestUtils.js": "./ts/tests/simulation/testUtils.ts",
+		"./*": {
+			"bun": "./ts/*.ts",
+			"default": "./js/*.js"
+		}
+	},
+	"version": "1.0.0"
+}

@@ -1,0 +1,35 @@
+/// <reference types="bun-types" />
+
+import { describe, expect, test } from 'bun:test'
+import { zeroAddress } from '@zoltar/core-shared/evm/ethereum'
+import { getMigrationGuardMessage } from '@zoltar/ui-zoltar-shared/features/universes/lib/zoltarMigrationGuards.js'
+import type { ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
+
+function createUniverse(overrides: Partial<ZoltarUniverseSummary> = {}): ZoltarUniverseSummary {
+	return {
+		childUniverses: [],
+		forkThresholdAttoRep: 1n,
+		forkQuestionDetails: undefined,
+		forkTime: 0n,
+		forkingOutcomeIndex: 0n,
+		hasForked: true,
+		parentUniverseId: 0n,
+		reputationToken: zeroAddress,
+		totalTheoreticalSupplyAttoRep: 1n,
+		universeId: 1n,
+		...overrides,
+	}
+}
+
+describe('zoltar migration guards', () => {
+	test('blocks migration when wallet or network prerequisites are missing', () => {
+		expect(getMigrationGuardMessage(undefined, true, createUniverse(), false, true, false, 'Fork first.')).toBe('Connect wallet to continue.')
+		expect(getMigrationGuardMessage(zeroAddress, false, createUniverse(), false, true, false, 'Fork first.')).toBe('Switch to Sepolia.')
+	})
+
+	test('waits for root universe and fork state before migration actions can proceed', () => {
+		expect(getMigrationGuardMessage(zeroAddress, true, undefined, false, false, false, '')).toBe('Refresh universe first.')
+		expect(getMigrationGuardMessage(zeroAddress, true, createUniverse({ hasForked: false }), false, false, false, '')).toBeUndefined()
+		expect(getMigrationGuardMessage(zeroAddress, true, createUniverse(), false, true, false, '')).toBeUndefined()
+	})
+})

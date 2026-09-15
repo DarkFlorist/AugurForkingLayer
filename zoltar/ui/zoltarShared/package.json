@@ -1,0 +1,53 @@
+{
+	"description": "Reusable Zoltar protocol and workflow UI capabilities",
+	"name": "@zoltar/ui-zoltar-shared",
+	"private": true,
+	"license": "Unlicense",
+	"type": "module",
+	"devDependencies": {
+		"better-typescript-lib": "2.11.0",
+		"typescript": "5.8.2"
+	},
+	"dependencies": {
+		"@preact/signals": "2.0.1",
+		"@zoltar/ui-core-shared": "workspace:1.0.0",
+		"preact": "10.26.4",
+		"@zoltar/core-shared": "workspace:1.0.0",
+		"@zoltar/zoltar-shared": "workspace:1.0.0"
+	},
+	"scripts": {
+		"build": "bun x tsc --project tsconfig.json",
+		"typecheck": "bun x tsc --project tsconfig.json --noEmit"
+	},
+	"exports": {
+		"./*.js": {
+			"bun": "./ts/*.ts",
+			"default": "./js/*.js"
+		},
+		"./features/zoltarTransactionPresentations.js": {
+			"bun": "./ts/features/zoltarTransactionPresentations.tsx",
+			"default": "./js/features/zoltarTransactionPresentations.js"
+		},
+		"./features/overview/*.js": {
+			"bun": "./ts/features/overview/*.tsx",
+			"default": "./js/features/overview/*.js"
+		},
+		"./features/questions/components/*.js": {
+			"bun": "./ts/features/questions/components/*.tsx",
+			"default": "./js/features/questions/components/*.js"
+		},
+		"./features/universes/components/*.js": {
+			"bun": "./ts/features/universes/components/*.tsx",
+			"default": "./js/features/universes/components/*.js"
+		},
+		"./features/deployment/components/*.js": {
+			"bun": "./ts/features/deployment/components/*.tsx",
+			"default": "./js/features/deployment/components/*.js"
+		},
+		"./features/zoltarSurface/components/*.js": {
+			"bun": "./ts/features/zoltarSurface/components/*.tsx",
+			"default": "./js/features/zoltarSurface/components/*.js"
+		}
+	},
+	"version": "1.0.0"
+}

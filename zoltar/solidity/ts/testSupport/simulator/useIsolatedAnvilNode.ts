@@ -1,0 +1,54 @@
+import { afterAll, beforeAll, beforeEach } from 'bun:test'
+import type { AnvilWindowEthereum } from './AnvilWindowEthereum'
+import type { AnvilNode } from './anvilNode'
+import { createAnvilNodeForConnectionMode, getAnvilConnectionMode } from './anvilNode'
+import { AnvilSnapshotUnavailableError } from './AnvilWindowEthereum'
+import { ensureDefined } from './utils/testUtils'
+const isSolidityBytecodeCoverageEnabled = (): boolean => process.env['SOLIDITY_BYTECODE_COVERAGE'] === '1'
+
+const TEST_CHAIN_START_TIMESTAMP = 1n
+export const useIsolatedAnvilNode = () => {
+	let anvilNode: AnvilNode | undefined
+	let anvilWindowEthereum: AnvilWindowEthereum | undefined
+	let snapshotId: string | undefined
+
+	beforeAll(async () => {
+		const connectionMode = getAnvilConnectionMode()
+		anvilNode = await createAnvilNodeForConnectionMode(connectionMode, {
+			context: 'test file',
+			printTraces: isSolidityBytecodeCoverageEnabled(),
+			startTimestamp: TEST_CHAIN_START_TIMESTAMP,
+		})
+		anvilWindowEthereum = anvilNode.anvilWindowEthereum
+		snapshotId = await anvilWindowEthereum.anvilSnapshot()
+	})
+
+	beforeEach(async () => {
+		const currentEthereum = ensureDefined(anvilWindowEthereum, 'Isolated Anvil node was not initialized')
+		const currentSnapshotId = ensureDefined(snapshotId, 'Missing Anvil snapshot for test isolation')
+		try {
+			await currentEthereum.anvilRevert(currentSnapshotId)
+		} catch (error) {
+			if (!(error instanceof AnvilSnapshotUnavailableError)) throw error
+			await currentEthereum.resetToCleanState()
+		}
+		await currentEthereum.setNextBlockBaseFeePerGasToZero()
+		snapshotId = await currentEthereum.anvilSnapshot()
+	})
+
+	afterAll(async () => {
+		await anvilNode?.dispose()
+		anvilNode = undefined
+		anvilWindowEthereum = undefined
+		snapshotId = undefined
+	})
+
+	return {
+		getAnvilWindowEthereum: () => ensureDefined(anvilWindowEthereum, 'Isolated Anvil node was not initialized'),
+		setBaselineSnapshot: async () => {
+			const currentEthereum = ensureDefined(anvilWindowEthereum, 'Isolated Anvil node was not initialized')
+			await currentEthereum.setNextBlockBaseFeePerGasToZero()
+			snapshotId = await currentEthereum.anvilSnapshot()
+		},
+	}
+}

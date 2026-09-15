@@ -1,0 +1,335 @@
+import { spawn } from 'node:child_process'
+import { existsSync, realpathSync } from 'node:fs'
+import { join, win32 } from 'node:path'
+import { setTimeout as sleep } from 'node:timers/promises'
+import { fileURLToPath } from 'node:url'
+import type { AnvilWindowEthereum } from './AnvilWindowEthereum'
+import { getMockedEthSimulateWindowEthereum, validateLocalAnvilRpcUrl } from './AnvilWindowEthereum'
+
+const DEFAULT_ANVIL_HOST = '127.0.0.1'
+const OS_ASSIGNED_PORT = 0
+const ANVIL_MAX_PERSISTED_STATES = '0'
+const ANVIL_THREADS = '1'
+const ANVIL_OUTPUT_TAIL_LENGTH = 16_384
+const RPC_READY_TIMEOUT_MS = 30_000
+const RPC_PROBE_TIMEOUT_MS = 3_000
+const SHUTDOWN_TIMEOUT_MS = 15_000
+const ANVIL_PLATFORM_PACKAGES: Readonly<Record<string, string>> = {
+	'darwin-arm64': 'anvil-darwin-arm64',
+	'darwin-x64': 'anvil-darwin-amd64',
+	'linux-arm64': 'anvil-linux-arm64',
+	'linux-x64': 'anvil-linux-amd64',
+	'win32-x64': 'anvil-win32-amd64',
+}
+
+type AnvilProcess = ReturnType<typeof spawn>
+
+export type AnvilConnectionMode = { readonly type: 'spawn-isolated'; readonly rpcUrl: string; readonly port: number } | { readonly type: 'use-existing'; readonly rpcUrl: string }
+
+export type AnvilNode = {
+	readonly rpcUrl: string
+	readonly anvilWindowEthereum: AnvilWindowEthereum
+	readonly dispose: () => Promise<void>
+}
+
+const getErrorMessage = (error: unknown): string => (error instanceof Error ? error.message : String(error))
+
+const appendOutputTail = (current: string, chunk: unknown): string => `${current}${String(chunk)}`.slice(-ANVIL_OUTPUT_TAIL_LENGTH)
+
+export const parseAnvilListeningRpcUrl = (output: string): string | undefined => {
+	const match = /Listening on (?:127\.0\.0\.1|0\.0\.0\.0):([1-9][0-9]*)/.exec(output)
+	const port = match?.[1]
+	return port === undefined ? undefined : `http://${DEFAULT_ANVIL_HOST}:${port}`
+}
+
+const getAnvilProcessFailureMessage = (child: AnvilProcess): string => {
+	const status = child.exitCode === null ? `signal ${child.signalCode ?? 'unknown'}` : `exit code ${child.exitCode.toString()}`
+	return `Anvil stopped before it became ready (${status}).`
+}
+
+const stripWrappingQuotes = (value: string): string => {
+	if (value.length < 2) return value
+	const firstCharacter = value[0]
+	const lastCharacter = value.at(-1)
+	if ((firstCharacter === '"' || firstCharacter === "'") && lastCharacter === firstCharacter) return value.slice(1, -1)
+	return value
+}
+
+export const resolveAnvilBinary = ({
+	architecture = process.arch,
+	environment = process.env,
+	pathExists = existsSync,
+	platform = process.platform,
+	repositoryRoot = fileURLToPath(new URL('../../../../', import.meta.url)),
+	which = Bun.which,
+}: {
+	readonly architecture?: string
+	readonly environment?: Record<string, string | undefined>
+	readonly pathExists?: (path: string) => boolean
+	readonly platform?: string
+	readonly repositoryRoot?: string
+	readonly which?: (command: string) => string | null
+} = {}): string => {
+	const explicitAnvilBin = environment['ANVIL_BIN']?.trim()
+	if (explicitAnvilBin !== undefined && explicitAnvilBin !== '') return stripWrappingQuotes(explicitAnvilBin)
+
+	const platformPackage = ANVIL_PLATFORM_PACKAGES[`${platform}-${architecture}`]
+	if (platformPackage !== undefined) {
+		const executableName = platform === 'win32' ? 'anvil.exe' : 'anvil'
+		const repositoryAnvilBin = platform === 'win32' ? win32.join(repositoryRoot, 'node_modules', '@foundry-rs', platformPackage, 'bin', executableName) : join(repositoryRoot, 'node_modules', '@foundry-rs', platformPackage, 'bin', executableName)
+		if (pathExists(repositoryAnvilBin)) return repositoryAnvilBin
+		const packageLink = join(repositoryRoot, 'node_modules', '@foundry-rs', 'anvil')
+		if (existsSync(packageLink)) {
+			const isolatedBinary = join(realpathSync(packageLink), '..', platformPackage, 'bin', executableName)
+			if (pathExists(isolatedBinary)) return isolatedBinary
+		}
+	}
+
+	const homeDirectory = environment['USERPROFILE'] ?? environment['HOME']
+	if (homeDirectory !== undefined) {
+		const candidates = platform === 'win32' ? [win32.join(homeDirectory, '.foundry', 'bin', 'anvil.exe')] : [join(homeDirectory, '.foundry', 'bin', 'anvil')]
+
+		for (const candidate of candidates) {
+			if (pathExists(candidate)) return candidate
+		}
+	}
+
+	return which('anvil') ?? 'anvil'
+}
+
+const getConfiguredGasCostAnvilRpc = (): string | undefined => {
+	const anvilRpc = process.env['GAS_COST_ANVIL_RPC']?.trim()
+	if (anvilRpc === undefined || anvilRpc === '') return undefined
+	return anvilRpc
+}
+
+export const getAnvilConnectionMode = (): AnvilConnectionMode => {
+	return {
+		type: 'spawn-isolated',
+		rpcUrl: '',
+		port: 0,
+	}
+}
+
+export const getGasCostsAnvilConnectionMode = (): AnvilConnectionMode => {
+	const anvilRpc = getConfiguredGasCostAnvilRpc()
+	if (anvilRpc !== undefined) return { type: 'use-existing', rpcUrl: anvilRpc }
+
+	return {
+		type: 'spawn-isolated',
+		rpcUrl: '',
+		port: 0,
+	}
+}
+
+export const parseAnvilReadinessResponse = (value: unknown, expectedChainId: number): void => {
+	if (typeof value !== 'object' || value === null || !('jsonrpc' in value) || value.jsonrpc !== '2.0' || !('id' in value) || value.id !== 1 || !('result' in value) || typeof value.result !== 'string') throw new Error('Invalid Anvil readiness JSON-RPC response or id')
+	if (!/^0x(?:0|[1-9a-f][0-9a-f]*)$/.test(value.result)) throw new Error('Invalid Anvil readiness chain ID quantity')
+	if (BigInt(value.result) !== BigInt(expectedChainId)) throw new Error(`Unexpected Anvil chain ID: ${value.result}`)
+}
+
+const waitForRpcReady = async (rpcUrl: string, expectedChainId = 1): Promise<void> => {
+	validateLocalAnvilRpcUrl(rpcUrl)
+
+	const deadline = Date.now() + RPC_READY_TIMEOUT_MS
+	let lastError: unknown
+
+	while (Date.now() < deadline) {
+		const controller = new AbortController()
+		const remainingMs = deadline - Date.now()
+		const probeTimeoutMs = Math.min(RPC_PROBE_TIMEOUT_MS, remainingMs)
+		const timeoutId = setTimeout(() => controller.abort(), probeTimeoutMs)
+
+		try {
+			const response = await fetch(rpcUrl, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				signal: controller.signal,
+				body: JSON.stringify({
+					jsonrpc: '2.0',
+					id: 1,
+					method: 'eth_chainId',
+					params: [],
+				}),
+			})
+			if (response.ok) {
+				parseAnvilReadinessResponse(await response.json(), expectedChainId)
+				return
+			}
+			lastError = new Error(`HTTP ${response.status}: ${response.statusText}`)
+		} catch (error) {
+			lastError = error
+		} finally {
+			clearTimeout(timeoutId)
+		}
+		await sleep(100)
+	}
+
+	throw new Error(`Timed out waiting for Anvil RPC at ${rpcUrl}: ${getErrorMessage(lastError)}`)
+}
+
+const waitForExit = async (child: AnvilProcess): Promise<void> =>
+	await new Promise((resolve, reject) => {
+		if (child.pid === undefined || child.exitCode !== null || child.signalCode !== null) {
+			resolve()
+			return
+		}
+
+		let forcedKillTimeoutId: ReturnType<typeof setTimeout> | undefined
+		const timeoutId = setTimeout(() => {
+			child.kill('SIGKILL')
+			forcedKillTimeoutId = setTimeout(() => reject(new Error('Anvil did not exit after SIGKILL')), SHUTDOWN_TIMEOUT_MS)
+		}, SHUTDOWN_TIMEOUT_MS)
+
+		child.once('exit', () => {
+			clearTimeout(timeoutId)
+			if (forcedKillTimeoutId !== undefined) clearTimeout(forcedKillTimeoutId)
+			resolve()
+		})
+		child.once('error', error => {
+			clearTimeout(timeoutId)
+			if (forcedKillTimeoutId !== undefined) clearTimeout(forcedKillTimeoutId)
+			reject(error)
+		})
+	})
+
+const getErrorCode = (error: unknown): string | undefined => {
+	if (typeof error !== 'object' || error === null || !('code' in error) || typeof error.code !== 'string') return undefined
+	return error.code
+}
+
+const terminateProcess = (child: AnvilProcess, signal: NodeJS.Signals = 'SIGTERM') => {
+	if (child.pid === undefined || child.exitCode !== null || child.signalCode !== null) return
+	try {
+		child.kill(signal)
+	} catch (error) {
+		const errorCode = getErrorCode(error)
+		if (errorCode !== 'ESRCH' && errorCode !== 'EPERM') throw error
+		// Ignore termination errors while cleaning up a failed spawn/startup path.
+	}
+}
+
+const removeAnvilProcessListeners = (child: AnvilProcess) => {
+	child.removeAllListeners('error')
+	child.removeAllListeners('exit')
+	child.stdout?.removeAllListeners('data')
+	child.stderr?.removeAllListeners('data')
+	child.stdout?.resume()
+	child.stderr?.resume()
+}
+
+export const connectToExistingAnvilNode = async (rpcUrl: string, context: string): Promise<AnvilNode> => {
+	try {
+		await waitForRpcReady(rpcUrl)
+		const anvilWindowEthereum = await getMockedEthSimulateWindowEthereum(rpcUrl)
+		await anvilWindowEthereum.setNextBlockBaseFeePerGasToZero()
+		return {
+			rpcUrl,
+			anvilWindowEthereum,
+			dispose: async () => {},
+		}
+	} catch (error) {
+		const environmentVariable = context === 'gas-costs' ? 'GAS_COST_ANVIL_RPC' : 'ANVIL_RPC'
+		throw new Error(`Unable to connect to Anvil at ${rpcUrl} for ${context}. Start Anvil or set ${environmentVariable} to a local endpoint. ${getErrorMessage(error)}`)
+	}
+}
+
+type IsolatedAnvilOptions = {
+	chainId?: number
+	disableCodeSizeLimit?: boolean
+	gasLimit?: bigint
+	hardfork?: string
+	printTraces?: boolean
+	zeroFees?: boolean
+}
+
+export const getIsolatedAnvilArgs = ({ chainId = 1, disableCodeSizeLimit = false, gasLimit, hardfork, printTraces = false, zeroFees = true }: IsolatedAnvilOptions = {}): string[] => {
+	const anvilArgs = ['--host', DEFAULT_ANVIL_HOST, '--port', OS_ASSIGNED_PORT.toString(), '--threads', ANVIL_THREADS, '--chain-id', chainId.toString(), '--timestamp', '1']
+	if (zeroFees) anvilArgs.push('--block-base-fee-per-gas', '0', '--gas-price', '0', '--no-priority-fee')
+	anvilArgs.push('--max-persisted-states', ANVIL_MAX_PERSISTED_STATES)
+	if (hardfork !== undefined) anvilArgs.push('--hardfork', hardfork)
+	if (gasLimit !== undefined) anvilArgs.push('--gas-limit', gasLimit.toString())
+	if (disableCodeSizeLimit) anvilArgs.push('--disable-code-size-limit')
+	if (printTraces) anvilArgs.push('--print-traces')
+	return anvilArgs
+}
+
+const createIsolatedAnvilNode = async ({ context, startTimestamp, ...anvilOptions }: { context: string; startTimestamp?: bigint } & IsolatedAnvilOptions): Promise<AnvilNode> => {
+	const anvilArgs = getIsolatedAnvilArgs(anvilOptions)
+	const anvilBinary = resolveAnvilBinary()
+
+	const childProcess = spawn(anvilBinary, anvilArgs, {
+		windowsHide: true,
+		stdio: ['ignore', 'pipe', 'pipe'],
+	})
+	let stderr = ''
+	let stdout = ''
+	if (childProcess.stderr === null || childProcess.stdout === null) {
+		terminateProcess(childProcess)
+		await waitForExit(childProcess)
+		throw new Error(`Failed to start isolated Anvil node for ${context}: Anvil output pipes are unavailable`)
+	}
+	childProcess.stderr.on('data', chunk => {
+		stderr = appendOutputTail(stderr, chunk)
+	})
+	childProcess.stdout.on('data', chunk => {
+		stdout = appendOutputTail(stdout, chunk)
+	})
+
+	const processFailurePromise = new Promise<never>((_, reject) => {
+		childProcess.once('error', error => {
+			if (getErrorCode(error) === 'ENOENT') {
+				reject(new Error(`Failed to start isolated Anvil node: could not find Anvil executable '${anvilBinary}'. Run 'bun install --frozen-lockfile' to install the repository-pinned Anvil binary, or set ANVIL_BIN to the full path of another Anvil installation.`))
+				return
+			}
+			reject(error)
+		})
+		childProcess.once('exit', () => reject(new Error(getAnvilProcessFailureMessage(childProcess))))
+	})
+	const listeningRpcUrlPromise = new Promise<string>((resolve, reject) => {
+		const timeoutId = setTimeout(() => reject(new Error('Timed out waiting for Anvil to report its listening address.')), RPC_READY_TIMEOUT_MS)
+		childProcess.once('error', () => clearTimeout(timeoutId))
+		childProcess.once('exit', () => clearTimeout(timeoutId))
+		const resolveListeningRpcUrl = () => {
+			const rpcUrl = parseAnvilListeningRpcUrl(`${stdout}\n${stderr}`)
+			if (rpcUrl === undefined) return
+			clearTimeout(timeoutId)
+			resolve(rpcUrl)
+		}
+		childProcess.stdout?.on('data', resolveListeningRpcUrl)
+		childProcess.stderr?.on('data', resolveListeningRpcUrl)
+	})
+
+	try {
+		const rpcUrl = await Promise.race([listeningRpcUrlPromise, processFailurePromise])
+		await Promise.race([waitForRpcReady(rpcUrl, anvilOptions.chainId ?? 1), processFailurePromise])
+		const anvilWindowEthereum = await getMockedEthSimulateWindowEthereum(rpcUrl)
+		if (startTimestamp !== undefined) await anvilWindowEthereum.setTime(startTimestamp)
+		await anvilWindowEthereum.setNextBlockBaseFeePerGasToZero()
+		removeAnvilProcessListeners(childProcess)
+		let disposed = false
+		return {
+			rpcUrl,
+			anvilWindowEthereum,
+			dispose: async () => {
+				if (disposed) return
+				disposed = true
+				terminateProcess(childProcess)
+				await waitForExit(childProcess)
+				removeAnvilProcessListeners(childProcess)
+			},
+		}
+	} catch (error) {
+		terminateProcess(childProcess)
+		await waitForExit(childProcess)
+		removeAnvilProcessListeners(childProcess)
+		const stderrMessage = stderr.trim() === '' ? '' : `\nAnvil stderr:\n${stderr.trim()}`
+		const stdoutMessage = stdout.trim() === '' ? '' : `\nAnvil stdout:\n${stdout.trim()}`
+		throw new Error(`Failed to start isolated Anvil node for ${context}: ${getErrorMessage(error)}${stderrMessage}${stdoutMessage}`)
+	}
+}
+
+export const createAnvilNodeForConnectionMode = async (connectionMode: AnvilConnectionMode, options: { context: string; startTimestamp?: bigint } & IsolatedAnvilOptions): Promise<AnvilNode> => {
+	if (connectionMode.type === 'use-existing') return await connectToExistingAnvilNode(connectionMode.rpcUrl, options.context)
+	return await createIsolatedAnvilNode(options)
+}

@@ -1,0 +1,8 @@
+{
+	"repository": "https://github.com/AugurProject/zoltar",
+	"commit": "85fdf19f8962d17b6f1e0612df9a01b6c30398d4",
+	"license": "Unlicense",
+	"scope": ["Zoltar contracts and neutral infrastructure", "Shared runtime and UI packages used by Zoltar", "Zoltar UI, tests, and build/deployment tooling"],
+	"adaptations": ["Standalone Bun workspace; Zoltar-only tooling and workflows", "Neutral infrastructure and test-fixture paths", "Unused code and dependencies removed; upstream Knip configuration scoped to Zoltar"],
+	"artifactBaseline": "tooling/contracts/upstream-artifacts.json"
+}

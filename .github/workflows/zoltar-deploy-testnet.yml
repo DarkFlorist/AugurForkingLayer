@@ -1,0 +1,55 @@
+name: Zoltar Testnet Deployment
+on:
+  workflow_dispatch:
+    inputs:
+      rpc_url:
+        description: Public HTTPS testnet RPC URL
+        required: true
+        type: string
+      chain_id:
+        description: Testnet chain ID (must match RPC)
+        default: '11155111'
+        required: true
+        type: string
+      max_fee_per_gas_gwei:
+        description: Maximum fee per gas in gwei
+        default: '100'
+        required: true
+        type: string
+      max_total_cost_eth:
+        description: Maximum total deployment cost in ETH
+        default: '20'
+        required: true
+        type: string
+      confirm:
+        description: Type DEPLOY to authorize transactions
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: zoltar-testnet-deployment
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main' && inputs.confirm == 'DEPLOY'
+    environment: zoltar-testnet
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: zoltar
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-zoltar
+      - run: bun run build
+      - name: Deploy and verify runtime code
+        env:
+          RPC_URL: ${{ inputs.rpc_url }}
+          CHAIN_ID: ${{ inputs.chain_id }}
+          MAX_FEE_PER_GAS_GWEI: ${{ inputs.max_fee_per_gas_gwei }}
+          MAX_TOTAL_COST_ETH: ${{ inputs.max_total_cost_eth }}
+          PRIVATE_KEY: ${{ secrets.TESTNET_DEPLOYER_PRIVATE_KEY }}
+        run: bun tooling/contracts/run-deploy-testnet.mts

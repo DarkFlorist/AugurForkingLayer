@@ -1,0 +1,46 @@
+{
+	"network": {
+		"chainId": 1,
+		"chainIdHex": "0x1",
+		"genesisRepTokenAddress": "0x221657776846890989a759ba2973e427dff5c9bb",
+		"id": "mainnet",
+		"name": "Ethereum Mainnet"
+	},
+	"deploymentStatus": "not-checked",
+	"protocolConfig": {
+		"forkBurnDivisor": "5",
+		"forkThresholdDivisor": "20"
+	},
+	"deploymentSteps": [
+		{
+			"id": "proxyDeployer",
+			"label": "Proxy Deployer",
+			"address": "0x7A0D94F55792C434d74a40883C6ed8545E406D12",
+			"dependencies": []
+		},
+		{
+			"id": "deploymentStatusOracle",
+			"label": "Deployment Status Oracle",
+			"address": "0xF85aAf2C079c401ae2Cd6E7B2d8B241718DeFE69",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "multicall3",
+			"label": "Multicall3",
+			"address": "0xB657B12CD9d80421DBC2bc70c43d6b2ff9409108",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "zoltarQuestionData",
+			"label": "ZoltarQuestionData",
+			"address": "0x98927dA4cD6C97d95c8CC97E77948389a84559fC",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "zoltar",
+			"label": "Zoltar",
+			"address": "0x4419b5E48F281df7aB160121bE071B7693F33051",
+			"dependencies": ["proxyDeployer", "zoltarQuestionData"]
+		}
+	]
+}

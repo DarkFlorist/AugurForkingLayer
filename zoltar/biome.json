@@ -1,0 +1,80 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": ["**", "!**/node_modules", "!**/vendor", "!**/dist", "!coverage", "!reth", "!testnetwork", "!docs/assets/js", "!shared/*/js", "!ui/*/js", "!solidity/artifacts", "!solidity/contracts", "!solidity/js", "!solidity/ts/testSupport/simulator/types/wire-types.js"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 320
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": false,
+			"correctness": {
+				"noUnusedFunctionParameters": "error",
+				"noUnusedImports": "error",
+				"noUnusedVariables": "error"
+			},
+			"nursery": {
+				"noFloatingPromises": "error",
+				"useExhaustiveSwitchCases": "error"
+			},
+			"suspicious": {
+				"noDoubleEquals": "error",
+				"noExplicitAny": "error"
+			},
+			"style": {
+				"useConst": "error",
+				"noNestedTernary": "error",
+				"noUselessElse": "error",
+				"noNonNullAssertion": "error",
+				"useDefaultSwitchClause": "error",
+				"useNodeAssertStrict": "error",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"viem": "Import EVM primitives through the shared boundary ('@zoltar/core-shared/evm/ethereum', or 'src/ethereum.ts' inside AugurScan) instead of viem or abitype.",
+							"abitype": "Import EVM primitives through the shared boundary ('@zoltar/core-shared/evm/ethereum', or 'src/ethereum.ts' inside AugurScan) instead of viem or abitype."
+						},
+						"patterns": [
+							{
+								"group": ["viem/**", "abitype/**"],
+								"message": "Import EVM primitives through the shared boundary ('@zoltar/core-shared/evm/ethereum', or 'src/ethereum.ts' inside AugurScan) instead of viem or abitype."
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+			"linter": {
+				"domains": {
+					"test": "recommended"
+				}
+			}
+		}
+	],
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "single",
+			"semicolons": "asNeeded",
+			"arrowParentheses": "asNeeded"
+		}
+	},
+	"assist": {
+		"enabled": false
+	}
+}

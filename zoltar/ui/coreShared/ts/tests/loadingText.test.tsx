@@ -1,0 +1,62 @@
+/// <reference types="bun-types" />
+
+import { installDomTestLifecycle } from './testUtils/domTestLifecycle.js'
+import { describe, expect, test } from 'bun:test'
+import { LoadingAwareText, LoadingText } from '../components/LoadingText.js'
+import { within } from './testUtils/queries'
+import { renderIntoDocument } from './testUtils/renderIntoDocument.js'
+
+describe('LoadingText', () => {
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+
+	installDomTestLifecycle({
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+		},
+	})
+
+	test('renders the default text and spinner when no child content is given', async () => {
+		const renderedComponent = await renderIntoDocument(<LoadingText />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		const wrapper = documentQueries.getByText('Loading…')
+
+		expect(wrapper).not.toBeNull()
+		expect(wrapper.className).toContain('loading-value')
+		expect(wrapper.getAttribute('role')).toBe('status')
+		expect(wrapper.getAttribute('aria-live')).toBe('polite')
+		expect(document.body.querySelector('.loading-value .spinner')).not.toBeNull()
+	})
+
+	test('applies custom classes and custom children', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<LoadingText className='compact'>
+				<span>Working</span>
+			</LoadingText>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		expect(document.body.querySelector('.loading-value.compact')).not.toBeNull()
+		expect(document.body.querySelector('.loading-value .spinner')).not.toBeNull()
+		expect(document.body.querySelector('.loading-value')?.textContent).toContain('Working')
+	})
+
+	test('recognizes and decorates user-facing loading messages', async () => {
+		const renderedComponent = await renderIntoDocument(<LoadingAwareText>Loading truth auction status…</LoadingAwareText>)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		expect(within(document.body).getByRole('status').textContent).toContain('Loading truth auction status…')
+		expect(document.body.querySelector('.loading-value .spinner')).not.toBeNull()
+	})
+
+	test('leaves non-loading messages unchanged', async () => {
+		const renderedComponent = await renderIntoDocument(<LoadingAwareText>Connect a wallet before submitting.</LoadingAwareText>)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		expect(within(document.body).getByText('Connect a wallet before submitting.')).not.toBeNull()
+		expect(document.body.querySelector('.spinner')).toBeNull()
+		expect(within(document.body).queryByRole('status')).toBeNull()
+	})
+})

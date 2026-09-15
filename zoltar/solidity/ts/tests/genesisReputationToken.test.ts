@@ -1,0 +1,125 @@
+import { beforeEach, describe, test } from 'bun:test'
+import { SEPOLIA_REP_ALLOCATIONS } from '@zoltar/zoltar-shared/deployment/sepoliaRepAllocations'
+import { encodeDeployData, type Address } from '@zoltar/core-shared/evm/ethereum'
+import assert from '../testSupport/simulator/utils/assert'
+import { AnvilWindowEthereum } from '../testSupport/simulator/AnvilWindowEthereum'
+import { useIsolatedAnvilNode } from '../testSupport/simulator/useIsolatedAnvilNode'
+import { TEST_ADDRESSES } from '../testSupport/simulator/utils/constants'
+import { createWriteClient, type WriteClient } from '../testSupport/simulator/utils/clients'
+import { setupTestAccounts } from '../testSupport/simulator/utils/utilities'
+import { GenesisReputationToken_GenesisReputationToken, ReputationToken_ReputationToken } from '../types/contractArtifact'
+
+describe('GenesisReputationToken', () => {
+	const { getAnvilWindowEthereum } = useIsolatedAnvilNode()
+	let mockWindow: AnvilWindowEthereum
+	let client: WriteClient
+
+	beforeEach(async () => {
+		mockWindow = getAnvilWindowEthereum()
+		client = createWriteClient(mockWindow, TEST_ADDRESSES[0])
+		await setupTestAccounts(mockWindow)
+	})
+
+	test('matches external REPv2 by exposing approval-based ERC-20 authorization only', () => {
+		const functionNames = new Set<string>(GenesisReputationToken_GenesisReputationToken.abi.flatMap(item => (item.type === 'function' ? [item.name] : [])))
+		assert.ok(functionNames.has('getTotalTheoreticalSupply'), 'genesis REP must expose the mainnet REPv2 theoretical-supply selector')
+		for (const unsupportedFunction of ['permit', 'nonces', 'transferWithAuthorization', 'receiveWithAuthorization', 'cancelAuthorization', 'authorizationState']) {
+			assert.ok(!functionNames.has(unsupportedFunction), `genesis REP must not advertise unsupported ${unsupportedFunction}`)
+		}
+	})
+
+	test('mints the configured Sepolia balances and fixes theoretical supply to their sum', async () => {
+		const data = encodeDeployData({
+			abi: GenesisReputationToken_GenesisReputationToken.abi,
+			bytecode: `0x${GenesisReputationToken_GenesisReputationToken.evm.bytecode.object}`,
+			args: [SEPOLIA_REP_ALLOCATIONS.map(allocation => allocation.address), SEPOLIA_REP_ALLOCATIONS.map(allocation => allocation.amount)],
+		})
+		const hash = await client.sendTransaction({ data })
+		const receipt = await client.waitForTransactionReceipt({ hash })
+		const tokenAddress = receipt.contractAddress as Address | null | undefined
+		if (tokenAddress === undefined || tokenAddress === null) throw new Error('Genesis REP deployment address missing')
+
+		for (const allocation of SEPOLIA_REP_ALLOCATIONS) {
+			const balance = await client.readContract({
+				abi: GenesisReputationToken_GenesisReputationToken.abi,
+				address: tokenAddress,
+				functionName: 'balanceOf',
+				args: [allocation.address],
+			})
+			assert.strictEqual(balance, allocation.amount, `unexpected Sepolia REP allocation for ${allocation.address}`)
+		}
+
+		const totalSupply = await client.readContract({
+			abi: GenesisReputationToken_GenesisReputationToken.abi,
+			address: tokenAddress,
+			functionName: 'totalSupply',
+			args: [],
+		})
+		const theoreticalSupply = await client.readContract({
+			abi: GenesisReputationToken_GenesisReputationToken.abi,
+			address: tokenAddress,
+			functionName: 'getTotalTheoreticalSupply',
+			args: [],
+		})
+		const allocatedSupply = SEPOLIA_REP_ALLOCATIONS.reduce((total, allocation) => total + allocation.amount, 0n)
+		assert.strictEqual(totalSupply, allocatedSupply)
+		assert.strictEqual(theoreticalSupply, allocatedSupply)
+	})
+
+	test('rejects missing, mismatched, zero-address, zero-balance, and duplicate allocations', async () => {
+		const deploy = async (holders: readonly Address[], balances: readonly bigint[]) => {
+			const data = encodeDeployData({
+				abi: GenesisReputationToken_GenesisReputationToken.abi,
+				bytecode: `0x${GenesisReputationToken_GenesisReputationToken.evm.bytecode.object}`,
+				args: [holders, balances],
+			})
+			return await client.sendTransaction({ data })
+		}
+
+		await assert.rejects(deploy([], []), /at least one initial holder|reverted/i)
+		await assert.rejects(deploy([client.account.address], []), /holder and balance counts|reverted/i)
+		await assert.rejects(deploy(['0x0000000000000000000000000000000000000000'], [1n]), /zero address|reverted/i)
+		await assert.rejects(deploy([client.account.address], [0n]), /balance must be non-zero|reverted/i)
+		await assert.rejects(deploy([client.account.address, client.account.address], [1n, 2n]), /holders must be unique|reverted/i)
+		await assert.rejects(deploy([client.account.address], [11_000_000n * 10n ** 18n + 1n]), /exceeds maximum supply|reverted/i)
+	})
+
+	test('rejects a child theoretical supply above the protocol REP maximum', async () => {
+		const data = encodeDeployData({
+			abi: ReputationToken_ReputationToken.abi,
+			bytecode: `0x${ReputationToken_ReputationToken.evm.bytecode.object}`,
+			args: [client.account.address],
+		})
+		const hash = await client.sendTransaction({ data })
+		const receipt = await client.waitForTransactionReceipt({ hash })
+		const tokenAddress = receipt.contractAddress as Address | null | undefined
+		if (tokenAddress === undefined || tokenAddress === null) throw new Error('Child REP deployment address missing')
+
+		await assert.rejects(
+			client.writeContract({
+				abi: ReputationToken_ReputationToken.abi,
+				address: tokenAddress,
+				functionName: 'initialize',
+				args: [1n, 11_000_000n * 10n ** 18n + 1n, 1n],
+			}),
+			/exceeds maximum REP|reverted/i,
+		)
+	})
+
+	test('child REP initialization is Zoltar-only and one-time', async () => {
+		const data = encodeDeployData({
+			abi: ReputationToken_ReputationToken.abi,
+			bytecode: `0x${ReputationToken_ReputationToken.evm.bytecode.object}`,
+			args: [client.account.address],
+		})
+		const receipt = await client.waitForTransactionReceipt({ hash: await client.sendTransaction({ data }) })
+		const tokenAddress = receipt.contractAddress
+		if (tokenAddress === undefined || tokenAddress === null) throw new Error('Child REP deployment address missing')
+		const attacker = createWriteClient(mockWindow, TEST_ADDRESSES[1])
+		await assert.rejects(attacker.writeContract({ abi: ReputationToken_ReputationToken.abi, address: tokenAddress, functionName: 'initialize', args: [1n, 100n, 1n] }), /ReputationToken caller must be the Zoltar contract|reverted/i)
+		await client.waitForTransactionReceipt({ hash: await client.writeContract({ abi: ReputationToken_ReputationToken.abi, address: tokenAddress, functionName: 'initialize', args: [1n, 100n, 1n] }) })
+		await assert.rejects(client.writeContract({ abi: ReputationToken_ReputationToken.abi, address: tokenAddress, functionName: 'initialize', args: [2n, 200n, 2n] }), /already initialized|reverted/i)
+		assert.strictEqual(await client.readContract({ abi: ReputationToken_ReputationToken.abi, address: tokenAddress, functionName: 'name' }), 'Augur Reputation 1')
+		assert.strictEqual(await client.readContract({ abi: ReputationToken_ReputationToken.abi, address: tokenAddress, functionName: 'symbol' }), 'REP1')
+	})
+})

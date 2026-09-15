@@ -1,0 +1,531 @@
+/// <reference types="bun-types" />
+
+import { installActiveEnvironmentForTesting } from '@zoltar/ui-core-shared/lib/activeEnvironment.js'
+import { getUniversePresentation } from '@zoltar/ui-core-shared/lib/userCopy.js'
+import { installDomTestLifecycle } from '@zoltar/ui-core-shared/tests/testUtils/domTestLifecycle.js'
+import { createFakeBackend } from '@zoltar/ui-core-shared/tests/testUtils/fakeBackend.js'
+import { fireEvent, waitFor, within } from '@zoltar/ui-core-shared/tests/testUtils/queries.js'
+import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
+import { installTestRouting } from '@zoltar/ui-core-shared/tests/testUtils/testRouting.js'
+import { SEPOLIA_NETWORK_PROFILE } from '@zoltar/ui-core-shared/wallet/networkProfile.js'
+import { OverviewPanels } from '@zoltar/ui-zoltar-shared/features/overview/OverviewPanels.js'
+import { describe, expect, mock, test } from 'bun:test'
+import { act } from 'preact/test-utils'
+
+installTestRouting()
+describe('OverviewPanels', () => {
+	type MetricElement = {
+		classList: {
+			contains: (token: string) => boolean
+		}
+		firstElementChild: MetricElement | null
+		getAttribute: (name: string) => string | null
+		parentElement: MetricElement | null
+		querySelector: (selector: string) => MetricElement | null
+	}
+
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+	let setClientWidthResolver = (_resolver: (element: MetricElement) => number) => undefined
+	let setMeasureWidthResolver = (_resolver: (element: MetricElement) => number) => undefined
+	let triggerResizeObservers = () => undefined
+
+	function openAccountMenu() {
+		const summary = document.body.querySelector('.account-menu > summary')
+		if (!(summary instanceof HTMLElement)) throw new Error('Expected the account menu summary')
+		expect(summary.getAttribute('aria-label')).toBe('Account Menu 0x123456…567890')
+		fireEvent.click(summary)
+	}
+
+	async function renderOverviewPanels(overrides: Partial<Parameters<typeof OverviewPanels>[0]> = {}) {
+		const baseProps: Parameters<typeof OverviewPanels>[0] = {
+			applicationTitle: 'Custom application',
+			activeUniverseId: 0n,
+			parentUniverseId: undefined,
+			accountState: {
+				address: undefined,
+				chainId: '0xaa36a7',
+				ethBalanceAttoEth: undefined,
+			},
+			isConnectingWallet: false,
+			isManagingWallet: false,
+			isLoadingRepPrices: false,
+			isRefreshingRepPrices: false,
+			isLoadingUniverseRepBalance: false,
+			isRefreshing: false,
+			onConnect: () => undefined,
+			onChangeWallet: () => undefined,
+			onDisconnectWallet: () => undefined,
+			onGoToGenesisUniverse: () => undefined,
+			onRefreshRepPrices: () => undefined,
+			onSwitchNetwork: () => undefined,
+			repPerEthFailure: undefined,
+			repPerEthPrice: undefined,
+			repPerEthSource: undefined,
+			repPerEthSourceUrl: undefined,
+			repUsdcFailure: undefined,
+			repUsdcPrice: undefined,
+			repUsdcSource: undefined,
+			repUsdcSourceUrl: undefined,
+			universeForkTime: undefined,
+			universeHasForked: false,
+			universePresentation: undefined,
+			universeRepBalanceAttoRep: undefined,
+			walletBootstrapComplete: true,
+		}
+
+		const renderedComponent = await renderIntoDocument(
+			<OverviewPanels
+				{...baseProps}
+				{...overrides}
+				accountState={{
+					...baseProps.accountState,
+					...overrides.accountState,
+				}}
+			/>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+		return within(document.body)
+	}
+
+	installDomTestLifecycle({
+		beforeTest: domEnvironment => {
+			let resolveClientWidth = (_element: MetricElement) => 0
+			let resolveMeasureWidth = (_element: MetricElement) => 0
+			const resizeObservers: MockResizeObserver[] = []
+			const originalGetBoundingClientRect = domEnvironment.window.HTMLElement.prototype.getBoundingClientRect
+
+			Object.defineProperty(domEnvironment.window.HTMLElement.prototype, 'clientWidth', {
+				configurable: true,
+				get() {
+					return resolveClientWidth(this)
+				},
+			})
+
+			domEnvironment.window.HTMLElement.prototype.getBoundingClientRect = function () {
+				if (this.classList.contains('currency-value-measure')) return new domEnvironment.window.DOMRect(0, 0, resolveMeasureWidth(this), 0)
+				return originalGetBoundingClientRect.call(this)
+			}
+
+			class MockResizeObserver implements ResizeObserver {
+				callback: ResizeObserverCallback
+
+				constructor(callback: ResizeObserverCallback) {
+					this.callback = callback
+					resizeObservers.push(this)
+				}
+
+				disconnect() {}
+
+				observe(_target: Element, _options?: ResizeObserverOptions) {}
+
+				unobserve(_target: Element) {}
+			}
+
+			Reflect.set(globalThis, 'ResizeObserver', MockResizeObserver)
+			setClientWidthResolver = nextResolver => {
+				resolveClientWidth = nextResolver
+			}
+			setMeasureWidthResolver = nextResolver => {
+				resolveMeasureWidth = nextResolver
+			}
+
+			triggerResizeObservers = () => {
+				for (const observer of resizeObservers) {
+					observer.callback([], observer)
+				}
+			}
+		},
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+			Reflect.deleteProperty(globalThis, 'ResizeObserver')
+			setClientWidthResolver = (_resolver: (element: MetricElement) => number) => undefined
+			setMeasureWidthResolver = (_resolver: (element: MetricElement) => number) => undefined
+			triggerResizeObservers = () => undefined
+		},
+	})
+
+	test('shows an enabled connect wallet button when disconnected and idle', async () => {
+		const documentQueries = await renderOverviewPanels()
+		const connectButton = documentQueries.getByRole('button', { name: 'Connect wallet' })
+
+		if (!(connectButton instanceof HTMLButtonElement)) throw new Error('Expected connect button')
+		expect(connectButton.disabled).toBe(false)
+	})
+
+	test('identifies the Zoltar application in its operations header', async () => {
+		const documentQueries = await renderOverviewPanels()
+		expect(documentQueries.getByRole('heading', { level: 2, name: 'Custom application' })).toBeDefined()
+	})
+
+	test('shows one concise missing-universe recovery action', async () => {
+		const onGoToGenesisUniverse = mock(() => undefined)
+		const documentQueries = await renderOverviewPanels({
+			onGoToGenesisUniverse,
+			activeUniverseId: 7n,
+			universePresentation: getUniversePresentation('missing'),
+		})
+
+		expect(documentQueries.getAllByText('Choose another universe.')).toHaveLength(1)
+		expect(documentQueries.getAllByRole('button', { name: 'Go to Genesis universe' })).toHaveLength(1)
+		expect(documentQueries.queryByText('Go to Genesis universe', { selector: 'p' })).toBeNull()
+		fireEvent.click(documentQueries.getByRole('button', { name: 'Go to Genesis universe' }))
+		expect(onGoToGenesisUniverse).toHaveBeenCalledTimes(1)
+	})
+
+	test('uses the application-owned title supplied by a dependent app', async () => {
+		const documentQueries = await renderOverviewPanels({ applicationTitle: 'Custom application' })
+		expect(documentQueries.getByRole('heading', { level: 2, name: 'Custom application' })).toBeDefined()
+		expect(document.body.textContent).not.toContain('Zoltar')
+	})
+
+	test('keeps the active Sepolia deployment target visible while disconnected', async () => {
+		const resetEnvironment = installActiveEnvironmentForTesting(createFakeBackend({ profile: SEPOLIA_NETWORK_PROFILE }))
+		try {
+			const documentQueries = await renderOverviewPanels({
+				accountState: {
+					address: undefined,
+					chainId: SEPOLIA_NETWORK_PROFILE.chainIdHex,
+					ethBalanceAttoEth: undefined,
+				},
+			})
+
+			expect(documentQueries.getByText('Sepolia')).not.toBeNull()
+			expect(documentQueries.queryByText('Read-only')).toBeNull()
+			expect(documentQueries.queryByText('Not configured on Sepolia')).toBeNull()
+			expect(documentQueries.getByRole('button', { name: 'Refresh REP prices' })).not.toBeNull()
+		} finally {
+			resetEnvironment()
+		}
+	})
+
+	test('distinguishes missing liquidity from a failed REP price request', async () => {
+		const documentQueries = await renderOverviewPanels({
+			repPerEthFailure: 'no-liquidity',
+			repUsdcFailure: 'rpc-error',
+		})
+
+		expect(documentQueries.getByText('No liquidity available')).not.toBeNull()
+		expect(documentQueries.getByText('Quote failed')).not.toBeNull()
+		const priceFailures = document.querySelectorAll('.rep-price-failure')
+		expect(priceFailures).toHaveLength(2)
+		for (const failure of Array.from(priceFailures)) expect(failure.classList.contains('currency-value')).toBe(true)
+		expect(documentQueries.getByRole('button', { name: 'Refresh REP prices' })).not.toBeNull()
+	})
+
+	test('renders an application-provided REP per ETH source label', async () => {
+		const documentQueries = await renderOverviewPanels({
+			repPerEthPrice: 2n * 10n ** 18n,
+			repPerEthSourceLabel: <span>Custom oracle</span>,
+		})
+
+		expect(documentQueries.getByText('Custom oracle')).not.toBeNull()
+	})
+
+	test('shows a disabled spinner button while a wallet connection request is pending', async () => {
+		const documentQueries = await renderOverviewPanels({
+			isConnectingWallet: true,
+		})
+		const connectButton = documentQueries.getByRole('button', { name: 'Connecting…' })
+
+		if (!(connectButton instanceof HTMLButtonElement)) throw new Error('Expected connect button')
+		expect(connectButton.disabled).toBe(true)
+	})
+
+	test('offers account management and wrong-network recovery for a connected wallet', async () => {
+		const onChangeWallet = mock(() => undefined)
+		const onDisconnectWallet = mock(() => undefined)
+		const onSwitchNetwork = mock(() => undefined)
+		const documentQueries = await renderOverviewPanels({
+			accountState: {
+				address: '0x1234567890123456789012345678901234567890',
+				chainId: '0x1',
+				ethBalanceAttoEth: undefined,
+			},
+			onChangeWallet,
+			onDisconnectWallet,
+			onSwitchNetwork,
+		})
+
+		openAccountMenu()
+		expect(documentQueries.getByText('Ethereum (1)')).not.toBeNull()
+		expect(documentQueries.queryByRole('button', { name: 'Copy Address' })).toBeNull()
+		expect(documentQueries.queryByRole('button', { name: 'Address Copied' })).toBeNull()
+		fireEvent.click(documentQueries.getByRole('button', { name: 'Change wallet' }))
+		fireEvent.click(documentQueries.getByRole('button', { name: 'Switch to Sepolia' }))
+		fireEvent.click(documentQueries.getByRole('button', { name: 'Disconnect' }))
+
+		expect(onChangeWallet).toHaveBeenCalledTimes(1)
+		expect(onSwitchNetwork).toHaveBeenCalledTimes(1)
+		expect(onDisconnectWallet).toHaveBeenCalledTimes(1)
+	})
+
+	test('provides the responsive account-address presentation for a normal provider wallet', async () => {
+		const address = '0x1234567890123456789012345678901234567890'
+		const documentQueries = await renderOverviewPanels({
+			accountState: {
+				address,
+				chainId: '0xaa36a7',
+				ethBalanceAttoEth: undefined,
+			},
+		})
+
+		const walletPanel = document.body.querySelector('.overview-wallet-panel')
+		if (!(walletPanel instanceof HTMLElement)) throw new Error('Expected wallet overview panel')
+		expect(walletPanel.classList.contains('is-simulation')).toBe(false)
+
+		expect(document.body.querySelector('.account-menu > summary .wallet-chip .address-value-abbreviated')?.textContent).toBe('0x123456…567890')
+		expect(document.body.querySelector('.account-menu > summary .wallet-chip .address-value')?.getAttribute('title')).toBe(address)
+		const addressButton = documentQueries.getByRole('button', { name: `Copy address ${address}` })
+		expect(addressButton.closest('.account-menu-popover')).not.toBeNull()
+		expect(addressButton.textContent).toBe(address)
+	})
+
+	test('identifies recognized and unknown wrong networks in the environment badge', async () => {
+		let documentQueries = await renderOverviewPanels({
+			accountState: {
+				address: '0x1234567890123456789012345678901234567890',
+				chainId: '0x2105',
+				ethBalanceAttoEth: undefined,
+			},
+		})
+
+		expect(documentQueries.getByText('Wrong Network (Base)')).not.toBeNull()
+		expect(document.body.querySelector('.account-menu > summary .wallet-chip.is-danger')).not.toBeNull()
+
+		await cleanupRenderedComponent?.()
+		cleanupRenderedComponent = undefined
+		documentQueries = await renderOverviewPanels({
+			accountState: {
+				address: '0x1234567890123456789012345678901234567890',
+				chainId: '0xcc6b',
+				ethBalanceAttoEth: undefined,
+			},
+		})
+
+		expect(documentQueries.getByText('Wrong Network (52331)')).not.toBeNull()
+		openAccountMenu()
+		expect(document.body.querySelector('.account-menu-network strong')?.textContent).toBe('52331')
+	})
+
+	test('keeps the connect wallet button idle during bootstrap-only loading', async () => {
+		const documentQueries = await renderOverviewPanels({
+			walletBootstrapComplete: false,
+		})
+		const connectButton = documentQueries.getByRole('button', { name: 'Connect wallet' })
+
+		if (!(connectButton instanceof HTMLButtonElement)) throw new Error('Expected connect button')
+		expect(connectButton.disabled).toBe(false)
+		expect([...document.body.querySelectorAll('.overview-inline-metrics .metric-field-value')].slice(0, 2).map(value => value.textContent?.trim())).toEqual(['Loading…', 'Loading…'])
+	})
+
+	test('renders the REP/ETH panel from the canonical REP per ETH quote', async () => {
+		const documentQueries = await renderOverviewPanels({
+			repPerEthPrice: 2439024390243902439024n,
+		})
+		expect(documentQueries.getByTitle('2 439.024390243902439024')).toBeDefined()
+		expect(documentQueries.queryByText(/0\.00041/)).toBeNull()
+	})
+
+	test('renders a refresh button for REP prices and wires it to the provided handler', async () => {
+		const onRefreshRepPrices = mock(() => undefined)
+		const documentQueries = await renderOverviewPanels({
+			onRefreshRepPrices,
+		})
+		const refreshButton = documentQueries.getByRole('button', { name: 'Refresh REP prices' })
+		fireEvent.click(refreshButton)
+
+		expect(onRefreshRepPrices).toHaveBeenCalledTimes(1)
+	})
+
+	test('keeps secondary environment metrics behind a mobile details disclosure', async () => {
+		const documentQueries = await renderOverviewPanels()
+		const detailsButton = documentQueries.getByRole('button', { name: 'Show environment details' })
+		const metrics = document.body.querySelector('.overview-inline-metrics')
+		if (!(metrics instanceof HTMLElement)) throw new Error('Expected overview metrics')
+
+		expect(detailsButton.getAttribute('aria-expanded')).toBe('false')
+		expect(metrics.classList.contains('mobile-expanded')).toBe(false)
+		expect(metrics.querySelectorAll('.overview-metric-secondary').length).toBeGreaterThan(0)
+
+		fireEvent.click(detailsButton)
+
+		expect(documentQueries.getByRole('button', { name: 'Hide environment details' }).getAttribute('aria-expanded')).toBe('true')
+		expect(metrics.classList.contains('mobile-expanded')).toBe(true)
+	})
+
+	test('keeps stale REP prices visible while the refresh control shows an in-flight refresh', async () => {
+		const documentQueries = await renderOverviewPanels({
+			isLoadingRepPrices: false,
+			isRefreshingRepPrices: true,
+			repPerEthPrice: 2439024390243902439024n,
+			repUsdcPrice: 1234567n,
+		})
+
+		const refreshButton = documentQueries.getByRole('button', { name: 'Refresh REP prices' })
+		if (!(refreshButton instanceof HTMLButtonElement)) throw new Error('Expected refresh button')
+
+		expect(refreshButton.disabled).toBe(true)
+		expect(refreshButton.title).toBe('Refreshing REP prices…')
+		expect(documentQueries.getByTitle('2 439.024390243902439024')).toBeDefined()
+		expect(documentQueries.getByTitle('1.234567 USDC')).toBeDefined()
+	})
+
+	test('surfaces a prominent fork migration notice without a redundant badge', async () => {
+		const documentQueries = await renderOverviewPanels({
+			universeForkTime: 123n,
+			universeHasForked: true,
+		})
+
+		expect(documentQueries.getByText(/This Universe has forked on/)).toBeDefined()
+		expect(document.body.textContent).toContain('Please migrate your REP to continue to use Augur')
+		expect(document.body.textContent).not.toContain('Migration required')
+	})
+
+	test('places both critical notices below the wallet and before balances', async () => {
+		const backend = createFakeBackend({ accountAddress: '0x1234567890123456789012345678901234567890' })
+		backend.getChainId = async () => '0x1'
+		const restore = installActiveEnvironmentForTesting(backend)
+		try {
+			await renderOverviewPanels({ universeHasForked: true })
+			await waitFor(() => expect(document.body.querySelector('.mainnet-disabled-notice')).not.toBeNull())
+			const toolbar = document.body.querySelector('.header-toolbar')
+			const mainnet = document.body.querySelector('.mainnet-disabled-notice')
+			const fork = document.body.querySelector('.universe-fork-notice')
+			expect(toolbar?.nextElementSibling).toBe(mainnet)
+			expect(mainnet?.nextElementSibling).toBe(fork)
+			expect(fork?.nextElementSibling?.classList.contains('overview-inline-metrics')).toBe(true)
+			expect(mainnet?.getAttribute('role')).toBe('alert')
+			expect(fork?.getAttribute('role')).toBe('alert')
+		} finally {
+			restore()
+		}
+	})
+
+	test('does not render a redundant forked badge in the toolbar badge slot', async () => {
+		await renderOverviewPanels({
+			universeHasForked: true,
+		})
+
+		const brand = document.body.querySelector('.header-toolbar-brand')
+		if (!(brand instanceof HTMLElement)) throw new Error('Expected the toolbar brand')
+		const title = brand.querySelector('h2.application-brand')
+		if (!(title instanceof HTMLElement)) throw new Error('Expected the application title')
+		const badgeSlot = brand.querySelector('.environment-badge-row')
+		if (!(badgeSlot instanceof HTMLElement)) throw new Error('Expected the toolbar badge slot')
+
+		expect(title.querySelector('.badge')).toBeNull()
+		expect(brand.children[1]).toBe(badgeSlot)
+		expect(badgeSlot.textContent).not.toContain('Read-only')
+		expect(badgeSlot.textContent).not.toContain('Forked')
+	})
+
+	test('distinguishes browser simulation from public network state', async () => {
+		const documentQueries = await renderOverviewPanels({
+			readBackendStatus: {
+				blockNumber: 12n,
+				blockTimestamp: undefined,
+				rpcSource: 'default',
+				rpcUrl: 'browser-simulation',
+				transportMode: 'provider',
+			},
+		})
+
+		expect(documentQueries.getByText('Simulation')).toBeDefined()
+		expect(documentQueries.queryByText('Write Network')).toBeNull()
+		expect(documentQueries.queryByText('Read Source')).toBeNull()
+		expect(documentQueries.queryByText('Browser simulation')).toBeNull()
+		expect(documentQueries.queryByText('browser simulation · provider via default @ 12')).toBeNull()
+	})
+
+	test('does not repeat a parent universe outside the header', async () => {
+		const documentQueries = await renderOverviewPanels({
+			activeUniverseId: 11n,
+		})
+
+		expect(documentQueries.queryByText('Parent Universe')).toBeNull()
+	})
+
+	test('keeps every header metric slot rendered while the wallet bootstraps or stays disconnected', async () => {
+		const expectedSlots = ['overview-simulation-secondary', 'overview-simulation-secondary', 'overview-metric-secondary', 'overview-metric-secondary']
+		const readSlots = () => [...document.body.querySelectorAll('.overview-inline-metrics .overview-metric-group-items > div')].map(cell => cell.className)
+		const readMetricValues = () => [...document.body.querySelectorAll('.overview-inline-metrics .metric-field-value')].map(value => value.textContent?.trim())
+		const readGroups = () =>
+			[...document.body.querySelectorAll('.overview-inline-metrics > .overview-metric-group')].map(group => {
+				if (!(group instanceof HTMLElement)) throw new Error('Expected a header metric group')
+				return { label: group.getAttribute('aria-label'), columns: group.style.getPropertyValue('--overview-metric-columns'), secondary: group.classList.contains('is-secondary') }
+			})
+
+		await renderOverviewPanels({ walletBootstrapComplete: false })
+		expect(readSlots()).toEqual(expectedSlots)
+		expect(readMetricValues().slice(0, 2)).toEqual(['Loading…', 'Loading…'])
+		expect(readGroups()).toEqual([
+			{ label: 'Balances', columns: '2', secondary: false },
+			{ label: 'Prices', columns: '2', secondary: true },
+		])
+		expect(document.body.querySelector('.overview-metric-group.is-secondary .overview-metric-group-caption button')?.getAttribute('aria-label')).toBe('Refresh REP prices')
+		expect(document.body.querySelector('.header-toolbar-controls .toolbar-field-value')?.textContent).toBe('Genesis (0x0)')
+		expect(document.body.querySelector('.header-toolbar-controls .toolbar-field-value > span')?.getAttribute('title')).toBe('Genesis (0x0)')
+		await cleanupRenderedComponent?.()
+
+		await renderOverviewPanels({ walletBootstrapComplete: false, showRepPrices: false })
+		expect(readSlots()).toEqual(['overview-simulation-secondary', 'overview-simulation-secondary'])
+		expect(readGroups()).toEqual([{ label: 'Balances', columns: '2', secondary: false }])
+		await cleanupRenderedComponent?.()
+
+		const childUniverseId = 0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdn
+		await renderOverviewPanels({ activeUniverseId: childUniverseId })
+		expect(document.body.querySelector('.header-toolbar-controls .toolbar-field-value')?.textContent).toBe('Universe 0x12345678…90abcd')
+		expect(document.body.querySelector('.header-toolbar-controls .toolbar-field-value > span')?.getAttribute('title')).toBe(`Universe 0x${childUniverseId.toString(16)}`)
+		await cleanupRenderedComponent?.()
+
+		await renderOverviewPanels({ walletBootstrapComplete: true })
+		expect(readSlots()).toEqual(expectedSlots)
+		expect(readMetricValues().slice(0, 2)).toEqual(['—', '—'])
+		expect(document.body.querySelector('.header-toolbar-controls .wallet-button')?.textContent).toBe('Connect wallet')
+		await cleanupRenderedComponent?.()
+
+		await renderOverviewPanels({
+			accountState: { address: '0x1234567890123456789012345678901234567890', chainId: '0xaa36a7', ethBalanceAttoEth: 2n * 10n ** 18n },
+			universeRepBalanceAttoRep: 5n * 10n ** 18n,
+		})
+		expect(readSlots()).toEqual(expectedSlots)
+		expect(readMetricValues().slice(0, 2)).toEqual(['≈ 2.00', '≈ 5.00'])
+		expect(document.body.querySelector('.header-toolbar-controls .wallet-chip .address-value-abbreviated')?.textContent).toBe('0x123456…567890')
+	})
+
+	test('compacts a large ETH balance', async () => {
+		// Widths belong to the metric cell around each shrink-to-fit value.
+		setClientWidthResolver(element => {
+			if (element.classList.contains('currency-value') || element.classList.contains('currency-value-wrap')) return 0
+			const title = element.querySelector('.currency-value')?.getAttribute('title')
+			if (title === '999 999 990 000') return 80
+			if (title === '10 000') return 160
+			return 160
+		})
+
+		setMeasureWidthResolver(element => {
+			const parentTitle = element.parentElement?.firstElementChild?.getAttribute('title')
+			if (parentTitle === '999 999 990 000') return 180
+			if (parentTitle === '10 000') return 110
+			return 80
+		})
+
+		const documentQueries = await renderOverviewPanels({
+			accountState: {
+				address: '0x1234567890123456789012345678901234567890',
+				chainId: '0xaa36a7',
+				ethBalanceAttoEth: 999999990000n * 10n ** 18n,
+			},
+			universeRepBalanceAttoRep: 5n * 10n ** 18n,
+		})
+
+		await act(() => {
+			triggerResizeObservers()
+		})
+
+		const ethButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+
+		expect(ethButton.textContent).toBe('≈ 1T')
+	})
+})

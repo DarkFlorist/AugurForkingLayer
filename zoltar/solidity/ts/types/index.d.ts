@@ -1,0 +1,104 @@
+declare module 'solc' {
+	interface CompilerInputSourceFile {
+		readonly keccak256?: string
+		readonly urls: string[]
+	}
+	interface CompilerInputSourceCode {
+		readonly keccak256?: string
+		readonly content: string
+	}
+	interface CompilerInput {
+		readonly language: 'Solidity' | 'serpent' | 'lll' | 'assembly'
+		readonly settings?: Record<string, unknown>
+		readonly sources: {
+			readonly [globalName: string]: CompilerInputSourceFile | CompilerInputSourceCode
+		}
+	}
+	interface CompilerOutputError {
+		readonly sourceLocation?: {
+			readonly file: string
+			readonly start: number
+			readonly end: number
+		}
+		readonly type: 'TypeError' | 'InternalCompilerError' | 'Exception'
+		readonly component: 'general' | 'ewasm'
+		readonly severity: 'error' | 'warning'
+		readonly message: string
+		readonly formattedMessage?: string
+	}
+	interface CompilerOutputEvmBytecode {
+		readonly object: string
+		readonly opcodes?: string
+		readonly sourceMap?: string
+		readonly immutableReferences?: {
+			readonly [astId: string]: readonly { readonly start: number; readonly length: number }[]
+		}
+		readonly linkReferences?:
+			| {}
+			| {
+					readonly [globalName: string]: {
+						readonly [name: string]: { start: number; length: number }[]
+					}
+			  }
+	}
+	interface CompilerOutputSources {
+		readonly [globalName: string]: {
+			readonly id: number
+			readonly ast: unknown
+			readonly legacyAST: unknown
+		}
+	}
+	interface CompilerOutputContract {
+		readonly metadata?: string
+		readonly userdoc?: unknown
+		readonly devdoc?: unknown
+		readonly ir?: string
+		readonly evm: {
+			readonly assembly?: string
+			readonly legacyAssembly?: unknown
+			readonly bytecode: CompilerOutputEvmBytecode
+			readonly deployedBytecode?: CompilerOutputEvmBytecode
+			readonly methodIdentifiers?: {
+				readonly [methodName: string]: string
+			}
+			readonly gasEstimates?: {
+				readonly creation: {
+					readonly codeDepositCost: string
+					readonly executionCost: string
+					readonly totalCostAttoRep: string
+				}
+				readonly external: {
+					readonly [functionSignature: string]: string
+				}
+				readonly internal: {
+					readonly [functionSignature: string]: string
+				}
+			}
+		}
+		readonly ewasm?: {
+			readonly wast: string
+			readonly wasm: string
+		}
+	}
+	interface CompilerOutputContractFile {
+		readonly [contractName: string]: CompilerOutputContract
+	}
+	interface CompilerOutputContracts {
+		readonly [globalName: string]: CompilerOutputContractFile
+	}
+	interface CompilerOutput {
+		readonly errors?: CompilerOutputError[]
+		readonly sources?: CompilerOutputSources
+		readonly contracts: CompilerOutputContracts
+	}
+	type ReadCallback = (path: string) => { contents?: string; error?: string }
+	function compile(input: string, readCallback?: ReadCallback): string
+	function version(): string
+	function loadRemoteVersion(version: string, callback: (error: Error | undefined, compiler: { compile(input: string, readCallback?: ReadCallback): string; version(): string } | undefined) => void): void
+	const solc: {
+		readonly compile: typeof compile
+		readonly version: typeof version
+		readonly loadRemoteVersion: typeof loadRemoteVersion
+	}
+	export default solc
+}

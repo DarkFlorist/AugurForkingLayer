@@ -1,0 +1,52 @@
+{
+	"network": {
+		"chainId": 11155111,
+		"chainIdHex": "0xaa36a7",
+		"genesisRepTokenAddress": "0xEf4bfe3ab731c4c8Ca69b5B446553E60c68F3f7B",
+		"id": "sepolia",
+		"name": "Sepolia"
+	},
+	"deploymentStatus": "not-checked",
+	"protocolConfig": {
+		"forkBurnDivisor": "5",
+		"forkThresholdDivisor": "20"
+	},
+	"deploymentSteps": [
+		{
+			"id": "proxyDeployer",
+			"label": "Proxy Deployer",
+			"address": "0x7A0D94F55792C434d74a40883C6ed8545E406D12",
+			"dependencies": []
+		},
+		{
+			"id": "deploymentStatusOracle",
+			"label": "Deployment Status Oracle",
+			"address": "0xE28efF94e491562bA30B40a63Cf22332A2ef1932",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "reputationToken",
+			"label": "Genesis Reputation Token",
+			"address": "0xEf4bfe3ab731c4c8Ca69b5B446553E60c68F3f7B",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "multicall3",
+			"label": "Multicall3",
+			"address": "0xB657B12CD9d80421DBC2bc70c43d6b2ff9409108",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "zoltarQuestionData",
+			"label": "ZoltarQuestionData",
+			"address": "0x98927dA4cD6C97d95c8CC97E77948389a84559fC",
+			"dependencies": ["proxyDeployer"]
+		},
+		{
+			"id": "zoltar",
+			"label": "Zoltar",
+			"address": "0xfAa07F49C2d97DCD49b7a2c1Ce34E0735896b626",
+			"dependencies": ["reputationToken", "proxyDeployer", "zoltarQuestionData"]
+		}
+	]
+}

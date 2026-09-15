@@ -28,7 +28,7 @@ void describe('two-question simulation backend', () => {
 		const questions = await loadAllZoltarQuestions(client)
 		expect(universe?.hasForked).toBe(false)
 		expect(questions).toHaveLength(2)
-		expect(questions.every(question => question.marketType === 'binary')).toBe(true)
+		expect(questions.every(question => question.questionType === 'binary')).toBe(true)
 		expect(questions.every(question => question.outcomeLabels.length === 2)).toBe(true)
 	}, 60_000)
 })

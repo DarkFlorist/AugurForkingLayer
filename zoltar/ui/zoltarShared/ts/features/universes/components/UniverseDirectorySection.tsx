@@ -1,6 +1,6 @@
 import type { ComponentChildren } from 'preact'
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '../../../copy/market.js'
+import * as questionCopy from '../../../copy/question.js'
 import { TimestampValue } from '@zoltar/ui-core-shared/components/TimestampValue.js'
 import { CurrencyValue } from '@zoltar/ui-core-shared/components/CurrencyValue.js'
 import { DataGrid } from '@zoltar/ui-core-shared/components/DataGrid.js'
@@ -32,7 +32,7 @@ export function UniverseDirectorySection({ children, zoltarUniverse }: UniverseD
 				<DataGrid>
 					<MetricField label={commonCopy.universe}>{formatUniverseLabel(zoltarUniverse.universeId)}</MetricField>
 					<MetricField label={commonCopy.status}>
-						{zoltarUniverse.hasForked ? commonCopy.forked : marketCopy.unforked}
+						{zoltarUniverse.hasForked ? commonCopy.forked : questionCopy.unforked}
 						{zoltarUniverse.hasForked && zoltarUniverse.forkTime > 0n ? (
 							<>
 								{' '}
@@ -40,7 +40,7 @@ export function UniverseDirectorySection({ children, zoltarUniverse }: UniverseD
 							</>
 						) : undefined}
 					</MetricField>
-					<MetricField label={marketCopy.parentUniverse}>{zoltarUniverse.universeId === 0n ? commonCopy.none : <UniverseLink universeId={zoltarUniverse.parentUniverseId} />}</MetricField>
+					<MetricField label={questionCopy.parentUniverse}>{zoltarUniverse.universeId === 0n ? commonCopy.none : <UniverseLink universeId={zoltarUniverse.parentUniverseId} />}</MetricField>
 					<MetricField label={zoltarUniverse.reputationTokenName ?? commonCopy.rep}>
 						<CurrencyValue value={zoltarUniverse.totalTheoreticalSupplyAttoRep} suffix={zoltarUniverse.reputationTokenSymbol ?? commonCopy.rep} />
 					</MetricField>

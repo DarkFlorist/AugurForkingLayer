@@ -28,7 +28,7 @@ void describe('forked categorical simulation backend', () => {
 
 		expect(backend.currentScenario).toBe('forked-categorical')
 		expect(universeSummary.hasForked).toBe(true)
-		expect(universeSummary.forkQuestionDetails?.marketType).toBe('categorical')
+		expect(universeSummary.forkQuestionDetails?.questionType).toBe('categorical')
 		expect(universeSummary.forkQuestionDetails?.outcomeLabels).toHaveLength(5)
 		expect(universeSummary.childUniverses.filter(child => child.exists)).toHaveLength(2)
 	}, 60_000)

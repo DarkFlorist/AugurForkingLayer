@@ -18,7 +18,7 @@ import { formatRelativeTimestamp, formatTimestamp } from '@zoltar/ui-core-shared
 import { resolveLoadableValueState, type LoadableValueState } from '@zoltar/ui-core-shared/lib/loadState.js'
 import { deriveTokenApprovalRequirement, type TokenApprovalState } from '@zoltar/ui-core-shared/transactions/tokenApproval.js'
 import { getReportPresentation, getUniversePresentation, getWalletPresentation } from '@zoltar/ui-core-shared/lib/userCopy.js'
-import type { MarketDetails, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionDetails, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
 
 const FORK_QUESTION_ERROR_ID = 'fork-zoltar-question-error'
 const FORK_QUESTION_STATE_ID = 'fork-zoltar-question-state'
@@ -43,7 +43,7 @@ type ForkZoltarSectionProps = {
 	zoltarForkRepBalanceAttoRep: bigint | undefined
 	zoltarQuestionLookupError?: string | undefined
 	zoltarQuestionLookupId?: string | undefined
-	zoltarQuestions: MarketDetails[]
+	zoltarQuestions: QuestionDetails[]
 	zoltarUniverse: ZoltarUniverseSummary | undefined
 	zoltarUniverseState: LoadableValueState
 }

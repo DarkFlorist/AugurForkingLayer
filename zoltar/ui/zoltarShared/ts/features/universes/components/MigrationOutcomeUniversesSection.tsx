@@ -1,6 +1,6 @@
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
 import * as zoltarCopy from '../../../copy/zoltar.js'
-import * as marketCopy from '../../../copy/market.js'
+import * as questionCopy from '../../../copy/question.js'
 import { CurrencyValue } from '@zoltar/ui-core-shared/components/CurrencyValue.js'
 import { OutcomeSelectionList } from '@zoltar/ui-core-shared/components/OutcomeSelectionList.js'
 import { WorkflowSubsection } from '@zoltar/ui-core-shared/components/WorkflowSubsection.js'
@@ -94,8 +94,8 @@ export function MigrationOutcomeUniversesSection({
 								<TransactionActionButton
 									tone='secondary'
 									showDisabledReason={false}
-									idleLabel={marketCopy.deployUniverse}
-									pendingLabel={marketCopy.deployingUniverse}
+									idleLabel={questionCopy.deployUniverse}
+									pendingLabel={questionCopy.deployingUniverse}
 									pending={pendingOutcomeIndex === child.outcomeIndex}
 									onClick={() => onDeployChildUniverse(child.outcomeIndex)}
 									availability={{ disabled: pendingOutcomeIndex !== undefined || deploymentDisabledReason(child) !== undefined, reason: deploymentDisabledReason(child) }}

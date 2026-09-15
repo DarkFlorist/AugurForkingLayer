@@ -1,6 +1,6 @@
 import * as appCopy from '@zoltar/ui-core-shared/copy/app.js'
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '@zoltar/ui-zoltar-shared/copy/market.js'
+import * as questionCopy from '@zoltar/ui-zoltar-shared/copy/question.js'
 import * as zoltarCopy from '@zoltar/ui-zoltar-shared/copy/zoltar.js'
 import type { ComponentChildren } from 'preact'
 import { useEffect } from 'preact/hooks'
@@ -27,7 +27,7 @@ import { writeZoltarViewQueryParam } from '@zoltar/ui-core-shared/navigation/url
 import { getUniversePresentation } from '@zoltar/ui-core-shared/lib/userCopy.js'
 import { resolveEnumValue } from '@zoltar/ui-core-shared/forms/viewState.js'
 import type { RouteTabDefinition } from '@zoltar/ui-core-shared/types/components.js'
-import type { MarketRouteContentProps, ZoltarView } from '@zoltar/ui-zoltar-shared/features/types.js'
+import type { QuestionRouteContentProps, ZoltarView } from '@zoltar/ui-zoltar-shared/features/types.js'
 import type { Route } from '@zoltar/ui-zoltar-shared/types/app.js'
 import { isUniverseIndependentZoltarView, zoltarRouting } from '@zoltar/ui-zoltar-shared/lib/routing.js'
 import { hasInvalidZoltarView } from './lib/routeValidation.js'
@@ -187,7 +187,7 @@ export function App() {
 		isOnActiveAppChain,
 		onRetryDeploymentStatus: () => void refreshState({ loadChainClock: false, loadWalletState: false }),
 	})
-	const zoltarRouteContentProps: MarketRouteContentProps = {
+	const zoltarRouteContentProps: QuestionRouteContentProps = {
 		accountState,
 		activeUniverseId,
 		activeView: activeZoltarView,
@@ -255,7 +255,7 @@ export function App() {
 				value={activeZoltarView}
 				onChange={view => setZoltarView(view)}
 				options={[
-					{ href: buildRouteHref(zoltarRouting.getHash('zoltar'), writeZoltarViewQueryParam(getRouteHashSearch(), 'questions')), label: marketCopy.browseQuestions, value: 'questions' },
+					{ href: buildRouteHref(zoltarRouting.getHash('zoltar'), writeZoltarViewQueryParam(getRouteHashSearch(), 'questions')), label: questionCopy.browseQuestions, value: 'questions' },
 					{ href: buildRouteHref(zoltarRouting.getHash('zoltar'), writeZoltarViewQueryParam(getRouteHashSearch(), 'create')), label: commonCopy.createQuestion, value: 'create' },
 					{ href: buildRouteHref(zoltarRouting.getHash('zoltar'), writeZoltarViewQueryParam(getRouteHashSearch(), 'universes')), label: commonCopy.universe, value: 'universes' as const },
 				]}

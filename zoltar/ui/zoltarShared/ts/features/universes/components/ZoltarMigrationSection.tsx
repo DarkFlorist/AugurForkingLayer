@@ -1,5 +1,5 @@
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '../../../copy/market.js'
+import * as questionCopy from '../../../copy/question.js'
 import * as zoltarCopy from '../../../copy/zoltar.js'
 import type { ComponentChildren } from 'preact'
 import { useMemo } from 'preact/hooks'
@@ -28,10 +28,10 @@ import type { ZoltarChildUniverseSummary, ZoltarUniverseSummary } from '@zoltar/
 import { getWrongNetworkReason } from '@zoltar/ui-core-shared/wallet/network.js'
 
 function getChildDeploymentAvailabilityReason({ accountAddress, exists, hasForked, isOnActiveAppChain }: { accountAddress: Address | undefined; exists?: boolean | undefined; hasForked: boolean; isOnActiveAppChain: boolean }) {
-	if (accountAddress === undefined) return marketCopy.childDeploymentWalletRequiredReason
+	if (accountAddress === undefined) return questionCopy.childDeploymentWalletRequiredReason
 	if (!isOnActiveAppChain) return getWrongNetworkReason()
-	if (!hasForked) return marketCopy.childUniversesNotForkedReason
-	if (exists === true) return marketCopy.childUniverseDeployedReason
+	if (!hasForked) return questionCopy.childUniversesNotForkedReason
+	if (exists === true) return questionCopy.childUniverseDeployedReason
 	return undefined
 }
 
@@ -263,7 +263,7 @@ export function ZoltarMigrationSection({
 							childUniverses={rootUniverse.childUniverses}
 							loadingBalances={loadingZoltarForkAccess}
 							disabled={zoltarMigrationPending}
-							isScalarFork={rootUniverse.forkQuestionDetails?.marketType === 'scalar'}
+							isScalarFork={rootUniverse.forkQuestionDetails?.questionType === 'scalar'}
 							migrationBalance={zoltarMigrationPreparedRepBalanceAttoRep}
 							onAddNextOutcome={addNextOutcome}
 							onToggleOutcomeIndex={toggleOutcomeIndex}

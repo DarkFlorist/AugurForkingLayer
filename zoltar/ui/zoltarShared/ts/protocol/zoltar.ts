@@ -1,8 +1,8 @@
 import { zeroAddress, type Address } from '@zoltar/core-shared/evm/ethereum'
 import { ReputationToken_ReputationToken, Zoltar_Zoltar, ZoltarQuestionData_ZoltarQuestionData } from '@zoltar/ui-core-shared/contractArtifact.js'
-import type { MarketCreationResult, MarketDetails, MarketDetailsPage, MarketType, QuestionData, ReadClient, WriteClient, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionCreationResult, QuestionDetails, QuestionDetailsPage, QuestionType, QuestionData, ReadClient, WriteClient, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
 import { readRequiredMulticall, writeContractAndWait } from './core.js'
-import { getMarketType, getProtocolPageOffset, getQuestionId, getQuestionIdHex, isStringArray, requireDeployedChildUniverseTupleArray, requireUniverseTupleArray, type UniverseTuple } from './helpers.js'
+import { getQuestionType, getProtocolPageOffset, getQuestionId, getQuestionIdHex, isStringArray, requireDeployedChildUniverseTupleArray, requireUniverseTupleArray, type UniverseTuple } from './helpers.js'
 import { getDeploymentSteps } from './deployment.js'
 
 const CONTRACT_PAGE_SIZE = 30n
@@ -119,7 +119,7 @@ async function loadQuestionIdsPage(client: ReadClient, startIndex: bigint, count
 	return page
 }
 
-export async function loadMarketDetails(client: ReadClient, questionId: bigint): Promise<MarketDetails> {
+export async function loadQuestionDetails(client: ReadClient, questionId: bigint): Promise<QuestionDetails> {
 	const [question, createdAt] = await readRequiredMulticall(client, [
 		{
 			abi: ZoltarQuestionData_ZoltarQuestionData.abi,
@@ -148,7 +148,7 @@ export async function loadMarketDetails(client: ReadClient, questionId: bigint):
 		displayValueMin,
 		endTime,
 		exists,
-		marketType: getMarketType({ title, description, startTime, endTime, numTicks, displayValueMin, displayValueMax, answerUnit }, outcomeLabels),
+		questionType: getQuestionType({ title, description, startTime, endTime, numTicks, displayValueMin, displayValueMax, answerUnit }, outcomeLabels),
 		outcomeLabels,
 		numTicks,
 		questionId: getQuestionIdHex(questionId),
@@ -157,9 +157,9 @@ export async function loadMarketDetails(client: ReadClient, questionId: bigint):
 	}
 }
 
-export async function loadAllZoltarQuestions(client: ReadClient): Promise<MarketDetails[]> {
+export async function loadAllZoltarQuestions(client: ReadClient): Promise<QuestionDetails[]> {
 	const questionIds = await loadQuestionIds(client)
-	return await Promise.all(questionIds.map(async questionId => await loadMarketDetails(client, questionId)))
+	return await Promise.all(questionIds.map(async questionId => await loadQuestionDetails(client, questionId)))
 }
 
 export async function loadZoltarQuestionCount(client: ReadClient) {
@@ -171,7 +171,7 @@ export async function loadZoltarQuestionCount(client: ReadClient) {
 	})
 }
 
-export async function loadZoltarQuestionPage(client: ReadClient, pageIndex: number, pageSize: number): Promise<MarketDetailsPage> {
+export async function loadZoltarQuestionPage(client: ReadClient, pageIndex: number, pageSize: number): Promise<QuestionDetailsPage> {
 	const startIndex = getProtocolPageOffset(pageIndex, pageSize)
 	const questionCount = await loadZoltarQuestionCount(client)
 	if (startIndex >= questionCount) {
@@ -188,7 +188,7 @@ export async function loadZoltarQuestionPage(client: ReadClient, pageIndex: numb
 		pageIndex,
 		pageSize,
 		questionCount,
-		questions: await Promise.all(questionIds.map(async questionId => await loadMarketDetails(client, questionId))),
+		questions: await Promise.all(questionIds.map(async questionId => await loadQuestionDetails(client, questionId))),
 	}
 }
 
@@ -235,11 +235,11 @@ export async function loadZoltarUniverseSummary(client: ReadClient, universeId: 
 	const hasForked = forkTime > 0n || storedForkTime > 0n
 
 	let childUniverses: ZoltarUniverseSummary['childUniverses'] = []
-	let forkQuestionDetails: MarketDetails | undefined = undefined
+	let forkQuestionDetails: QuestionDetails | undefined = undefined
 	if (hasForked && forkQuestionId > 0n) {
-		const marketDetails = await loadMarketDetails(client, forkQuestionId)
-		forkQuestionDetails = marketDetails
-		if (marketDetails.marketType === 'scalar') {
+		const questionDetails = await loadQuestionDetails(client, forkQuestionId)
+		forkQuestionDetails = questionDetails
+		if (questionDetails.questionType === 'scalar') {
 			const deployedChildUniverses: ZoltarUniverseSummary['childUniverses'] = []
 			let currentIndex = 0n
 			while (true) {
@@ -293,7 +293,7 @@ export async function loadZoltarUniverseSummary(client: ReadClient, universeId: 
 		} else {
 			const childOutcomeEntries = [
 				{ outcomeIndex: 0n, outcomeLabel: 'Invalid' },
-				...marketDetails.outcomeLabels.map((outcomeLabel, outcomeIndex) => ({
+				...questionDetails.outcomeLabels.map((outcomeLabel, outcomeIndex) => ({
 					outcomeIndex: BigInt(outcomeIndex + 1),
 					outcomeLabel,
 				})),
@@ -369,10 +369,10 @@ export async function loadZoltarUniverseSummary(client: ReadClient, universeId: 
 	}
 }
 
-export async function createMarket(
+export async function createQuestion(
 	client: WriteClient,
 	parameters: {
-		marketType: MarketType
+		questionType: QuestionType
 		outcomeLabels: string[]
 		questionData: QuestionData
 	},
@@ -388,6 +388,6 @@ export async function createMarket(
 	return {
 		questionId: getQuestionIdHex(questionId),
 		createQuestionHash,
-		marketType: parameters.marketType,
-	} satisfies MarketCreationResult
+		questionType: parameters.questionType,
+	} satisfies QuestionCreationResult
 }

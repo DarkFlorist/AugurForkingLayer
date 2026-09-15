@@ -1,5 +1,5 @@
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '../../../copy/market.js'
+import * as questionCopy from '../../../copy/question.js'
 import { useEffect, useMemo, useState } from 'preact/hooks'
 import type { Address } from '@zoltar/core-shared/evm/ethereum'
 import { EnumDropdown, type EnumDropdownOption } from '@zoltar/ui-core-shared/components/EnumDropdown.js'
@@ -15,26 +15,26 @@ import { TimestampValue } from '@zoltar/ui-core-shared/components/TimestampValue
 import { WarningSurface } from '@zoltar/ui-core-shared/components/WarningSurface.js'
 import { MetricField } from '@zoltar/ui-core-shared/components/MetricField.js'
 import { assertNever } from '@zoltar/ui-core-shared/lib/assert.js'
-import { getMarketCreationOutcomeLabels, hasMarketEndTimePassed, validateMarketForm } from '../lib/questionCreation.js'
+import { getQuestionCreationOutcomeLabels, hasQuestionEndTimePassed, validateQuestionForm } from '../lib/questionCreation.js'
 import { useChainTimestamp } from '@zoltar/ui-core-shared/wallet/chainTimestamp.js'
 import { appendInvalidOutcomeLabelIfMissing, isInvalidOutcomeLabel } from '@zoltar/ui-core-shared/lib/outcomeLabels.js'
 import { clampScalarTickIndex, parseScalarFormInputs } from '@zoltar/ui-core-shared/lib/scalarOutcome.js'
-import { getMarketTypeLabel } from '@zoltar/ui-core-shared/lib/marketType.js'
-import type { MarketFormState } from '../../../types/app.js'
-import type { MarketCreationResult, MarketDetails } from '@zoltar/ui-core-shared/types/contracts.js'
+import { getQuestionTypeLabel } from '@zoltar/ui-core-shared/lib/questionType.js'
+import type { QuestionFormState } from '../../../types/app.js'
+import type { QuestionCreationResult, QuestionDetails } from '@zoltar/ui-core-shared/types/contracts.js'
 import { ScalarCreatePreview, type ScalarCreatePreviewDetails } from './ScalarCreatePreview.js'
 import { getWrongNetworkReason } from '@zoltar/ui-core-shared/wallet/network.js'
 import { tryParseTimestampInput } from '@zoltar/ui-core-shared/forms/formInputs.js'
 import type { ComponentChildren } from 'preact'
 
-const MARKET_TYPE_OPTIONS: EnumDropdownOption<MarketFormState['marketType']>[] = [
-	{ value: 'binary', label: marketCopy.binary },
-	{ value: 'categorical', label: marketCopy.categorical },
-	{ value: 'scalar', label: marketCopy.scalar },
+const QUESTION_TYPE_OPTIONS: EnumDropdownOption<QuestionFormState['questionType']>[] = [
+	{ value: 'binary', label: questionCopy.binary },
+	{ value: 'categorical', label: questionCopy.categorical },
+	{ value: 'scalar', label: questionCopy.scalar },
 ]
-type MarketFormFieldName = keyof ReturnType<typeof validateMarketForm>['fieldErrors']
+type QuestionFormFieldName = keyof ReturnType<typeof validateQuestionForm>['fieldErrors']
 type QuestionCreateSectionProps = {
-	allowedMarketTypes?: readonly MarketFormState['marketType'][]
+	allowedQuestionTypes?: readonly QuestionFormState['questionType'][]
 	accountAddress: Address | undefined
 	canUseForFork: boolean
 	formDisabled?: boolean
@@ -42,15 +42,15 @@ type QuestionCreateSectionProps = {
 	isOnActiveAppChain: boolean
 	questionCreating: boolean
 	questionError: string | undefined
-	questionForm: MarketFormState
-	questionResult: MarketCreationResult | undefined
+	questionForm: QuestionFormState
+	questionResult: QuestionCreationResult | undefined
 	loadingZoltarQuestions: boolean
 	onCreateQuestion: () => void
-	onQuestionFormChange: (update: Partial<MarketFormState>) => void
+	onQuestionFormChange: (update: Partial<QuestionFormState>) => void
 	onOpenForkTab: () => void
 	onResetQuestion: () => void
 	onUseQuestionForFork: (questionId: string) => void
-	renderResultActions?: (result: { marketType: MarketCreationResult['marketType']; questionId: string; questionTitle: string }) => ComponentChildren
+	renderResultActions?: (result: { questionType: QuestionCreationResult['questionType']; questionId: string; questionTitle: string }) => ComponentChildren
 	submitFields?: ComponentChildren
 	submitActionOverride?: {
 		availability: {
@@ -62,11 +62,11 @@ type QuestionCreateSectionProps = {
 		pending: boolean
 		pendingLabel: string
 	}
-	zoltarQuestions: MarketDetails[]
+	zoltarQuestions: QuestionDetails[]
 }
 
-function getScalarCreatePreviewDetails(questionForm: MarketFormState, scalarInputsValid: boolean): ScalarCreatePreviewDetails | undefined {
-	if (questionForm.marketType !== 'scalar') return undefined
+function getScalarCreatePreviewDetails(questionForm: QuestionFormState, scalarInputsValid: boolean): ScalarCreatePreviewDetails | undefined {
+	if (questionForm.questionType !== 'scalar') return undefined
 	if (!scalarInputsValid) return undefined
 	return {
 		answerUnit: questionForm.answerUnit.trim(),
@@ -74,15 +74,15 @@ function getScalarCreatePreviewDetails(questionForm: MarketFormState, scalarInpu
 	}
 }
 
-function getFieldErrorId(field: MarketFormFieldName) {
-	return `market-create-${field}-error`
+function getFieldErrorId(field: QuestionFormFieldName) {
+	return `question-create-${field}-error`
 }
 
-function getFieldErrorDescribedBy(field: MarketFormFieldName, message: string | undefined) {
+function getFieldErrorDescribedBy(field: QuestionFormFieldName, message: string | undefined) {
 	return message === undefined ? undefined : getFieldErrorId(field)
 }
 
-function renderFieldError(field: MarketFormFieldName, message: string | undefined) {
+function renderFieldError(field: QuestionFormFieldName, message: string | undefined) {
 	if (message === undefined) return undefined
 	return (
 		<p className='field-error' id={getFieldErrorId(field)}>
@@ -103,40 +103,40 @@ function renderRequiredFieldLabel(label: string) {
 	)
 }
 
-function getMarketTypeGuidance(marketType: MarketFormState['marketType']) {
-	switch (marketType) {
+function getQuestionTypeGuidance(questionType: QuestionFormState['questionType']) {
+	switch (questionType) {
 		case 'binary':
-			return marketCopy.binaryQuestionDescription
+			return questionCopy.binaryQuestionDescription
 		case 'categorical':
-			return marketCopy.categoricalOutcomesGuidance
+			return questionCopy.categoricalOutcomesGuidance
 		case 'scalar':
-			return marketCopy.scalarQuestionDescription
+			return questionCopy.scalarQuestionDescription
 		default:
-			return assertNever(marketType)
+			return assertNever(questionType)
 	}
 }
 
-function getDraftOutcomeLabels(questionForm: MarketFormState, categoricalOutcomesError: string | undefined) {
-	switch (questionForm.marketType) {
+function getDraftOutcomeLabels(questionForm: QuestionFormState, categoricalOutcomesError: string | undefined) {
+	switch (questionForm.questionType) {
 		case 'binary':
-			return appendInvalidOutcomeLabelIfMissing(getMarketCreationOutcomeLabels(questionForm))
+			return appendInvalidOutcomeLabelIfMissing(getQuestionCreationOutcomeLabels(questionForm))
 		case 'categorical': {
 			if (categoricalOutcomesError === undefined) {
-				return appendInvalidOutcomeLabelIfMissing(getMarketCreationOutcomeLabels(questionForm))
+				return appendInvalidOutcomeLabelIfMissing(getQuestionCreationOutcomeLabels(questionForm))
 			}
 
 			const normalizedOutcomes = questionForm.categoricalOutcomes.map(outcome => outcome.trim()).filter(outcome => outcome !== '')
-			return normalizedOutcomes.length > 0 ? appendInvalidOutcomeLabelIfMissing(normalizedOutcomes) : [marketCopy.minimumOutcomeCountReason, commonCopy.invalid]
+			return normalizedOutcomes.length > 0 ? appendInvalidOutcomeLabelIfMissing(normalizedOutcomes) : [questionCopy.minimumOutcomeCountReason, commonCopy.invalid]
 		}
 		case 'scalar':
-			return [marketCopy.scalar, commonCopy.invalid]
+			return [questionCopy.scalar, commonCopy.invalid]
 		default:
-			return assertNever(questionForm.marketType)
+			return assertNever(questionForm.questionType)
 	}
 }
 
 export function QuestionCreateSection({
-	allowedMarketTypes = ['binary', 'categorical', 'scalar'],
+	allowedQuestionTypes = ['binary', 'categorical', 'scalar'],
 	accountAddress,
 	canUseForFork,
 	formDisabled = false,
@@ -159,11 +159,11 @@ export function QuestionCreateSection({
 }: QuestionCreateSectionProps) {
 	const [scalarCreatePreviewTick, setScalarCreatePreviewTick] = useState('0')
 	const currentTimestamp = useChainTimestamp()
-	const [touchedFields, setTouchedFields] = useState<ReadonlySet<MarketFormFieldName>>(new Set())
+	const [touchedFields, setTouchedFields] = useState<ReadonlySet<QuestionFormFieldName>>(new Set())
 	const selectedQuestionDetails = useMemo(() => (questionResult === undefined ? undefined : zoltarQuestions.find(question => question.questionId === questionResult.questionId)), [questionResult?.questionId, zoltarQuestions])
-	const marketTypeOptions = useMemo(() => MARKET_TYPE_OPTIONS.filter(option => allowedMarketTypes.includes(option.value)), [allowedMarketTypes])
-	const questionFormValidation = validateMarketForm(questionForm)
-	const marketTypeGuidance = getMarketTypeGuidance(questionForm.marketType)
+	const questionTypeOptions = useMemo(() => QUESTION_TYPE_OPTIONS.filter(option => allowedQuestionTypes.includes(option.value)), [allowedQuestionTypes])
+	const questionFormValidation = validateQuestionForm(questionForm)
+	const questionTypeGuidance = getQuestionTypeGuidance(questionForm.questionType)
 	const scalarInputsValid = questionFormValidation.fieldErrors.scalarIncrement === undefined && questionFormValidation.fieldErrors.scalarMax === undefined && questionFormValidation.fieldErrors.scalarMin === undefined
 	const scalarCreatePreviewDetails = getScalarCreatePreviewDetails(questionForm, scalarInputsValid)
 	const selectedQuestionTitle = selectedQuestionDetails === undefined ? commonCopy.question : getQuestionTitle(selectedQuestionDetails)
@@ -174,13 +174,13 @@ export function QuestionCreateSection({
 	}))
 	const normalizedDescription = questionForm.description.trim()
 	const draftDescription = normalizedDescription === '' ? undefined : questionForm.description
-	const draftTitle = questionForm.title.trim() === '' ? marketCopy.untitledQuestion : questionForm.title
-	const markFieldTouched = (field: MarketFormFieldName) => setTouchedFields(current => new Set([...current, field]))
-	const getVisibleFieldError = (field: MarketFormFieldName) => (touchedFields.has(field) ? questionFormValidation.fieldErrors[field] : undefined)
+	const draftTitle = questionForm.title.trim() === '' ? questionCopy.untitledQuestion : questionForm.title
+	const markFieldTouched = (field: QuestionFormFieldName) => setTouchedFields(current => new Set([...current, field]))
+	const getVisibleFieldError = (field: QuestionFormFieldName) => (touchedFields.has(field) ? questionFormValidation.fieldErrors[field] : undefined)
 	const timingRelationshipError = questionFormValidation.fieldErrors.startTime !== undefined && questionFormValidation.fieldErrors.startTime === questionFormValidation.fieldErrors.endTime && (touchedFields.has('startTime') || touchedFields.has('endTime')) ? questionFormValidation.fieldErrors.startTime : undefined
 	const startTimeError = timingRelationshipError ?? getVisibleFieldError('startTime')
 	const endTimeError = timingRelationshipError ?? getVisibleFieldError('endTime')
-	const timingRelationshipErrorId = 'market-create-timing-error'
+	const timingRelationshipErrorId = 'question-create-timing-error'
 	const canCreateQuestion = accountAddress !== undefined && isOnActiveAppChain && !questionCreating && questionFormValidation.isValid
 	const submitAction =
 		submitActionOverride === undefined
@@ -188,7 +188,7 @@ export function QuestionCreateSection({
 					availability: {
 						disabled: !canCreateQuestion,
 						reason: (() => {
-							if (accountAddress === undefined) return marketCopy.questionCreationWalletRequired
+							if (accountAddress === undefined) return questionCopy.questionCreationWalletRequired
 							if (!isOnActiveAppChain) return getWrongNetworkReason()
 							if (questionFormValidation.isValid) return undefined
 							return questionFormValidation.notice
@@ -197,10 +197,10 @@ export function QuestionCreateSection({
 					idleLabel: commonCopy.createQuestionAction,
 					onSubmit: onCreateQuestion,
 					pending: questionCreating,
-					pendingLabel: marketCopy.createQuestionPendingLabel,
+					pendingLabel: questionCopy.createQuestionPendingLabel,
 				}
 			: submitActionOverride
-	const showEndedQuestionWarning = questionFormValidation.fieldErrors.endTime === undefined && hasMarketEndTimePassed(questionForm, currentTimestamp)
+	const showEndedQuestionWarning = questionFormValidation.fieldErrors.endTime === undefined && hasQuestionEndTimePassed(questionForm, currentTimestamp)
 	const renderDraftTimestamp = (value: string, emptyValue: string) => {
 		if (value.trim() === '') return emptyValue
 		const timestamp = tryParseTimestampInput(value)
@@ -236,7 +236,7 @@ export function QuestionCreateSection({
 						<div className='actions'>
 							{canUseForFork ? (
 								<button
-									aria-label={hasForked ? marketCopy.formatAlreadyForkedLabel(selectedQuestionTitle, questionResult.questionId) : marketCopy.formatUseForForkLabel(selectedQuestionTitle, questionResult.questionId)}
+									aria-label={hasForked ? questionCopy.formatAlreadyForkedLabel(selectedQuestionTitle, questionResult.questionId) : questionCopy.formatUseForForkLabel(selectedQuestionTitle, questionResult.questionId)}
 									className='secondary'
 									disabled={hasForked}
 									onClick={() => {
@@ -245,12 +245,12 @@ export function QuestionCreateSection({
 										onOpenForkTab()
 									}}
 								>
-									{hasForked ? marketCopy.alreadyForked : marketCopy.useForFork}
+									{hasForked ? questionCopy.alreadyForked : questionCopy.useForFork}
 								</button>
 							) : undefined}
-							{renderResultActions?.({ marketType: questionResult.marketType, questionId: questionResult.questionId, questionTitle: selectedQuestionTitle })}
+							{renderResultActions?.({ questionType: questionResult.questionType, questionId: questionResult.questionId, questionTitle: selectedQuestionTitle })}
 							<button className='secondary' onClick={onResetQuestion}>
-								{marketCopy.createAnotherQuestion}
+								{questionCopy.createAnotherQuestion}
 							</button>
 						</div>
 					}
@@ -260,17 +260,17 @@ export function QuestionCreateSection({
 							if (selectedQuestionDetails === undefined) {
 								if (loadingZoltarQuestions)
 									return (
-										<span className='loading-value' role='status' aria-label={marketCopy.loadingQuestionDetails}>
+										<span className='loading-value' role='status' aria-label={questionCopy.loadingQuestionDetails}>
 											<span className='spinner' aria-hidden='true' />
 										</span>
 									)
 
-								return <p className='detail'>{marketCopy.questionDetailsUnavailable}</p>
+								return <p className='detail'>{questionCopy.questionDetailsUnavailable}</p>
 							}
 
 							return <Question question={selectedQuestionDetails} showTitle={false} />
 						})()}
-						<MetricField label={marketCopy.creationTransactionHash}>
+						<MetricField label={questionCopy.creationTransactionHash}>
 							<TransactionHashLink hash={questionResult.createQuestionHash} />
 						</MetricField>
 					</div>
@@ -291,22 +291,22 @@ export function QuestionCreateSection({
 					>
 						<fieldset className='question-create-editor' disabled={formDisabled}>
 							<div className='field'>
-								<span>{marketCopy.questionType}</span>
-								<EnumDropdown disabled={formDisabled || marketTypeOptions.length === 1} ariaLabel={marketCopy.questionType} options={marketTypeOptions} value={questionForm.marketType} onChange={marketType => onQuestionFormChange({ marketType })} />
-								{marketTypeOptions.length === 1 ? undefined : <p className='field-help'>{marketTypeGuidance}</p>}
+								<span>{questionCopy.questionType}</span>
+								<EnumDropdown disabled={formDisabled || questionTypeOptions.length === 1} ariaLabel={questionCopy.questionType} options={questionTypeOptions} value={questionForm.questionType} onChange={questionType => onQuestionFormChange({ questionType })} />
+								{questionTypeOptions.length === 1 ? undefined : <p className='field-help'>{questionTypeGuidance}</p>}
 							</div>
 
 							<div className='field'>
 								<label>
-									<span>{renderRequiredFieldLabel(marketCopy.title)}</span>
+									<span>{renderRequiredFieldLabel(questionCopy.title)}</span>
 									<FormInput
-										aria-label={marketCopy.title}
+										aria-label={questionCopy.title}
 										aria-describedby={getFieldErrorDescribedBy('title', getVisibleFieldError('title'))}
 										invalid={getVisibleFieldError('title') !== undefined}
 										value={questionForm.title}
 										onBlur={() => markFieldTouched('title')}
 										onInput={event => onQuestionFormChange({ title: event.currentTarget.value })}
-										placeholder={marketCopy.questionTitlePlaceholder}
+										placeholder={questionCopy.questionTitlePlaceholder}
 										required
 									/>
 								</label>
@@ -314,17 +314,17 @@ export function QuestionCreateSection({
 							</div>
 
 							<div className='field'>
-								<label htmlFor='market-create-description'>
-									<span>{marketCopy.description}</span>
+								<label htmlFor='question-create-description'>
+									<span>{questionCopy.description}</span>
 								</label>
-								<textarea id='market-create-description' value={questionForm.description} onInput={event => onQuestionFormChange({ description: event.currentTarget.value })} placeholder={marketCopy.optionalQuestionContext} />
-								<p className='field-help'>{marketCopy.resolutionSourceHelpText}</p>
+								<textarea id='question-create-description' value={questionForm.description} onInput={event => onQuestionFormChange({ description: event.currentTarget.value })} placeholder={questionCopy.optionalQuestionContext} />
+								<p className='field-help'>{questionCopy.resolutionSourceHelpText}</p>
 							</div>
 
 							<div className='field-row'>
 								<div className='field'>
 									<label>
-										<span>{marketCopy.startTime}</span>
+										<span>{questionCopy.startTime}</span>
 										<FormInput
 											aria-describedby={timingRelationshipError === undefined ? getFieldErrorDescribedBy('startTime', startTimeError) : timingRelationshipErrorId}
 											invalid={startTimeError !== undefined}
@@ -338,9 +338,9 @@ export function QuestionCreateSection({
 								</div>
 								<div className='field'>
 									<label>
-										<span>{renderRequiredFieldLabel(marketCopy.endTime)}</span>
+										<span>{renderRequiredFieldLabel(questionCopy.endTime)}</span>
 										<FormInput
-											aria-label={marketCopy.endTime}
+											aria-label={questionCopy.endTime}
 											aria-describedby={timingRelationshipError === undefined ? getFieldErrorDescribedBy('endTime', endTimeError) : timingRelationshipErrorId}
 											invalid={endTimeError !== undefined}
 											type='datetime-local'
@@ -358,11 +358,11 @@ export function QuestionCreateSection({
 									{timingRelationshipError}
 								</p>
 							)}
-							<p className='field-help'>{marketCopy.questionTimingHelpText}</p>
+							<p className='field-help'>{questionCopy.questionTimingHelpText}</p>
 
-							{questionForm.marketType === 'categorical' ? (
-								<div className='field' role='group' aria-labelledby='market-create-outcomes-label'>
-									<span id='market-create-outcomes-label'>{renderRequiredFieldLabel(marketCopy.outcomes)}</span>
+							{questionForm.questionType === 'categorical' ? (
+								<div className='field' role='group' aria-labelledby='question-create-outcomes-label'>
+									<span id='question-create-outcomes-label'>{renderRequiredFieldLabel(questionCopy.outcomes)}</span>
 									<div className='categorical-outcomes'>
 										{questionForm.categoricalOutcomes.map((outcome, outcomeIndex) => (
 											<div className='categorical-outcome-row' key={`categorical-outcome-${outcomeIndex}`}>
@@ -378,58 +378,58 @@ export function QuestionCreateSection({
 														placeholder={`${commonCopy.outcome} ${outcomeIndex + 1}`}
 													/>
 												</label>
-												<button aria-label={marketCopy.formatRemoveOutcomeLabel(outcomeIndex + 1)} className='secondary categorical-outcome-remove' type='button' onClick={() => removeCategoricalOutcome(outcomeIndex)}>
-													{marketCopy.remove}
+												<button aria-label={questionCopy.formatRemoveOutcomeLabel(outcomeIndex + 1)} className='secondary categorical-outcome-remove' type='button' onClick={() => removeCategoricalOutcome(outcomeIndex)}>
+													{questionCopy.remove}
 												</button>
 											</div>
 										))}
 									</div>
 									{renderFieldError('categoricalOutcomes', getVisibleFieldError('categoricalOutcomes'))}
-									<p className='field-help'>{marketCopy.categoricalOutcomeLabelsHelpText}</p>
+									<p className='field-help'>{questionCopy.categoricalOutcomeLabelsHelpText}</p>
 									<button className='secondary categorical-outcome-add' type='button' onClick={addCategoricalOutcome}>
-										{marketCopy.addOutcome}
+										{questionCopy.addOutcome}
 									</button>
 								</div>
 							) : undefined}
 
-							{questionForm.marketType === 'scalar' ? (
+							{questionForm.questionType === 'scalar' ? (
 								<div className='field-row'>
 									<div className='field'>
 										<label>
-											<span>{renderRequiredFieldLabel(marketCopy.scalarMin)}</span>
+											<span>{renderRequiredFieldLabel(questionCopy.scalarMin)}</span>
 											<FormInput
-												aria-label={marketCopy.scalarMin}
+												aria-label={questionCopy.scalarMin}
 												aria-describedby={getFieldErrorDescribedBy('scalarMin', getVisibleFieldError('scalarMin'))}
 												invalid={getVisibleFieldError('scalarMin') !== undefined}
 												value={questionForm.scalarMin}
 												onBlur={() => markFieldTouched('scalarMin')}
 												onInput={event => onQuestionFormChange({ scalarMin: event.currentTarget.value })}
-												placeholder={marketCopy.scalarMinExample}
+												placeholder={questionCopy.scalarMinExample}
 												required
 											/>
 										</label>
 										{renderFieldError('scalarMin', getVisibleFieldError('scalarMin'))}
 									</div>
 									<label className='field'>
-										<span>{marketCopy.answerUnit}</span>
-										<FormInput value={questionForm.answerUnit} onInput={event => onQuestionFormChange({ answerUnit: event.currentTarget.value })} placeholder={marketCopy.usd} />
+										<span>{questionCopy.answerUnit}</span>
+										<FormInput value={questionForm.answerUnit} onInput={event => onQuestionFormChange({ answerUnit: event.currentTarget.value })} placeholder={questionCopy.usd} />
 									</label>
 								</div>
 							) : undefined}
 
-							{questionForm.marketType === 'scalar' ? (
+							{questionForm.questionType === 'scalar' ? (
 								<div className='field-row'>
 									<div className='field'>
 										<label>
-											<span>{renderRequiredFieldLabel(marketCopy.scalarIncrement)}</span>
+											<span>{renderRequiredFieldLabel(questionCopy.scalarIncrement)}</span>
 											<FormInput
-												aria-label={marketCopy.scalarIncrement}
+												aria-label={questionCopy.scalarIncrement}
 												aria-describedby={getFieldErrorDescribedBy('scalarIncrement', getVisibleFieldError('scalarIncrement'))}
 												invalid={getVisibleFieldError('scalarIncrement') !== undefined}
 												value={questionForm.scalarIncrement}
 												onBlur={() => markFieldTouched('scalarIncrement')}
 												onInput={event => onQuestionFormChange({ scalarIncrement: event.currentTarget.value })}
-												placeholder={marketCopy.scalarIncrementExample}
+												placeholder={questionCopy.scalarIncrementExample}
 												required
 											/>
 										</label>
@@ -437,15 +437,15 @@ export function QuestionCreateSection({
 									</div>
 									<div className='field'>
 										<label>
-											<span>{renderRequiredFieldLabel(marketCopy.scalarMax)}</span>
+											<span>{renderRequiredFieldLabel(questionCopy.scalarMax)}</span>
 											<FormInput
-												aria-label={marketCopy.scalarMax}
+												aria-label={questionCopy.scalarMax}
 												aria-describedby={getFieldErrorDescribedBy('scalarMax', getVisibleFieldError('scalarMax'))}
 												invalid={getVisibleFieldError('scalarMax') !== undefined}
 												value={questionForm.scalarMax}
 												onBlur={() => markFieldTouched('scalarMax')}
 												onInput={event => onQuestionFormChange({ scalarMax: event.currentTarget.value })}
-												placeholder={marketCopy.scalarMaxExample}
+												placeholder={questionCopy.scalarMaxExample}
 												required
 											/>
 										</label>
@@ -453,16 +453,16 @@ export function QuestionCreateSection({
 									</div>
 								</div>
 							) : undefined}
-							{questionForm.marketType === 'scalar' ? <p className='field-help'>{marketCopy.scalarResolutionHelpText}</p> : undefined}
+							{questionForm.questionType === 'scalar' ? <p className='field-help'>{questionCopy.scalarResolutionHelpText}</p> : undefined}
 							{showEndedQuestionWarning ? (
 								<WarningSurface ariaLive='polite' role='status' surface='flat' variant='compact'>
-									<p>{marketCopy.endedQuestionWarning}</p>
+									<p>{questionCopy.endedQuestionWarning}</p>
 								</WarningSurface>
 							) : undefined}
 
 							{(() => {
-								if (questionForm.marketType === 'scalar') {
-									if (scalarCreatePreviewDetails === undefined) return <p className='detail'>{marketCopy.scalarPreviewInputHint}</p>
+								if (questionForm.questionType === 'scalar') {
+									if (scalarCreatePreviewDetails === undefined) return <p className='detail'>{questionCopy.scalarPreviewInputHint}</p>
 
 									return <ScalarCreatePreview details={scalarCreatePreviewDetails} selectedTick={scalarCreatePreviewTick} onSelectedTickChange={setScalarCreatePreviewTick} />
 								}
@@ -470,24 +470,24 @@ export function QuestionCreateSection({
 								return undefined
 							})()}
 
-							<SectionBlock headingLevel={4} title={marketCopy.draftPreview} variant='embedded'>
+							<SectionBlock headingLevel={4} title={questionCopy.draftPreview} variant='embedded'>
 								<div className='question-draft-preview'>
 									<div className='question-draft-preview-header'>
 										<div className='question-summary-heading'>
 											<strong>{draftTitle}</strong>
 											{draftDescription === undefined ? undefined : <p className='detail'>{draftDescription}</p>}
 										</div>
-										<span className='question-draft-preview-chip'>{getMarketTypeLabel(questionForm.marketType)}</span>
+										<span className='question-draft-preview-chip'>{getQuestionTypeLabel(questionForm.questionType)}</span>
 									</div>
 									<OutcomeChipRow items={draftOutcomeItems} />
-									<div className='question-draft-preview-meta' role='list' aria-label={marketCopy.draftQuestionSummary}>
+									<div className='question-draft-preview-meta' role='list' aria-label={questionCopy.draftQuestionSummary}>
 										<div className='question-draft-preview-meta-item' role='listitem'>
 											<span>{commonCopy.starts}</span>
-											<strong>{renderDraftTimestamp(questionForm.startTime, marketCopy.immediatelyAfterCreation)}</strong>
+											<strong>{renderDraftTimestamp(questionForm.startTime, questionCopy.immediatelyAfterCreation)}</strong>
 										</div>
 										<div className='question-draft-preview-meta-item' role='listitem'>
 											<span>{commonCopy.ends}</span>
-											<strong>{renderDraftTimestamp(questionForm.endTime, marketCopy.endTimeRequired)}</strong>
+											<strong>{renderDraftTimestamp(questionForm.endTime, questionCopy.endTimeRequired)}</strong>
 										</div>
 									</div>
 								</div>

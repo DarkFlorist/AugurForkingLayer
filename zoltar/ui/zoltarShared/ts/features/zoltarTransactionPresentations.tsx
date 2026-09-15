@@ -1,12 +1,12 @@
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
 import * as transactionCopy from '@zoltar/ui-core-shared/copy/transaction.js'
-import * as marketCopy from '../copy/market.js'
+import * as questionCopy from '../copy/question.js'
 import type { Hash } from '@zoltar/core-shared/evm/ethereum'
 import { IdentifierValue } from '@zoltar/ui-core-shared/components/IdentifierValue.js'
 import { formatCurrencyBalanceWithUnit, formatValueWithUnit } from '@zoltar/ui-core-shared/lib/formatters.js'
-import { getMarketTypeLabel } from '@zoltar/ui-core-shared/lib/marketType.js'
+import { getQuestionTypeLabel } from '@zoltar/ui-core-shared/lib/questionType.js'
 import { buildIntent, buildPresentation, withWarning } from '@zoltar/ui-core-shared/transactions/transactionPresentations.js'
-import type { MarketCreationResult, ZoltarChildUniverseActionResult, ZoltarForkActionResult, ZoltarMigrationActionResult } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionCreationResult, ZoltarChildUniverseActionResult, ZoltarForkActionResult, ZoltarMigrationActionResult } from '@zoltar/ui-core-shared/types/contracts.js'
 
 export function createDeploymentTransactionIntent(stepLabel: string) {
 	return buildIntent({ action: 'deploy', source: 'deployment', submittedTitle: transactionCopy.formatDeployingValue(stepLabel) })
@@ -16,30 +16,30 @@ export function createDeploymentSuccessPresentation(stepLabel: string, hash: Has
 	return buildPresentation({ hash, title: transactionCopy.formatValueDeployed(stepLabel), tone: 'success' })
 }
 
-type MarketCreationTransactionContext = {
-	marketType: MarketCreationResult['marketType']
+type QuestionCreationTransactionContext = {
+	questionType: QuestionCreationResult['questionType']
 	title?: string | undefined
 }
 
-function getMarketCreationTransactionRows(context: MarketCreationTransactionContext) {
-	return [...(context.title === undefined || context.title.trim() === '' ? [] : [{ label: marketCopy.title, value: context.title.trim() }]), { label: marketCopy.questionType, value: getMarketTypeLabel(context.marketType) }]
+function getQuestionCreationTransactionRows(context: QuestionCreationTransactionContext) {
+	return [...(context.title === undefined || context.title.trim() === '' ? [] : [{ label: questionCopy.title, value: context.title.trim() }]), { label: questionCopy.questionType, value: getQuestionTypeLabel(context.questionType) }]
 }
 
-export function createMarketCreationTransactionIntent(context: MarketCreationTransactionContext) {
-	return buildIntent({ action: 'createMarket', rows: getMarketCreationTransactionRows(context), source: 'zoltar', submittedTitle: transactionCopy.creatingQuestion })
+export function createQuestionCreationTransactionIntent(context: QuestionCreationTransactionContext) {
+	return buildIntent({ action: 'createQuestion', rows: getQuestionCreationTransactionRows(context), source: 'zoltar', submittedTitle: transactionCopy.creatingQuestion })
 }
 
-export function createMarketCreationSuccessPresentation(result: MarketCreationResult, context?: Omit<MarketCreationTransactionContext, 'marketType'>) {
+export function createQuestionCreationSuccessPresentation(result: QuestionCreationResult, context?: Omit<QuestionCreationTransactionContext, 'questionType'>) {
 	return buildPresentation({
 		hash: result.createQuestionHash,
-		rows: [{ label: commonCopy.questionId, value: <IdentifierValue value={result.questionId} /> }, ...getMarketCreationTransactionRows({ ...context, marketType: result.marketType })],
+		rows: [{ label: commonCopy.questionId, value: <IdentifierValue value={result.questionId} /> }, ...getQuestionCreationTransactionRows({ ...context, questionType: result.questionType })],
 		title: transactionCopy.questionCreated,
 		tone: 'success',
 	})
 }
 
-export function createMarketCreationWarningPresentation(result: MarketCreationResult, message: string, context?: Omit<MarketCreationTransactionContext, 'marketType'>) {
-	return withWarning(createMarketCreationSuccessPresentation(result, context), message)
+export function createQuestionCreationWarningPresentation(result: QuestionCreationResult, message: string, context?: Omit<QuestionCreationTransactionContext, 'questionType'>) {
+	return withWarning(createQuestionCreationSuccessPresentation(result, context), message)
 }
 
 type QuestionUniverseTransactionContext = { questionId?: string | undefined; universeId?: bigint | undefined }

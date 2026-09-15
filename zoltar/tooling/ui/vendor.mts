@@ -40,7 +40,6 @@ const dependencyPaths: Dependency[] = [
 	{ packageName: 'preact', mainEntrypointFile: 'preact.module.js' },
 	{ packageName: 'preact/jsx-runtime', mainEntrypointFile: 'jsxRuntime.module.js' },
 	{ packageName: 'preact/hooks', mainEntrypointFile: 'hooks.module.js' },
-	{ packageName: 'preact/compat', mainEntrypointFile: 'compat.module.js' },
 	{ packageName: '@preact/signals', mainEntrypointFile: 'signals.module.js' },
 	{ packageName: '@preact/signals-core', mainEntrypointFile: 'signals-core.module.js' },
 	{ packageName: '@noble/hashes', mainEntrypointFile: 'index.js' },

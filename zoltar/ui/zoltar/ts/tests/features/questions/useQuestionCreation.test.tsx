@@ -7,7 +7,7 @@ import { createDeferred } from '@zoltar/ui-core-shared/tests/testUtils/deferred.
 import { installDomTestLifecycle } from '@zoltar/ui-core-shared/tests/testUtils/domTestLifecycle.js'
 import { createFakeBackend } from '@zoltar/ui-core-shared/tests/testUtils/fakeBackend.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
-import type { DeploymentStatus, MarketCreationResult } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { DeploymentStatus, QuestionCreationResult } from '@zoltar/ui-core-shared/types/contracts.js'
 import type { CreateWriteClientCallbacks, TransactionRequestPreview } from '@zoltar/ui-core-shared/wallet/chainBackend.js'
 import type { UseQuestionCreationDependencies } from '@zoltar/ui-zoltar-shared/features/questions/hooks/useQuestionCreation.js'
 import { describe, expect, mock, test } from 'bun:test'
@@ -20,10 +20,10 @@ type UseQuestionCreationState = ReturnType<UseQuestionCreation>
 const WALLET_ADDRESS = getAddress('0x00000000000000000000000000000000000000a1')
 const NEXT_WALLET_ADDRESS = getAddress('0x00000000000000000000000000000000000000a2')
 const QUESTION_ID = `0x${'12'.repeat(32)}`
-const CREATION_RESULT: MarketCreationResult & { hash: Hash } = {
+const CREATION_RESULT: QuestionCreationResult & { hash: Hash } = {
 	createQuestionHash: zeroHash,
 	hash: zeroHash,
-	marketType: 'binary',
+	questionType: 'binary',
 	questionId: QUESTION_ID,
 }
 const DEPLOYED_QUESTION_DATA: DeploymentStatus = {
@@ -209,7 +209,7 @@ describe('useQuestionCreation', () => {
 	})
 
 	test('rejects duplicate submissions and releases the lock after completion', async () => {
-		const deferred = createDeferred<MarketCreationResult & { hash: Hash }>()
+		const deferred = createDeferred<QuestionCreationResult & { hash: Hash }>()
 		const harness = await renderHook({ createQuestion: async () => await deferred.promise })
 		let firstSubmission = Promise.resolve()
 		await act(async () => {
@@ -251,7 +251,7 @@ describe('useQuestionCreation', () => {
 	})
 
 	test('does not present a deferred completion in a different environment', async () => {
-		const deferred = createDeferred<MarketCreationResult & { hash: Hash }>()
+		const deferred = createDeferred<QuestionCreationResult & { hash: Hash }>()
 		let submittedCallbacks: CreateWriteClientCallbacks | undefined
 		const harness = await renderHook({
 			createQuestion: async (_accountAddress, callbacks) => {
@@ -266,7 +266,7 @@ describe('useQuestionCreation', () => {
 			await Promise.resolve()
 		})
 		await harness.rerenderEnvironment(1)
-		const preparedPreview: TransactionRequestPreview = { account: WALLET_ADDRESS, args: [], chainName: 'replacement test', functionName: 'createMarket', value: 0n }
+		const preparedPreview: TransactionRequestPreview = { account: WALLET_ADDRESS, args: [], chainName: 'replacement test', functionName: 'createQuestion', value: 0n }
 		submittedCallbacks?.onTransactionPrepared?.(preparedPreview)
 		submittedCallbacks?.onTransactionSubmitted?.(zeroHash)
 
@@ -287,8 +287,8 @@ describe('useQuestionCreation', () => {
 	})
 
 	test('allows a replacement environment submission without letting the old completion unlock it', async () => {
-		const firstDeferred = createDeferred<MarketCreationResult & { hash: Hash }>()
-		const secondDeferred = createDeferred<MarketCreationResult & { hash: Hash }>()
+		const firstDeferred = createDeferred<QuestionCreationResult & { hash: Hash }>()
+		const secondDeferred = createDeferred<QuestionCreationResult & { hash: Hash }>()
 		let requestCount = 0
 		const harness = await renderHook({
 			createQuestion: async () => {
@@ -328,7 +328,7 @@ describe('useQuestionCreation', () => {
 	})
 
 	test('releases global transaction ownership after the submitting account changes', async () => {
-		const firstDeferred = createDeferred<MarketCreationResult & { hash: Hash }>()
+		const firstDeferred = createDeferred<QuestionCreationResult & { hash: Hash }>()
 		let requestCount = 0
 		let transactionInFlight = false
 		const harness = await renderHook({
@@ -375,7 +375,7 @@ describe('useQuestionCreation', () => {
 	})
 
 	test('does not erase a newer account draft when an older submission completes', async () => {
-		const deferred = createDeferred<MarketCreationResult & { hash: Hash }>()
+		const deferred = createDeferred<QuestionCreationResult & { hash: Hash }>()
 		const harness = await renderHook({ createQuestion: async () => await deferred.promise })
 		let submission = Promise.resolve()
 		await act(async () => {

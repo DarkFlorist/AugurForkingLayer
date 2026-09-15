@@ -1,6 +1,6 @@
 import * as appCopy from '@zoltar/ui-core-shared/copy/app.js'
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '@zoltar/ui-zoltar-shared/copy/market.js'
+import * as questionCopy from '@zoltar/ui-zoltar-shared/copy/question.js'
 import * as zoltarCopy from '@zoltar/ui-zoltar-shared/copy/zoltar.js'
 import type { Route } from '@zoltar/ui-zoltar-shared/types/app.js'
 import type { ZoltarView } from '@zoltar/ui-zoltar-shared/features/types.js'
@@ -18,7 +18,7 @@ export function getAppPageTitle({ activeZoltarView, route }: AppPageTitleInput) 
 		if (activeZoltarView === 'fork') return zoltarCopy.forkZoltar
 		if (activeZoltarView === 'migrate') return zoltarCopy.migrateRep
 		if (activeZoltarView === 'universes') return commonCopy.universe
-		return marketCopy.questions
+		return questionCopy.questions
 	}
 	return appCopy.pageNotFoundTitle
 }

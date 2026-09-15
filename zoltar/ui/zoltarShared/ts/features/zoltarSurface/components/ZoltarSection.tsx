@@ -1,5 +1,5 @@
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '../../../copy/market.js'
+import * as questionCopy from '../../../copy/question.js'
 import * as zoltarCopy from '../../../copy/zoltar.js'
 import { ForkZoltarSection } from '../../universes/components/ForkZoltarSection.js'
 import { ZoltarMigrationSection } from '../../universes/components/ZoltarMigrationSection.js'
@@ -10,7 +10,7 @@ import { SectionBlock } from '@zoltar/ui-core-shared/components/SectionBlock.js'
 import { QuestionCreateSection } from '../../questions/components/QuestionCreateSection.js'
 import { QuestionsView } from './QuestionsView.js'
 import { isActiveAppChain } from '@zoltar/ui-core-shared/wallet/network.js'
-import type { MarketRouteContentProps } from '../../types.js'
+import type { QuestionRouteContentProps } from '../../types.js'
 
 export function ZoltarSection({
 	accountState,
@@ -60,12 +60,12 @@ export function ZoltarSection({
 	questionError,
 	questionForm,
 	questionResult,
-}: MarketRouteContentProps) {
+}: QuestionRouteContentProps) {
 	const isOnActiveAppChain = isActiveAppChain(accountState.chainId)
 	if (activeView === 'create') {
 		return (
 			<>
-				<RouteHeader description={marketCopy.createQuestionDescription} title={commonCopy.createQuestion} />
+				<RouteHeader description={questionCopy.createQuestionDescription} title={commonCopy.createQuestion} />
 				<QuestionCreateSection
 					accountAddress={accountState.address}
 					canUseForFork={zoltarUniverse !== undefined}

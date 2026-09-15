@@ -14,7 +14,7 @@ describe('transactionTray', () => {
 
 	test('tracks a requested transaction through submit, presentation, and finish', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -49,7 +49,7 @@ describe('transactionTray', () => {
 
 	test('keeps transaction actions locked until the current transaction finishes', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -83,7 +83,7 @@ describe('transactionTray', () => {
 	test('updates the pending hash when a submitted transaction is repriced', () => {
 		const replacementHash = '0x5678000000000000000000000000000000000000000000000000000000000000'
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -99,7 +99,7 @@ describe('transactionTray', () => {
 
 	test('adds prepared transaction call details before submission', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -193,7 +193,7 @@ describe('transactionTray', () => {
 		const mixedCycle: { values?: unknown[] } = {}
 		mixedCycle.values = [mixedCycle]
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -241,7 +241,7 @@ describe('transactionTray', () => {
 
 	test('uses preparing copy for requested simulation transactions', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			requiresWalletConfirmation: false,
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
@@ -256,7 +256,7 @@ describe('transactionTray', () => {
 	test('applies active simulation defaults to undecorated requested transactions', () => {
 		const resetEnvironment = installActiveEnvironmentForTesting(createFakeBackend({ profile: createFakeSimulationProfile() }))
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -271,7 +271,7 @@ describe('transactionTray', () => {
 	test('uses the defaulted pending intent when prepared previews omit wallet confirmation requirements', () => {
 		const resetEnvironment = installActiveEnvironmentForTesting(createFakeBackend({ profile: createFakeSimulationProfile() }))
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -294,7 +294,7 @@ describe('transactionTray', () => {
 
 	test('turns a requested transaction into a dismissible failure when submission fails', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -311,7 +311,7 @@ describe('transactionTray', () => {
 
 	test('clears requested transaction state when a write is canceled before submission', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',
@@ -330,7 +330,7 @@ describe('transactionTray', () => {
 
 	test('turns a submitted pending transaction into a failed transaction while preserving the hash', () => {
 		const requested = markTransactionRequested(createInitialTransactionTrayState(), {
-			action: 'createMarket',
+			action: 'createQuestion',
 			source: 'zoltar',
 			submittedDetail: 'Question creation transaction submitted.',
 			submittedTitle: 'Creating Question',

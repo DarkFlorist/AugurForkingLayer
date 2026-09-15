@@ -1,22 +1,22 @@
 import { sortStringArrayByKeccak } from '@zoltar/core-shared/serialization/sortStringArrayByKeccak'
-import type { MarketFormState } from '../../../types/app.js'
+import type { QuestionFormState } from '../../../types/app.js'
 import type { QuestionData } from '@zoltar/ui-core-shared/types/contracts.js'
 import { assertNever } from '@zoltar/ui-core-shared/lib/assert.js'
 import { parseTimestampInput, tryParseTimestampInput } from '@zoltar/ui-core-shared/forms/formInputs.js'
 import { parseScalarFormInputs } from '@zoltar/ui-core-shared/lib/scalarOutcome.js'
-type MarketFormField = keyof Pick<MarketFormState, 'categoricalOutcomes' | 'endTime' | 'scalarIncrement' | 'scalarMax' | 'scalarMin' | 'startTime' | 'title'>
-type MarketFormValidation = {
-	fieldErrors: Partial<Record<MarketFormField, string>>
+type QuestionFormField = keyof Pick<QuestionFormState, 'categoricalOutcomes' | 'endTime' | 'scalarIncrement' | 'scalarMax' | 'scalarMin' | 'startTime' | 'title'>
+type QuestionFormValidation = {
+	fieldErrors: Partial<Record<QuestionFormField, string>>
 	isValid: boolean
 	notice: string | undefined
 }
-function getScalarQuestionData(form: MarketFormState) {
+function getScalarQuestionData(form: QuestionFormState) {
 	return {
 		answerUnit: form.answerUnit.trim(),
 		...parseScalarFormInputs(form),
 	}
 }
-function createQuestionData(form: MarketFormState): QuestionData {
+function createQuestionData(form: QuestionFormState): QuestionData {
 	const questionData = {
 		title: form.title.trim(),
 		description: form.description.trim(),
@@ -27,7 +27,7 @@ function createQuestionData(form: MarketFormState): QuestionData {
 		displayValueMax: 0n,
 		answerUnit: '',
 	}
-	switch (form.marketType) {
+	switch (form.questionType) {
 		case 'binary':
 		case 'categorical':
 			break
@@ -40,7 +40,7 @@ function createQuestionData(form: MarketFormState): QuestionData {
 			break
 		}
 		default:
-			assertNever(form.marketType)
+			assertNever(form.questionType)
 	}
 	if (questionData.title === '') throw new Error('Title is required')
 	if (questionData.endTime <= questionData.startTime) throw new Error('End time must be after start time')
@@ -49,22 +49,22 @@ function createQuestionData(form: MarketFormState): QuestionData {
 function normalizeOutcomeLabel(label: string) {
 	return label.trim()
 }
-function getMissingRequiredCategoricalOutcomeLabels(form: MarketFormState) {
+function getMissingRequiredCategoricalOutcomeLabels(form: QuestionFormState) {
 	return [0, 1].filter(index => normalizeOutcomeLabel(form.categoricalOutcomes[index] ?? '') === '').map(index => `Outcome ${index + 1}`)
 }
 function getRequiredCategoricalOutcomeMessage(missingOutcomeLabels: string[]) {
 	if (missingOutcomeLabels.length === 1) return `${missingOutcomeLabels[0]} is required`
 	return `${missingOutcomeLabels.join(' and ')} are required`
 }
-function getCategoricalOutcomeLabels(form: MarketFormState) {
+function getCategoricalOutcomeLabels(form: QuestionFormState) {
 	const missingRequiredOutcomeLabels = getMissingRequiredCategoricalOutcomeLabels(form)
 	if (missingRequiredOutcomeLabels.length > 0) throw new Error(getRequiredCategoricalOutcomeMessage(missingRequiredOutcomeLabels))
 	const outcomeLabels = form.categoricalOutcomes.map(normalizeOutcomeLabel).filter(label => label !== '')
 	if (new Set(outcomeLabels).size !== outcomeLabels.length) throw new Error('Outcomes must be unique')
 	return sortStringArrayByKeccak(outcomeLabels)
 }
-function getOutcomeLabels(form: MarketFormState) {
-	switch (form.marketType) {
+function getOutcomeLabels(form: QuestionFormState) {
+	switch (form.questionType) {
 		case 'binary':
 			return ['Yes', 'No']
 		case 'categorical':
@@ -72,28 +72,28 @@ function getOutcomeLabels(form: MarketFormState) {
 		case 'scalar':
 			return []
 		default:
-			return assertNever(form.marketType)
+			return assertNever(form.questionType)
 	}
 }
 
-export function getMarketCreationOutcomeLabels(form: MarketFormState) {
+export function getQuestionCreationOutcomeLabels(form: QuestionFormState) {
 	return getOutcomeLabels(form)
 }
 
-export function hasMarketEndTimePassed(form: MarketFormState, currentTimestamp: bigint | undefined) {
+export function hasQuestionEndTimePassed(form: QuestionFormState, currentTimestamp: bigint | undefined) {
 	if (currentTimestamp === undefined || form.endTime.trim() === '') return false
 	const endTimestamp = tryParseTimestampInput(form.endTime)
 	return endTimestamp !== undefined && endTimestamp <= currentTimestamp
 }
-function setFieldError(fieldErrors: Partial<Record<MarketFormField, string>>, field: MarketFormField, message: string) {
+function setFieldError(fieldErrors: Partial<Record<QuestionFormField, string>>, field: QuestionFormField, message: string) {
 	if (fieldErrors[field] !== undefined) return
 	fieldErrors[field] = message
 }
 function formatFieldList(fields: string[]) {
 	return fields.join(', ')
 }
-export function validateMarketForm(form: MarketFormState): MarketFormValidation {
-	const fieldErrors: Partial<Record<MarketFormField, string>> = {}
+export function validateQuestionForm(form: QuestionFormState): QuestionFormValidation {
+	const fieldErrors: Partial<Record<QuestionFormField, string>> = {}
 	const missingFields: string[] = []
 	const invalidMessages: string[] = []
 	if (form.title.trim() === '') {
@@ -130,7 +130,7 @@ export function validateMarketForm(form: MarketFormState): MarketFormValidation 
 		setFieldError(fieldErrors, 'endTime', message)
 		invalidMessages.push(message)
 	}
-	if (form.marketType === 'categorical') {
+	if (form.questionType === 'categorical') {
 		const missingRequiredOutcomeLabels = getMissingRequiredCategoricalOutcomeLabels(form)
 		if (missingRequiredOutcomeLabels.length > 0) {
 			setFieldError(fieldErrors, 'categoricalOutcomes', getRequiredCategoricalOutcomeMessage(missingRequiredOutcomeLabels))
@@ -145,7 +145,7 @@ export function validateMarketForm(form: MarketFormState): MarketFormValidation 
 			}
 		}
 	}
-	if (form.marketType === 'scalar') {
+	if (form.questionType === 'scalar') {
 		const scalarFields: Array<{
 			key: 'scalarMin' | 'scalarMax' | 'scalarIncrement'
 			label: string
@@ -186,10 +186,10 @@ export function validateMarketForm(form: MarketFormState): MarketFormValidation 
 		notice: noticeParts.length === 0 ? undefined : noticeParts.join('. '),
 	}
 }
-export function createQuestionParameters(form: MarketFormState) {
+export function createQuestionParameters(form: QuestionFormState) {
 	return {
-		marketType: form.marketType,
-		outcomeLabels: getMarketCreationOutcomeLabels(form),
+		questionType: form.questionType,
+		outcomeLabels: getQuestionCreationOutcomeLabels(form),
 		questionData: createQuestionData(form),
 	}
 }

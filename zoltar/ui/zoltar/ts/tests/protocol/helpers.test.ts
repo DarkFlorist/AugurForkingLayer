@@ -3,7 +3,7 @@
 import { describe, expect, test } from 'bun:test'
 import { getAddress, zeroAddress } from '@zoltar/core-shared/evm/ethereum'
 import { getGenesisReputationTokenAddress } from '@zoltar/ui-zoltar-shared/protocol/activeProtocolAddresses.js'
-import { bigintToAddress, getMarketType, getProtocolPageOffset, getQuestionId, getQuestionIdHex, isStringArray, requireUniverseTupleArray } from '@zoltar/ui-zoltar-shared/protocol/helpers.js'
+import { bigintToAddress, getQuestionType, getProtocolPageOffset, getQuestionId, getQuestionIdHex, isStringArray, requireUniverseTupleArray } from '@zoltar/ui-zoltar-shared/protocol/helpers.js'
 
 const questionData = {
 	title: 'Test question',
@@ -50,10 +50,10 @@ describe('contracts helpers', () => {
 		expect(getQuestionIdHex(idA)).toBe(`0x${idA.toString(16)}`)
 	})
 
-	test('market utilities cover binary and categorical paths', () => {
-		expect(getMarketType({ ...questionData, numTicks: 100n }, [])).toBe('scalar')
-		expect(getMarketType(questionData, ['Yes', 'No'])).toBe('binary')
-		expect(getMarketType(questionData, ['A', 'B', 'C'])).toBe('categorical')
+	test('question utilities cover binary and categorical paths', () => {
+		expect(getQuestionType({ ...questionData, numTicks: 100n }, [])).toBe('scalar')
+		expect(getQuestionType(questionData, ['Yes', 'No'])).toBe('binary')
+		expect(getQuestionType(questionData, ['A', 'B', 'C'])).toBe('categorical')
 	})
 
 	test('getGenesisReputationTokenAddress is wired through helper defaults', () => {

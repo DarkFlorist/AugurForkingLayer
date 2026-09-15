@@ -1,5 +1,5 @@
 import * as commonCopy from '@zoltar/ui-core-shared/copy/common.js'
-import * as marketCopy from '../../../copy/market.js'
+import * as questionCopy from '../../../copy/question.js'
 import { useEffect, useState } from 'preact/hooks'
 import { ScalarOutcomePicker } from '@zoltar/ui-core-shared/components/ScalarOutcomePicker.js'
 import { clampScalarTickIndex, formatScalarOutcomeLabel } from '@zoltar/ui-core-shared/lib/scalarOutcome.js'
@@ -31,7 +31,7 @@ export function ScalarCreatePreview({ details, selectedTick, onSelectedTickChang
 		<ScalarOutcomePicker
 			details={{ answerUnit: details.answerUnit, displayValueMax: details.displayValueMax, displayValueMin: details.displayValueMin, numTicks: details.numTicks }}
 			isInvalid={isInvalid}
-			label={marketCopy.scalarPreview}
+			label={questionCopy.scalarPreview}
 			onInvalidChange={setIsInvalid}
 			onSelectedTickChange={onSelectedTickChange}
 			selectedOutcomeLabel={isInvalid ? commonCopy.invalid : formatScalarOutcomeLabel(details, clampedSelectedTickValue)}

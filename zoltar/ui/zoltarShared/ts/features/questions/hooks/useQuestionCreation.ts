@@ -1,19 +1,19 @@
 import { useSignal } from '@preact/signals'
 import { useEffect, useRef } from 'preact/hooks'
 import type { Address, Hash } from '@zoltar/core-shared/evm/ethereum'
-import { createMarket as createQuestionTransaction } from '../../../protocol/zoltar.js'
+import { createQuestion as createQuestionTransaction } from '../../../protocol/zoltar.js'
 import { createWalletWriteClient } from '@zoltar/ui-core-shared/wallet/clients.js'
 import { createErrorActionFeedback, createPendingActionFeedback, createSuccessActionFeedback, createWarningActionFeedback } from '@zoltar/ui-core-shared/transactions/actionFeedback.js'
 import type { ActionFeedback } from '@zoltar/ui-core-shared/transactions/actionFeedback.js'
-import { createMarketCreationSuccessPresentation, createMarketCreationTransactionIntent, createMarketCreationWarningPresentation } from '../../zoltarTransactionPresentations.js'
+import { createQuestionCreationSuccessPresentation, createQuestionCreationTransactionIntent, createQuestionCreationWarningPresentation } from '../../zoltarTransactionPresentations.js'
 import { refreshWalletStateOnly } from '@zoltar/ui-core-shared/lib/refreshState.js'
 import { runWriteAction } from '@zoltar/ui-core-shared/transactions/writeAction.js'
 import { createQuestionParameters } from '../lib/questionCreation.js'
 import { hasDeployedStep } from '@zoltar/ui-core-shared/lib/deploymentStatus.js'
-import { getDefaultMarketFormState } from '../lib/questionForm.js'
+import { getDefaultQuestionFormState } from '../lib/questionForm.js'
 import { getBrowserStorage } from '@zoltar/ui-core-shared/lib/browserStorage.js'
-import type { MarketFormState, TransactionLifecycleParameters, WriteOperationContext } from '../../../types/app.js'
-import type { DeploymentStatus, MarketCreationResult } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionFormState, TransactionLifecycleParameters, WriteOperationContext } from '../../../types/app.js'
+import type { DeploymentStatus, QuestionCreationResult } from '@zoltar/ui-core-shared/types/contracts.js'
 import type { CreateWriteClientCallbacks } from '@zoltar/ui-core-shared/wallet/chainBackend.js'
 import { useZoltarOperations } from '../../universes/hooks/useZoltarOperations.js'
 
@@ -27,7 +27,7 @@ type UseQuestionCreationParameters = TransactionLifecycleParameters &
 	}
 
 export type UseQuestionCreationDependencies = {
-	createQuestion: (accountAddress: Address, callbacks: CreateWriteClientCallbacks, parameters: ReturnType<typeof createQuestionParameters>) => Promise<MarketCreationResult & { hash: Hash }>
+	createQuestion: (accountAddress: Address, callbacks: CreateWriteClientCallbacks, parameters: ReturnType<typeof createQuestionParameters>) => Promise<QuestionCreationResult & { hash: Hash }>
 }
 
 const defaultUseQuestionCreationDependencies: UseQuestionCreationDependencies = {
@@ -53,13 +53,13 @@ function getQuestionDraftStorage() {
 	return getBrowserStorage('sessionStorage')
 }
 
-function isMarketFormState(value: unknown): value is MarketFormState {
+function isQuestionFormState(value: unknown): value is QuestionFormState {
 	if (typeof value !== 'object' || value === null) return false
 	if (!('answerUnit' in value) || typeof value.answerUnit !== 'string') return false
 	if (!('categoricalOutcomes' in value) || !Array.isArray(value.categoricalOutcomes) || !value.categoricalOutcomes.every(outcome => typeof outcome === 'string')) return false
 	if (!('description' in value) || typeof value.description !== 'string') return false
 	if (!('endTime' in value) || typeof value.endTime !== 'string') return false
-	if (!('marketType' in value) || (value.marketType !== 'binary' && value.marketType !== 'categorical' && value.marketType !== 'scalar')) return false
+	if (!('questionType' in value) || (value.questionType !== 'binary' && value.questionType !== 'categorical' && value.questionType !== 'scalar')) return false
 	if (!('scalarIncrement' in value) || typeof value.scalarIncrement !== 'string') return false
 	if (!('scalarMax' in value) || typeof value.scalarMax !== 'string') return false
 	if (!('scalarMin' in value) || typeof value.scalarMin !== 'string') return false
@@ -74,7 +74,7 @@ function readStoredQuestionDraft(storageKey: string | undefined) {
 		const storedValue = getQuestionDraftStorage()?.getItem(storageKey)
 		if (storedValue === null || storedValue === undefined) return undefined
 		const parsedValue: unknown = JSON.parse(storedValue)
-		return isMarketFormState(parsedValue) ? parsedValue : undefined
+		return isQuestionFormState(parsedValue) ? parsedValue : undefined
 	} catch (error) {
 		if (!(error instanceof SyntaxError) && !(error instanceof DOMException)) throw error
 		return undefined
@@ -82,10 +82,10 @@ function readStoredQuestionDraft(storageKey: string | undefined) {
 }
 
 function readQuestionDraft(storageKey: string | undefined) {
-	return readStoredQuestionDraft(storageKey) ?? getDefaultMarketFormState()
+	return readStoredQuestionDraft(storageKey) ?? getDefaultQuestionFormState()
 }
 
-function writeQuestionDraft(storageKey: string | undefined, form: MarketFormState) {
+function writeQuestionDraft(storageKey: string | undefined, form: QuestionFormState) {
 	if (storageKey === undefined) return false
 	try {
 		const storage = getQuestionDraftStorage()
@@ -109,7 +109,7 @@ function clearQuestionDraft(storageKey: string | undefined) {
 	}
 }
 
-function clearQuestionDraftIfUnchanged(storageKey: string | undefined, submittedForm: MarketFormState) {
+function clearQuestionDraftIfUnchanged(storageKey: string | undefined, submittedForm: QuestionFormState) {
 	const storedForm = readStoredQuestionDraft(storageKey)
 	if (storedForm !== undefined && JSON.stringify(storedForm) === JSON.stringify(submittedForm)) clearQuestionDraft(storageKey)
 }
@@ -129,19 +129,19 @@ export function useQuestionCreation(
 	const currentQuestionActionScopeKeyRef = useRef(questionActionScopeKey)
 	currentQuestionActionScopeKeyRef.current = questionActionScopeKey
 	const anonymousQuestionDraftStorageKey = getQuestionDraftStorageKey(undefined)
-	const questionFormState = useSignal<{ form: MarketFormState; storageKey: string | undefined }>({ form: readQuestionDraft(questionDraftStorageKey), storageKey: questionDraftStorageKey })
+	const questionFormState = useSignal<{ form: QuestionFormState; storageKey: string | undefined }>({ form: readQuestionDraft(questionDraftStorageKey), storageKey: questionDraftStorageKey })
 	const questionCreatingScopes = useSignal<ReadonlySet<string>>(new Set())
 	const questionSubmissionScopesRef = useRef(new Set<string>())
-	const questionResult = useSignal<KeyedValue<MarketCreationResult> | undefined>(undefined)
+	const questionResult = useSignal<KeyedValue<QuestionCreationResult> | undefined>(undefined)
 	const questionError = useSignal<KeyedValue<string | undefined> | undefined>(undefined)
-	const questionFeedback = useSignal<KeyedValue<ActionFeedback<'createMarket'>> | undefined>(undefined)
+	const questionFeedback = useSignal<KeyedValue<ActionFeedback<'createQuestion'>> | undefined>(undefined)
 	const getQuestionFormForCurrentOwner = () => {
 		const keyedForm = questionFormState.value
 		if (keyedForm.storageKey === questionDraftStorageKey) return keyedForm.form
 		const storedOwnerDraft = readStoredQuestionDraft(questionDraftStorageKey)
 		if (storedOwnerDraft !== undefined) return storedOwnerDraft
 		if (accountAddress !== undefined && keyedForm.storageKey === anonymousQuestionDraftStorageKey) return keyedForm.form
-		return getDefaultMarketFormState()
+		return getDefaultQuestionFormState()
 	}
 	const getQuestionForm = () => getQuestionFormForCurrentOwner()
 	useEffect(() => {
@@ -155,7 +155,7 @@ export function useQuestionCreation(
 			clearQuestionDraft(anonymousQuestionDraftStorageKey)
 		}
 	}, [accountAddress, questionDraftStorageKey])
-	const setQuestionForm = (updater: (current: MarketFormState) => MarketFormState) => {
+	const setQuestionForm = (updater: (current: QuestionFormState) => QuestionFormState) => {
 		const nextForm = updater(getQuestionForm())
 		writeQuestionDraft(questionDraftStorageKey, nextForm)
 		questionFormState.value = { form: nextForm, storageKey: questionDraftStorageKey }
@@ -169,26 +169,26 @@ export function useQuestionCreation(
 		const submittedQuestionDraftStorageKey = questionDraftStorageKey
 		const submittedQuestionActionScopeKey = questionActionScopeKey
 		const isCurrentQuestionActionScope = () => currentQuestionActionScopeKeyRef.current === submittedQuestionActionScopeKey
-		const submittedMarketForm = getQuestionForm()
+		const submittedQuestionForm = getQuestionForm()
 		const transactionContext = {
-			marketType: submittedMarketForm.marketType,
-			title: submittedMarketForm.title,
+			questionType: submittedQuestionForm.questionType,
+			title: submittedQuestionForm.title,
 		}
 		questionSubmissionScopesRef.current.add(submittedQuestionActionScopeKey)
 		questionResult.value = undefined
-		questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createPendingActionFeedback('createMarket', 'Creating question') }
+		questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createPendingActionFeedback('createQuestion', 'Creating question') }
 		try {
 			await runWriteAction(
 				{
 					accountAddress,
 					missingWalletMessage: 'Connect a wallet before creating a question',
 					onRefreshError: (message, hash) => {
-						questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createWarningActionFeedback('createMarket', 'Question created', message, hash) }
+						questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createWarningActionFeedback('createQuestion', 'Question created', message, hash) }
 						const result = getValueForStorageKey(questionResult.value, submittedQuestionActionScopeKey)
-						if (result !== undefined && isCurrentQuestionActionScope()) onTransactionPresented(createMarketCreationWarningPresentation(result, message, transactionContext))
+						if (result !== undefined && isCurrentQuestionActionScope()) onTransactionPresented(createQuestionCreationWarningPresentation(result, message, transactionContext))
 					},
 					onTransactionRequested: () => {
-						const accepted = onTransactionRequested(createMarketCreationTransactionIntent(transactionContext))
+						const accepted = onTransactionRequested(createQuestionCreationTransactionIntent(transactionContext))
 						if (accepted === false) return false
 						questionCreatingScopes.value = new Set([...questionCreatingScopes.value, submittedQuestionActionScopeKey])
 						return accepted
@@ -203,7 +203,7 @@ export function useQuestionCreation(
 						if (isCurrentQuestionActionScope()) onTransactionFailed?.(message)
 					},
 					onWriteError: message => {
-						questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createErrorActionFeedback('createMarket', 'Question creation failed', message) }
+						questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createErrorActionFeedback('createQuestion', 'Question creation failed', message) }
 						questionError.value = { storageKey: submittedQuestionActionScopeKey, value: message }
 					},
 					refreshState: async () => {
@@ -227,16 +227,16 @@ export function useQuestionCreation(
 								if (isCurrentQuestionActionScope()) onTransactionSubmitted(hash)
 							},
 						},
-						createQuestionParameters(submittedMarketForm),
+						createQuestionParameters(submittedQuestionForm),
 					)
 				},
 				'Failed to create question',
 				result => {
-					clearQuestionDraftIfUnchanged(submittedQuestionDraftStorageKey, submittedMarketForm)
+					clearQuestionDraftIfUnchanged(submittedQuestionDraftStorageKey, submittedQuestionForm)
 					questionResult.value = { storageKey: submittedQuestionActionScopeKey, value: result }
-					questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createSuccessActionFeedback('createMarket', 'Question created', result.hash) }
+					questionFeedback.value = { storageKey: submittedQuestionActionScopeKey, value: createSuccessActionFeedback('createQuestion', 'Question created', result.hash) }
 					if (isCurrentQuestionActionScope()) {
-						onTransactionPresented(createMarketCreationSuccessPresentation(result, transactionContext))
+						onTransactionPresented(createQuestionCreationSuccessPresentation(result, transactionContext))
 						zoltar.setZoltarForkQuestionId(result.questionId)
 					}
 				},
@@ -248,7 +248,7 @@ export function useQuestionCreation(
 
 	const resetQuestion = () => {
 		clearQuestionDraft(questionDraftStorageKey)
-		questionFormState.value = { form: getDefaultMarketFormState(), storageKey: questionDraftStorageKey }
+		questionFormState.value = { form: getDefaultQuestionFormState(), storageKey: questionDraftStorageKey }
 		questionError.value = undefined
 		questionResult.value = undefined
 	}

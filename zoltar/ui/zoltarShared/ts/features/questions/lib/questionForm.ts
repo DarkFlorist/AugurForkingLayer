@@ -1,12 +1,12 @@
-import type { MarketFormState } from '../../../types/app.js'
+import type { QuestionFormState } from '../../../types/app.js'
 
-export function getDefaultMarketFormState(): MarketFormState {
+export function getDefaultQuestionFormState(): QuestionFormState {
 	return {
 		answerUnit: '',
 		categoricalOutcomes: ['Yes', 'No'],
 		description: '',
 		endTime: '',
-		marketType: 'binary',
+		questionType: 'binary',
 		scalarIncrement: '1',
 		scalarMax: '100',
 		scalarMin: '0',

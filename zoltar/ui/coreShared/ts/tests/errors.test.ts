@@ -39,7 +39,7 @@ void describe('error helpers', () => {
 
 	void test('formats write failures with transaction-oriented wording', () => {
 		expect(formatWriteErrorMessage(new Error('execution reverted: insufficient funds for gas * price + value'), 'Failed to report on outcome')).toBe('Transaction failed while attempting to report on outcome. Reason: insufficient funds for gas * price + value')
-		expect(formatWriteErrorMessage(new Error('No market found for that ID'), 'Failed to create security pool')).toBe('No market found for that ID')
+		expect(formatWriteErrorMessage(new Error('No question found for that ID'), 'Failed to create security pool')).toBe('No question found for that ID')
 	})
 
 	void test('maps stale-price provider failures to an actionable recovery step', () => {

@@ -6,7 +6,7 @@ import { within } from '@zoltar/ui-core-shared/tests/testUtils/queries.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
 import { installTestRouting } from '@zoltar/ui-core-shared/tests/testUtils/testRouting.js'
 import type { ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
-import type { MarketRouteContentProps } from '@zoltar/ui-zoltar-shared/features/types.js'
+import type { QuestionRouteContentProps } from '@zoltar/ui-zoltar-shared/features/types.js'
 import { UniverseDirectorySection } from '@zoltar/ui-zoltar-shared/features/universes/components/UniverseDirectorySection.js'
 import { ZoltarSection } from '@zoltar/ui-zoltar-shared/features/zoltarSurface/components/ZoltarSection.js'
 import { describe, expect, test } from 'bun:test'
@@ -56,13 +56,13 @@ describe('UniverseDirectorySection', () => {
 
 	for (const hasForked of [false, true]) {
 		test(`renders ${hasForked ? 'migration' : 'fork'} actions in the Universe view`, async () => {
-			const props: MarketRouteContentProps = {
+			const props: QuestionRouteContentProps = {
 				accountState: { address: zeroAddress, chainId: '0xaa36a7', ethBalanceAttoEth: 0n, wethBalanceAttoEth: 0n },
 				activeUniverseId: 1n,
 				activeView: 'universes',
 				environmentRefreshKey: 0,
 				zoltarUniverseState: 'ready',
-				questionForm: { answerUnit: '', categoricalOutcomes: [], description: '', scalarIncrement: '', scalarMax: '', scalarMin: '', title: '', endTime: '', marketType: 'binary', startTime: '' },
+				questionForm: { answerUnit: '', categoricalOutcomes: [], description: '', scalarIncrement: '', scalarMax: '', scalarMin: '', title: '', endTime: '', questionType: 'binary', startTime: '' },
 				zoltarForkApproval: { error: undefined, loading: false, value: 0n },
 				zoltarForkQuestionId: '',
 				zoltarMigrationForm: { amount: '', outcomeIndexes: '' },

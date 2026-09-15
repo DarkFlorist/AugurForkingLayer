@@ -8,7 +8,7 @@ import { createFakeBackend } from '@zoltar/ui-core-shared/tests/testUtils/fakeBa
 import { createMockLoaderClient, getContractFunctionName } from '@zoltar/ui-core-shared/tests/testUtils/protocolTestSupport.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
 import { createInitialTransactionTrayState, markTransactionFailed, markTransactionRequested } from '@zoltar/ui-core-shared/transactions/transactionTray.js'
-import type { MarketDetails, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionDetails, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
 import { useZoltarFork, type UseZoltarForkDependencies } from '@zoltar/ui-zoltar-shared/features/universes/hooks/useZoltarFork.js'
 import { describe, expect, mock, test } from 'bun:test'
 import { h, render } from 'preact'
@@ -36,7 +36,7 @@ function createUniverse(overrides: Partial<ZoltarUniverseSummary> = {}): ZoltarU
 	}
 }
 
-function createForkQuestion(questionId: string): MarketDetails {
+function createForkQuestion(questionId: string): QuestionDetails {
 	return {
 		answerUnit: '',
 		createdAt: 1n,
@@ -45,7 +45,7 @@ function createForkQuestion(questionId: string): MarketDetails {
 		displayValueMin: 0n,
 		endTime: 2n,
 		exists: true,
-		marketType: 'binary',
+		questionType: 'binary',
 		numTicks: 2n,
 		outcomeLabels: ['Yes', 'No'],
 		questionId,

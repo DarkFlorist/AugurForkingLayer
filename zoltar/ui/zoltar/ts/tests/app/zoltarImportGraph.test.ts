@@ -97,7 +97,7 @@ function collectForbiddenProductReferences(source: string, modulePath: string) {
 		return collectStaticExpressionText(node.expression) ?? ''
 	}
 	function collect(value: string) {
-		if (/other(?:\s|-)*product|externalapp|#\/(?:security-pools?|markets?)(?:[/?#]|$)/i.test(value)) matches.add(value)
+		if (/other(?:\s|-)*product|externalapp|#\/(?:security-pools?|questions?)(?:[/?#]|$)/i.test(value)) matches.add(value)
 	}
 	function visit(node: ts.Node) {
 		if (ts.isIdentifier(node) || ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isJsxText(node)) collect(node.text)

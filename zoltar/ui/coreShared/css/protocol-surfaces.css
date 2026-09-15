@@ -538,7 +538,7 @@ strong.metric-value-danger {
 		gap: 0.15rem;
 	}
 
-	.market-linked-pool {
+	.question-linked-pool {
 		align-items: stretch;
 		grid-template-columns: 1fr;
 	}
@@ -1555,7 +1555,7 @@ main.global-transaction-tray-open :is(a, button, input, select, summary, textare
 	.categorical-outcome-row,
 	.fork-summary-grid,
 	.field-row,
-	.market-grid {
+	.question-grid {
 		grid-template-columns: 1fr;
 	}
 

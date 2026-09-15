@@ -88,7 +88,7 @@ describe('AppHeaderShell', () => {
 	})
 
 	test('supports an injected application header and custom main-content target', async () => {
-		const domEnvironment = installDomEnvironment('http://localhost/#/markets')
+		const domEnvironment = installDomEnvironment('http://localhost/#/questions')
 		const appContent = document.createElement('main')
 		appContent.id = 'main-content'
 		document.body.appendChild(appContent)
@@ -106,7 +106,7 @@ describe('AppHeaderShell', () => {
 	})
 
 	test('moves focus into settings and restores it when Escape closes the dialog', async () => {
-		const domEnvironment = installDomEnvironment('http://localhost/#/markets')
+		const domEnvironment = installDomEnvironment('http://localhost/#/questions')
 		const rendered = await renderIntoDocument(<AppHeaderShell overview={<div>Overview</div>} simulationController={undefined} onRefresh={async () => undefined} />)
 		try {
 			const settingsButton = within(rendered.container).getByRole('button', { name: 'Settings' })

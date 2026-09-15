@@ -768,7 +768,7 @@ button.quiet:disabled {
 .entity-card-body > .notice.error,
 .entity-card-subsection > .notice.error,
 .form-grid > .notice.error,
-.market-column > .notice.error {
+.question-column > .notice.error {
 	margin-top: 0.25rem;
 }
 
@@ -2143,29 +2143,29 @@ button.wallet-asset-action-pending:disabled {
 	color: var(--text);
 }
 
-.market-panel {
+.question-panel {
 	margin-top: 0;
 }
 
-.market-panel > .workflow-stack {
+.question-panel > .workflow-stack {
 	margin-top: 0.25rem;
 	gap: 1.25rem;
 }
 
-.market-overview-card {
+.question-overview-card {
 	gap: 1rem;
 	padding: 1.2rem;
 }
 
-.market-overview-card .entity-card-body {
+.question-overview-card .entity-card-body {
 	gap: 1rem;
 }
 
-.market-overview-grid {
+.question-overview-grid {
 	padding-top: 0.15rem;
 }
 
-.market-subtab-nav {
+.question-subtab-nav {
 	margin-top: 1rem;
 	padding: 0;
 	border: 0;
@@ -2407,20 +2407,20 @@ button.wallet-asset-action-pending:disabled {
 	border-top: 1px solid var(--divider-subtle);
 }
 
-.market-overview-subsection {
+.question-overview-subsection {
 	gap: 0.55rem;
 	padding-top: 0.65rem;
 }
 
-.market-overview-subsection .entity-card-subsection-header {
+.question-overview-subsection .entity-card-subsection-header {
 	margin-bottom: -0.1rem;
 }
 
-.market-overview-subsection .detail {
+.question-overview-subsection .detail {
 	line-height: 1.45;
 }
 
-.market-scalar-deploy {
+.question-scalar-deploy {
 	display: grid;
 	gap: 0.9rem;
 	padding: 1.15rem 1.2rem 1.2rem;
@@ -2430,7 +2430,7 @@ button.wallet-asset-action-pending:disabled {
 	box-shadow: none;
 }
 
-.market-scalar-deploy .actions {
+.question-scalar-deploy .actions {
 	justify-content: flex-start;
 }
 
@@ -2657,7 +2657,7 @@ button.wallet-asset-action-pending:disabled {
 	letter-spacing: -0.02em;
 }
 
-.market-header {
+.question-header {
 	display: grid;
 	gap: 0.5rem;
 	align-items: end;
@@ -2665,14 +2665,14 @@ button.wallet-asset-action-pending:disabled {
 	border-bottom: 1px solid var(--border-default);
 }
 
-.market-grid {
+.question-grid {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr);
 	gap: 1rem;
 	margin-top: 1rem;
 }
 
-.market-linked-pools {
+.question-linked-pools {
 	display: grid;
 	gap: 0.75rem;
 	margin-top: 1rem;
@@ -2680,23 +2680,23 @@ button.wallet-asset-action-pending:disabled {
 	border-top: 1px solid var(--border-default);
 }
 
-.market-linked-pools-header {
+.question-linked-pools-header {
 	display: grid;
 	gap: 0.15rem;
 }
 
-.market-linked-pools-header > span,
-.market-linked-pool-summary > span {
+.question-linked-pools-header > span,
+.question-linked-pool-summary > span {
 	color: var(--muted);
 	font-size: var(--font-detail);
 }
 
-.market-linked-pool-list {
+.question-linked-pool-list {
 	display: grid;
 	gap: 0.65rem;
 }
 
-.market-linked-pool {
+.question-linked-pool {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(12rem, 0.8fr) auto;
 	align-items: center;
@@ -2708,26 +2708,26 @@ button.wallet-asset-action-pending:disabled {
 	background: transparent;
 }
 
-.market-linked-pool:last-child {
+.question-linked-pool:last-child {
 	border-bottom: 0;
 }
 
-.market-linked-pool-universe-warning {
+.question-linked-pool-universe-warning {
 	grid-column: 1 / -1;
 }
 
-.market-linked-pool-summary {
+.question-linked-pool-summary {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
 	gap: 0.55rem 0.9rem;
 }
 
-.market-linked-pool-share-supply {
+.question-linked-pool-share-supply {
 	max-width: 9rem;
 }
 
-.market-linked-pool-participation {
+.question-linked-pool-participation {
 	display: grid;
 	gap: 0.2rem;
 	color: var(--muted);
@@ -2735,18 +2735,18 @@ button.wallet-asset-action-pending:disabled {
 	line-height: 1.45;
 }
 
-.market-linked-pool-participation strong {
+.question-linked-pool-participation strong {
 	color: var(--text);
 	font-size: var(--font-label);
 }
 
-.market-column {
+.question-column {
 	display: grid;
 	gap: 1rem;
 	min-width: 0;
 }
 
-.market-column:empty {
+.question-column:empty {
 	display: none;
 }
 

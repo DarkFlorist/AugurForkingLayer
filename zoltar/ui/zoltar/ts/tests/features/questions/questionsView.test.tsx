@@ -3,13 +3,13 @@
 import { installDomTestLifecycle } from '@zoltar/ui-core-shared/tests/testUtils/domTestLifecycle.js'
 import { fireEvent, within } from '@zoltar/ui-core-shared/tests/testUtils/queries.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
-import type { MarketDetails } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionDetails } from '@zoltar/ui-core-shared/types/contracts.js'
 import { QuestionsView } from '@zoltar/ui-zoltar-shared/features/zoltarSurface/components/QuestionsView.js'
 import { describe, expect, mock, test } from 'bun:test'
 import { render } from 'preact'
 import { act } from 'preact/test-utils'
 
-const question: MarketDetails = {
+const question: QuestionDetails = {
 	answerUnit: '',
 	createdAt: 1n,
 	description: 'A reusable resolution question',
@@ -17,7 +17,7 @@ const question: MarketDetails = {
 	displayValueMin: 0n,
 	endTime: 3n,
 	exists: true,
-	marketType: 'binary',
+	questionType: 'binary',
 	numTicks: 2n,
 	outcomeLabels: ['Yes', 'No'],
 	questionId: '0x01',
@@ -132,7 +132,7 @@ describe('QuestionsView', () => {
 
 	test('clamps and reloads a page that is out of range in a replacement environment', async () => {
 		const loadPage = mock(async () => undefined)
-		const view = (requestContextKey: number, pageIndex: number, questionCount: bigint, questions: MarketDetails[]) => (
+		const view = (requestContextKey: number, pageIndex: number, questionCount: bigint, questions: QuestionDetails[]) => (
 			<QuestionsView
 				canFork={false}
 				hasForked={false}

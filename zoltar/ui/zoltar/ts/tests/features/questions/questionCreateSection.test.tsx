@@ -5,19 +5,19 @@ import { installDomTestLifecycle } from '@zoltar/ui-core-shared/tests/testUtils/
 import { fireEvent, within } from '@zoltar/ui-core-shared/tests/testUtils/queries.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
 import { expectTransactionButtonDisabled } from '@zoltar/ui-core-shared/tests/testUtils/transactionActionButton.js'
-import type { MarketCreationResult, MarketDetails } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionCreationResult, QuestionDetails } from '@zoltar/ui-core-shared/types/contracts.js'
 import { QuestionCreateSection } from '@zoltar/ui-zoltar-shared/features/questions/components/QuestionCreateSection.js'
-import type { MarketFormState } from '@zoltar/ui-zoltar-shared/types/app.js'
+import type { QuestionFormState } from '@zoltar/ui-zoltar-shared/types/app.js'
 import { describe, expect, test } from 'bun:test'
 import { act } from 'preact/test-utils'
 
-function createQuestionForm(overrides: Partial<MarketFormState> = {}): MarketFormState {
+function createQuestionForm(overrides: Partial<QuestionFormState> = {}): QuestionFormState {
 	return {
 		answerUnit: '',
 		categoricalOutcomes: ['Yes', 'No'],
 		description: 'Question context',
 		endTime: '2000',
-		marketType: 'binary',
+		questionType: 'binary',
 		scalarIncrement: '0.1',
 		scalarMax: '10',
 		scalarMin: '0',
@@ -27,7 +27,7 @@ function createQuestionForm(overrides: Partial<MarketFormState> = {}): MarketFor
 	}
 }
 
-const question: MarketDetails = {
+const question: QuestionDetails = {
 	answerUnit: '',
 	createdAt: 1n,
 	description: 'Question description',
@@ -35,7 +35,7 @@ const question: MarketDetails = {
 	displayValueMin: 0n,
 	endTime: 2000n,
 	exists: true,
-	marketType: 'binary',
+	questionType: 'binary',
 	numTicks: 2n,
 	outcomeLabels: ['Yes', 'No'],
 	questionId: '0xquestion-1',
@@ -54,7 +54,7 @@ describe('QuestionCreateSection', () => {
 	})
 
 	test('blocks review without a wallet and reports field updates', async () => {
-		const updates: Array<Partial<MarketFormState>> = []
+		const updates: Array<Partial<QuestionFormState>> = []
 		const renderedComponent = await renderIntoDocument(
 			<QuestionCreateSection
 				accountAddress={undefined}
@@ -91,7 +91,7 @@ describe('QuestionCreateSection', () => {
 		let resetCount = 0
 		const selectedQuestionIds: string[] = []
 		const openedViews: string[] = []
-		const result: MarketCreationResult = { createQuestionHash: `0x${'1'.repeat(64)}`, marketType: 'binary', questionId: question.questionId }
+		const result: QuestionCreationResult = { createQuestionHash: `0x${'1'.repeat(64)}`, questionType: 'binary', questionId: question.questionId }
 		const renderedComponent = await renderIntoDocument(
 			<QuestionCreateSection
 				accountAddress={zeroAddress}
@@ -156,7 +156,7 @@ describe('QuestionCreateSection', () => {
 	})
 
 	test('omits the post-create fork handoff when no universe is available', async () => {
-		const result: MarketCreationResult = { createQuestionHash: `0x${'1'.repeat(64)}`, marketType: 'binary', questionId: question.questionId }
+		const result: QuestionCreationResult = { createQuestionHash: `0x${'1'.repeat(64)}`, questionType: 'binary', questionId: question.questionId }
 		const renderedComponent = await renderIntoDocument(
 			<QuestionCreateSection
 				accountAddress={zeroAddress}

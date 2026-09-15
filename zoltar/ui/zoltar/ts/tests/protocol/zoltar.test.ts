@@ -2,14 +2,14 @@
 
 import { describe, expect, test } from 'bun:test'
 import { getAddress } from '@zoltar/core-shared/evm/ethereum'
-import { loadMarketDetails, loadZoltarQuestionPage, loadZoltarUniverseSummary } from '@zoltar/ui-zoltar-shared/protocol/zoltar.js'
+import { loadQuestionDetails, loadZoltarQuestionPage, loadZoltarUniverseSummary } from '@zoltar/ui-zoltar-shared/protocol/zoltar.js'
 
 const QUESTION_TUPLE_BINARY = ['Binary question', 'desc', 1n, 2n, 0n, 0n, 100n, '']
 const QUESTION_TUPLE_SCALAR = ['Scalar question', 'desc', 1n, 2n, 100n, -10n, 10n, 'units']
 const EMPTY_QUESTION = ['', '', 0n, 0n, 0n, 0n, 0n, '']
 const REP_TOKEN = getAddress('0x00000000000000000000000000000000000000f1')
 
-type MockReadClient = Parameters<typeof loadMarketDetails>[0]
+type MockReadClient = Parameters<typeof loadQuestionDetails>[0]
 type MockReadContractRequest = Parameters<MockReadClient['readContract']>[0]
 
 function createReadClient({ multicallResponses, readContractHandlers }: { multicallResponses: unknown[]; readContractHandlers: Record<string, (request: MockReadContractRequest) => Promise<unknown>> }): MockReadClient {
@@ -32,7 +32,7 @@ function createReadClient({ multicallResponses, readContractHandlers }: { multic
 }
 
 describe('zoltar contract helpers', () => {
-	test('loadMarketDetails marks missing question data as non-existent without loading labels', async () => {
+	test('loadQuestionDetails marks missing question data as non-existent without loading labels', async () => {
 		const readContractCalls: string[] = []
 		const client = createReadClient({
 			multicallResponses: [[EMPTY_QUESTION, 0n]],
@@ -44,16 +44,16 @@ describe('zoltar contract helpers', () => {
 			},
 		})
 
-		const market = await loadMarketDetails(client, 123n)
+		const question = await loadQuestionDetails(client, 123n)
 
-		expect(market.exists).toBe(false)
-		expect(market.outcomeLabels).toEqual([])
+		expect(question.exists).toBe(false)
+		expect(question.outcomeLabels).toEqual([])
 		expect(readContractCalls).toEqual([])
-		expect(market.marketType).toBe('categorical')
-		expect(market.questionId).toBe('0x7b')
+		expect(question.questionType).toBe('categorical')
+		expect(question.questionId).toBe('0x7b')
 	})
 
-	test('loadMarketDetails loads binary outcome labels for an existing question', async () => {
+	test('loadQuestionDetails loads binary outcome labels for an existing question', async () => {
 		const outcomeLabels = ['Yes', 'No']
 		const readContractCalls: string[] = []
 		const client = createReadClient({
@@ -66,11 +66,11 @@ describe('zoltar contract helpers', () => {
 			},
 		})
 
-		const market = await loadMarketDetails(client, 456n)
+		const question = await loadQuestionDetails(client, 456n)
 
-		expect(market.exists).toBe(true)
-		expect(market.marketType).toBe('binary')
-		expect(market.outcomeLabels).toEqual(outcomeLabels)
+		expect(question.exists).toBe(true)
+		expect(question.questionType).toBe('binary')
+		expect(question.outcomeLabels).toEqual(outcomeLabels)
 		expect(readContractCalls).toEqual(['getOutcomeLabels'])
 	})
 
@@ -157,7 +157,7 @@ describe('zoltar contract helpers', () => {
 		const summary = await loadZoltarUniverseSummary(client, 8n)
 
 		expect(summary).toBeDefined()
-		expect(summary?.forkQuestionDetails?.marketType).toBe('scalar')
+		expect(summary?.forkQuestionDetails?.questionType).toBe('scalar')
 		expect(summary?.hasForked).toBe(true)
 		expect(summary?.childUniverses).toEqual([])
 	})
@@ -196,7 +196,7 @@ describe('zoltar contract helpers', () => {
 		expect(summary?.childUniverses.map(universe => universe.outcomeIndex)).toEqual([0n, 1n, 2n])
 		expect(summary?.childUniverses.map(universe => universe.exists)).toEqual([true, true, true])
 		expect(summary?.childUniverses.map(universe => universe.parentUniverseId)).toEqual([99n, 98n, 97n])
-		expect(summary?.forkQuestionDetails?.marketType).toBe('binary')
+		expect(summary?.forkQuestionDetails?.questionType).toBe('binary')
 		expect(summary?.totalTheoreticalSupplyAttoRep).toBe(999n)
 	})
 })

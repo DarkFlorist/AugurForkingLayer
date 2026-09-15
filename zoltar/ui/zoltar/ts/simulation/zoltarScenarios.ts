@@ -5,11 +5,11 @@ import { deploySimulationAppContracts, reportBootstrapProgress, requireQaAccount
 import type { QuestionData } from '@zoltar/ui-core-shared/types/contracts.js'
 import { getDeploymentSteps } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
 import { approveErc20 } from '@zoltar/ui-zoltar-shared/protocol/tokenActions.js'
-import { createMarket, loadZoltarUniverseSummary } from '@zoltar/ui-zoltar-shared/protocol/zoltar.js'
+import { createQuestion, loadZoltarUniverseSummary } from '@zoltar/ui-zoltar-shared/protocol/zoltar.js'
 import { createZoltarChildUniverse, forkZoltarUniverse } from '@zoltar/ui-zoltar-shared/protocol/zoltarForks.js'
 import { getZoltarAddress } from '@zoltar/ui-zoltar-shared/protocol/zoltarDeploymentHelpers.js'
 
-const scenarioProtocol = { approveErc20, createMarket, createZoltarChildUniverse, forkZoltarUniverse, getDeploymentSteps, getZoltarAddress, loadZoltarUniverseSummary }
+const scenarioProtocol = { approveErc20, createQuestion, createZoltarChildUniverse, forkZoltarUniverse, getDeploymentSteps, getZoltarAddress, loadZoltarUniverseSummary }
 
 const DAY_IN_SECONDS = 24n * 60n * 60n
 
@@ -37,11 +37,11 @@ export function getZoltarScenarioDescription(scenario: ZoltarScenario) {
 	}
 }
 
-function createForkedCategoricalQuestion(currentTimestamp: bigint): { marketType: 'categorical'; outcomeLabels: string[]; questionData: QuestionData } {
+function createForkedCategoricalQuestion(currentTimestamp: bigint): { questionType: 'categorical'; outcomeLabels: string[]; questionData: QuestionData } {
 	const outcomeLabels = sortStringArrayByKeccak(['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon'])
 
 	return {
-		marketType: 'categorical',
+		questionType: 'categorical',
 		outcomeLabels,
 		questionData: {
 			answerUnit: '',
@@ -63,11 +63,11 @@ async function seedForkedCategoricalScenario({ accounts, createReadClient, creat
 	const currentTimestamp = await getSimulationChainTimestamp(memoryClient)
 	const seededQuestion = createForkedCategoricalQuestion(currentTimestamp)
 
-	const marketResult = await scenarioProtocol.createMarket(writeClient, seededQuestion)
+	const questionResult = await scenarioProtocol.createQuestion(writeClient, seededQuestion)
 	await reportBootstrapProgress(onProgress, 'Creating seeded categorical fork question', 0.88)
 
 	const universeId = 0n
-	const questionId = BigInt(marketResult.questionId)
+	const questionId = BigInt(questionResult.questionId)
 	const rootUniverse = await scenarioProtocol.loadZoltarUniverseSummary(readClient, universeId)
 	if (rootUniverse === undefined) throw new Error('Expected the seeded genesis universe before forking')
 	await scenarioProtocol.approveErc20(writeClient, rootUniverse.reputationToken, scenarioProtocol.getZoltarAddress(), rootUniverse.forkThresholdAttoRep, 'approveForkRep')
@@ -83,7 +83,7 @@ async function seedForkedCategoricalScenario({ accounts, createReadClient, creat
 	const universeSummary = await scenarioProtocol.loadZoltarUniverseSummary(readClient, universeId)
 	if (universeSummary === undefined) throw new Error('Expected the seeded genesis universe after forking')
 	if (!universeSummary.hasForked) throw new Error('Expected the seeded genesis universe to be forked')
-	if (universeSummary.forkQuestionDetails?.marketType !== 'categorical') throw new Error('Expected the seeded fork question to be categorical')
+	if (universeSummary.forkQuestionDetails?.questionType !== 'categorical') throw new Error('Expected the seeded fork question to be categorical')
 	if (universeSummary.forkQuestionDetails.outcomeLabels.length !== 5) throw new Error('Expected five seeded categorical outcomes')
 	if (universeSummary.childUniverses.filter(child => child.exists).length !== 2) throw new Error('Expected two deployed child universes in the seeded fork scenario')
 
@@ -99,7 +99,7 @@ async function seedTwoQuestionsScenario({ accounts, createWriteClient, memoryCli
 		{ answerUnit: '', description: 'A second seeded binary question for list and selection QA.', displayValueMax: 0n, displayValueMin: 0n, endTime: currentTimestamp + 2n * DAY_IN_SECONDS, numTicks: 0n, startTime: currentTimestamp, title: 'Will the second proposal pass?' },
 	]
 	for (const [index, questionData] of questions.entries()) {
-		await scenarioProtocol.createMarket(writeClient, { marketType: 'binary', outcomeLabels: ['Yes', 'No'], questionData })
+		await scenarioProtocol.createQuestion(writeClient, { questionType: 'binary', outcomeLabels: ['Yes', 'No'], questionData })
 		await reportBootstrapProgress(onProgress, `Creating seeded question ${(index + 1).toString()} of 2`, 0.86 + index * 0.05)
 	}
 }

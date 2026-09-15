@@ -7,7 +7,7 @@ import { installDomTestLifecycle } from '@zoltar/ui-core-shared/tests/testUtils/
 import { createFakeBackend } from '@zoltar/ui-core-shared/tests/testUtils/fakeBackend.js'
 import { waitFor } from '@zoltar/ui-core-shared/tests/testUtils/queries.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
-import type { DeploymentStatus, MarketDetails } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { DeploymentStatus, QuestionDetails } from '@zoltar/ui-core-shared/types/contracts.js'
 import { useZoltarUniverse, type UseZoltarUniverseDependencies } from '@zoltar/ui-zoltar-shared/features/universes/hooks/useZoltarUniverse.js'
 import { describe, expect, mock, test } from 'bun:test'
 import { h, render } from 'preact'
@@ -36,7 +36,7 @@ function createZoltarDeploymentStatus(): DeploymentStatus {
 	}
 }
 
-function createQuestion(questionId: string): MarketDetails {
+function createQuestion(questionId: string): QuestionDetails {
 	return {
 		answerUnit: '',
 		createdAt: 1n,
@@ -45,7 +45,7 @@ function createQuestion(questionId: string): MarketDetails {
 		displayValueMin: 0n,
 		endTime: 2n,
 		exists: true,
-		marketType: 'binary',
+		questionType: 'binary',
 		numTicks: 2n,
 		outcomeLabels: ['Yes', 'No'],
 		questionId,
@@ -66,8 +66,8 @@ function createZoltarUniverseDependencies(overrides: Partial<UseZoltarUniverseDe
 		loadAllZoltarQuestions: async () => {
 			throw new Error('loadAllZoltarQuestions should not be called in this test')
 		},
-		loadMarketDetails: async () => {
-			throw new Error('loadMarketDetails should not be called in this test')
+		loadQuestionDetails: async () => {
+			throw new Error('loadQuestionDetails should not be called in this test')
 		},
 		loadZoltarQuestionCount: async () => {
 			throw new Error('loadZoltarQuestionCount should not be called in this test')
@@ -137,9 +137,9 @@ describe('useZoltarUniverse', () => {
 			pageIndex: number
 			pageSize: number
 			questionCount: bigint
-			questions: MarketDetails[]
+			questions: QuestionDetails[]
 		}>()
-		const newPage = createDeferred<{ pageIndex: number; pageSize: number; questionCount: bigint; questions: MarketDetails[] }>()
+		const newPage = createDeferred<{ pageIndex: number; pageSize: number; questionCount: bigint; questions: QuestionDetails[] }>()
 		let pageRequests = 0
 		const dependencies = createZoltarUniverseDependencies({
 			loadZoltarQuestionCount: mock(async () => 1n),
@@ -252,11 +252,11 @@ describe('useZoltarUniverse', () => {
 
 	test('loads and canonicalizes an exact existing question ID without loading the question list', async () => {
 		const question = createQuestion('0x99')
-		const loadMarketDetails = mock(async (_client, questionId: bigint) => {
+		const loadQuestionDetails = mock(async (_client, questionId: bigint) => {
 			expect(questionId).toBe(0x99n)
 			return question
 		})
-		const dependencies = createZoltarUniverseDependencies({ loadMarketDetails })
+		const dependencies = createZoltarUniverseDependencies({ loadQuestionDetails })
 		let hookState: UseZoltarUniverseState | undefined
 		function Harness() {
 			hookState = useZoltarUniverse(
@@ -282,7 +282,7 @@ describe('useZoltarUniverse', () => {
 			await requireHookState(hookState).loadZoltarQuestion('0x00099')
 		})
 
-		expect(loadMarketDetails).toHaveBeenCalledTimes(1)
+		expect(loadQuestionDetails).toHaveBeenCalledTimes(1)
 		expect(requireHookState(hookState).zoltarQuestions).toEqual([question])
 		expect(requireHookState(hookState).zoltarQuestionLookupId).toBe('0x99')
 		expect(requireHookState(hookState).zoltarQuestionLookupError).toBeUndefined()
@@ -290,15 +290,15 @@ describe('useZoltarUniverse', () => {
 		await act(async () => {
 			await requireHookState(hookState).loadZoltarQuestion(`0x1${'0'.repeat(64)}`)
 		})
-		expect(loadMarketDetails).toHaveBeenCalledTimes(1)
+		expect(loadQuestionDetails).toHaveBeenCalledTimes(1)
 		expect(requireHookState(hookState).zoltarQuestionLookupId).toBeUndefined()
 		expect(requireHookState(hookState).zoltarQuestionLookupError).toBe('Enter a valid hexadecimal question ID')
 	})
 
 	test('attributes loading and errors only to the current exact question request', async () => {
-		const olderQuestion = createDeferred<MarketDetails>()
+		const olderQuestion = createDeferred<QuestionDetails>()
 		const dependencies = createZoltarUniverseDependencies({
-			loadMarketDetails: async (_client, questionId) => {
+			loadQuestionDetails: async (_client, questionId) => {
 				if (questionId === 1n) return await olderQuestion.promise
 				throw new Error('current question lookup failed')
 			},
@@ -346,10 +346,10 @@ describe('useZoltarUniverse', () => {
 	})
 
 	test('invalidates an older exact question request when the current question is cached', async () => {
-		const olderQuestion = createDeferred<MarketDetails>()
+		const olderQuestion = createDeferred<QuestionDetails>()
 		const cachedQuestion = createQuestion('0x2')
-		const loadMarketDetails = mock(async (_client, questionId: bigint) => (questionId === 1n ? await olderQuestion.promise : cachedQuestion))
-		const dependencies = createZoltarUniverseDependencies({ loadMarketDetails })
+		const loadQuestionDetails = mock(async (_client, questionId: bigint) => (questionId === 1n ? await olderQuestion.promise : cachedQuestion))
+		const dependencies = createZoltarUniverseDependencies({ loadQuestionDetails })
 		let hookState: UseZoltarUniverseState | undefined
 		function Harness() {
 			hookState = useZoltarUniverse(
@@ -383,7 +383,7 @@ describe('useZoltarUniverse', () => {
 			await requireHookState(hookState).loadZoltarQuestion('0x02')
 		})
 
-		expect(loadMarketDetails).toHaveBeenCalledTimes(2)
+		expect(loadQuestionDetails).toHaveBeenCalledTimes(2)
 		expect(requireHookState(hookState).loadingZoltarQuestion).toBe(false)
 		expect(requireHookState(hookState).zoltarQuestionLookupId).toBe('0x2')
 		expect(requireHookState(hookState).zoltarQuestionLookupError).toBeUndefined()
@@ -396,11 +396,11 @@ describe('useZoltarUniverse', () => {
 	})
 
 	test('ignores an exact lookup failure after the full question list resolves the canonical ID', async () => {
-		const exactQuestion = createDeferred<MarketDetails>()
+		const exactQuestion = createDeferred<QuestionDetails>()
 		const listedQuestion = createQuestion('0x01')
 		const dependencies = createZoltarUniverseDependencies({
 			loadAllZoltarQuestions: async () => [listedQuestion],
-			loadMarketDetails: async () => await exactQuestion.promise,
+			loadQuestionDetails: async () => await exactQuestion.promise,
 			loadZoltarQuestionCount: async () => 1n,
 		})
 		let hookState: UseZoltarUniverseState | undefined
@@ -442,10 +442,10 @@ describe('useZoltarUniverse', () => {
 	})
 
 	test('clears an exact lookup error when a later question page resolves the canonical ID', async () => {
-		const exactQuestion = createDeferred<MarketDetails>()
+		const exactQuestion = createDeferred<QuestionDetails>()
 		const pagedQuestion = createQuestion('0x0001')
 		const dependencies = createZoltarUniverseDependencies({
-			loadMarketDetails: async () => await exactQuestion.promise,
+			loadQuestionDetails: async () => await exactQuestion.promise,
 			loadZoltarQuestionCount: async () => 1n,
 			loadZoltarQuestionPage: async () => ({ pageIndex: 0, pageSize: 10, questionCount: 1n, questions: [pagedQuestion] }),
 		})
@@ -639,7 +639,7 @@ describe('useZoltarUniverse', () => {
 			pageIndex: number
 			pageSize: number
 			questionCount: bigint
-			questions: MarketDetails[]
+			questions: QuestionDetails[]
 		}>()
 		let countCall = 0
 		let pageCall = 0

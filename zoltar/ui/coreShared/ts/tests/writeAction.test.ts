@@ -120,7 +120,7 @@ describe('runWriteAction', () => {
 			},
 			onTransactionRequested: () => {
 				if (transactionState.inFlightCount > 0) return false
-				transactionState = markTransactionRequested(transactionState, { action: 'createMarket', source: 'zoltar', submittedTitle: 'Creating Question' })
+				transactionState = markTransactionRequested(transactionState, { action: 'createQuestion', source: 'zoltar', submittedTitle: 'Creating Question' })
 				return true
 			},
 			onWriteError,
@@ -181,7 +181,7 @@ describe('runWriteAction', () => {
 			},
 			onTransactionRequested: () => {
 				if (transactionState.inFlightCount > 0) return false
-				transactionState = markTransactionRequested(transactionState, { action: 'createMarket', source: 'zoltar', submittedTitle: 'Creating Question' })
+				transactionState = markTransactionRequested(transactionState, { action: 'createQuestion', source: 'zoltar', submittedTitle: 'Creating Question' })
 				return true
 			},
 			refreshState: async () => undefined,
@@ -408,7 +408,7 @@ describe('runWriteAction', () => {
 				},
 				onTransactionRequested: () => {
 					transactionState = markTransactionRequested(transactionState, {
-						action: 'createMarket',
+						action: 'createQuestion',
 						source: 'zoltar',
 						submittedDetail: 'Question creation transaction submitted.',
 						submittedTitle: 'Creating Question',

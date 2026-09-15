@@ -445,19 +445,6 @@ async function runBrowserSmokeUnlocked(appId: UiAppId, baseUrl: string, options:
 			if ((options.requireWorker ?? true) && !session.hasWorkerStarted()) issues.push({ kind: 'worker', detail: `No worker initialized for ${appId} at ${pageUrl}` })
 		}
 
-		const screenshotPath = process.env['UI_SCREENSHOT_PATH']
-		if (screenshotPath !== undefined && screenshotPath !== '') {
-			const scrollSelector = process.env['UI_SCREENSHOT_SCROLL_SELECTOR']
-			if (scrollSelector !== undefined && scrollSelector !== '') {
-				await send('Runtime.evaluate', { expression: `document.querySelector(${JSON.stringify(scrollSelector)})?.scrollIntoView({ block: 'start' })` })
-				await Bun.sleep(100)
-			}
-			const result = (await send('Page.captureScreenshot', { captureBeyondViewport: false, format: 'png', fromSurface: true })) as { data?: unknown }
-			if (typeof result.data !== 'string') throw new Error('Chromium did not return PNG screenshot data.')
-			await fs.mkdir(path.dirname(screenshotPath), { recursive: true })
-			await fs.writeFile(screenshotPath, Buffer.from(result.data, 'base64'))
-		}
-
 		if (issues.length > 0) {
 			const summary = issues.map(issue => `  - [${issue.kind}] ${issue.detail}`).join('\n')
 			throw new Error(`Browser smoke check failed for ${appId} at ${pageUrl}:\n${summary}`)

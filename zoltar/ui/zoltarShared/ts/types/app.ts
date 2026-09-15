@@ -1,10 +1,10 @@
-import type { MarketType } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionType } from '@zoltar/ui-core-shared/types/contracts.js'
 
 export type { AccountState, TransactionLifecycleParameters, WriteOperationContext } from '@zoltar/ui-core-shared/types/app.js'
 
 export type Route = 'deploy' | 'zoltar' | 'not-found'
 
-export type MarketFormState = {
+export type QuestionFormState = {
 	answerUnit: string
 	categoricalOutcomes: string[]
 	description: string
@@ -13,7 +13,7 @@ export type MarketFormState = {
 	scalarMin: string
 	title: string
 	endTime: string
-	marketType: MarketType
+	questionType: QuestionType
 	startTime: string
 }
 

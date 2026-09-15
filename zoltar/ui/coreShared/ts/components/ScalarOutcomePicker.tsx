@@ -54,7 +54,7 @@ export function ScalarOutcomePicker({ action, clampExactTickInput = true, detail
 	}
 
 	return (
-		<div className='market-scalar-deploy workflow-subsection'>
+		<div className='question-scalar-deploy workflow-subsection'>
 			<div className='field scalar-slider-field'>
 				<span id={sliderLabelId}>{label}</span>
 				<div className='scalar-slider-with-invalid'>

@@ -1,5 +1,5 @@
 import { encodeAbiParameters, getAddress, keccak256, type Address } from '@zoltar/core-shared/evm/ethereum'
-import type { MarketType, QuestionData } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionType, QuestionData } from '@zoltar/ui-core-shared/types/contracts.js'
 
 export type UniverseTuple = readonly [bigint, bigint, bigint, Address, bigint]
 type DeployedChildUniverseTuple = {
@@ -76,7 +76,7 @@ export function getQuestionIdHex(questionId: bigint) {
 	return `0x${questionId.toString(16)}`
 }
 
-export function getMarketType(questionData: QuestionData, outcomeLabels: string[]): MarketType {
+export function getQuestionType(questionData: QuestionData, outcomeLabels: string[]): QuestionType {
 	if (outcomeLabels.length === 0 && questionData.numTicks > 0n) return 'scalar'
 	if (outcomeLabels.length === 2 && outcomeLabels[0] === 'Yes' && outcomeLabels[1] === 'No') return 'binary'
 	return 'categorical'

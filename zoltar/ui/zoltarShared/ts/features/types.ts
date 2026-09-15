@@ -1,6 +1,6 @@
 import type { Address } from '@zoltar/core-shared/evm/ethereum'
 import type { AccountState, ZoltarMigrationFormState } from '../types/app.js'
-import type { DeploymentStatus, DeploymentStepId, MarketDetails, MarketDetailsPage, MarketCreationResult, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { DeploymentStatus, DeploymentStepId, QuestionDetails, QuestionDetailsPage, QuestionCreationResult, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
 
 import type { LoadableValueState } from '@zoltar/ui-core-shared/lib/loadState.js'
 import type { TokenApprovalState } from '@zoltar/ui-core-shared/transactions/tokenApproval.js'
@@ -82,7 +82,7 @@ export type DeploymentRouteContentProps = {
 	onRetryDeploymentStatus: () => void
 }
 
-export type MarketRouteContentProps = {
+export type QuestionRouteContentProps = {
 	accountState: AccountState
 	activeUniverseId: bigint
 	activeView: ZoltarView
@@ -104,17 +104,17 @@ export type MarketRouteContentProps = {
 	onLoadZoltarQuestion: (questionId: string) => Promise<void>
 	onLoadZoltarQuestionPage: (pageIndex: number, pageSize: number) => Promise<void>
 	onCreateQuestion: () => void
-	onQuestionFormChange: (update: Partial<import('../types/app.js').MarketFormState>) => void
+	onQuestionFormChange: (update: Partial<import('../types/app.js').QuestionFormState>) => void
 	onResetQuestion: () => void
 	onZoltarMigrationFormChange: (update: Partial<ZoltarMigrationFormState>) => void
 	zoltarQuestionCount: bigint | undefined
 	zoltarQuestionLookupError: string | undefined
 	zoltarQuestionLookupId: string | undefined
-	zoltarQuestionPage: MarketDetailsPage | undefined
+	zoltarQuestionPage: QuestionDetailsPage | undefined
 	questionCreating: boolean
 	questionError: string | undefined
-	questionForm: import('../types/app.js').MarketFormState
-	questionResult: MarketCreationResult | undefined
+	questionForm: import('../types/app.js').QuestionFormState
+	questionResult: QuestionCreationResult | undefined
 	zoltarForkApproval: TokenApprovalState
 	zoltarForkError: string | undefined
 	loadingZoltarForkAccess: boolean
@@ -129,7 +129,7 @@ export type MarketRouteContentProps = {
 	zoltarMigrationChildRepBalancesAttoRep: Record<string, bigint | undefined>
 	zoltarMigrationPending: boolean
 	zoltarMigrationPreparedRepBalanceAttoRep: bigint | undefined
-	zoltarQuestions: MarketDetails[]
+	zoltarQuestions: QuestionDetails[]
 	zoltarQuestionsError: string | undefined
 	zoltarMigrationActiveAction: 'split' | undefined
 	zoltarUniverse: ZoltarUniverseSummary | undefined

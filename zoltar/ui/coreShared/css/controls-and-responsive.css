@@ -241,14 +241,14 @@
 
 .workflow-stack,
 .route-workflow-stack,
-.market-panel,
+.question-panel,
 .contract-panel {
 	display: grid;
 	gap: var(--space-4);
 }
 
 .route-view-flow,
-.market-route-flow {
+.question-route-flow {
 	display: grid;
 	gap: var(--space-3);
 }
@@ -563,7 +563,7 @@
 	background: transparent;
 }
 
-.market-subtab-nav {
+.question-subtab-nav {
 	margin-top: 0;
 	padding: 0;
 	border: 0;
@@ -586,7 +586,7 @@
 }
 
 .route-subtab-nav .view-tab,
-.market-subtab-nav .view-tab {
+.question-subtab-nav .view-tab {
 	flex: 0 0 auto;
 	justify-content: center;
 	scroll-snap-align: center;
@@ -647,7 +647,7 @@
 }
 
 .route-subtab-nav + .workflow-stack,
-.market-subtab-nav + .workflow-stack {
+.question-subtab-nav + .workflow-stack {
 	margin-top: 0;
 }
 
@@ -971,24 +971,24 @@
 		padding: 0.5rem 0.55rem;
 	}
 
-	.market-task-context {
+	.question-task-context {
 		gap: var(--space-2);
 	}
 
-	.market-task-context > .section-block-header {
+	.question-task-context > .section-block-header {
 		display: none;
 	}
 
-	.market-task-context .data-grid {
+	.question-task-context .data-grid {
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: var(--space-2);
 	}
 
-	.market-task-context .data-grid > div {
+	.question-task-context .data-grid > div {
 		padding-top: var(--space-2);
 	}
 
-	.market-task-context .data-grid strong {
+	.question-task-context .data-grid strong {
 		font-size: var(--font-detail);
 	}
 

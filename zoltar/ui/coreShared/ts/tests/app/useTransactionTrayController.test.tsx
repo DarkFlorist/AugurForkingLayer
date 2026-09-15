@@ -38,7 +38,7 @@ describe('useTransactionTrayController', () => {
 		if (controller === undefined) throw new Error('Transaction tray controller did not initialize')
 
 		await act(() => {
-			controller?.onTransactionRequested({ action: 'createMarket', source: 'zoltar', submittedTitle: 'Creating Question' })
+			controller?.onTransactionRequested({ action: 'createQuestion', source: 'zoltar', submittedTitle: 'Creating Question' })
 		})
 		expect(controller.transactionState.value.inFlightCount).toBe(1)
 		expect(controller.transactionState.value.active?.tone).toBe('awaiting-wallet')
@@ -63,7 +63,7 @@ describe('useTransactionTrayController', () => {
 		const previousGeneration = controller
 
 		await act(() => {
-			previousGeneration.onTransactionRequested({ action: 'createMarket', source: 'zoltar', submittedTitle: 'Creating Question' })
+			previousGeneration.onTransactionRequested({ action: 'createQuestion', source: 'zoltar', submittedTitle: 'Creating Question' })
 			previousGeneration.onTransactionPresented({ title: 'Question created', tone: 'success' })
 			previousGeneration.resetForEnvironment()
 		})
@@ -82,7 +82,7 @@ describe('useTransactionTrayController', () => {
 		})
 		if (controller === undefined) throw new Error('Transaction tray controller did not rerender')
 		await act(() => {
-			controller?.onTransactionRequested({ action: 'createMarket', source: 'zoltar', submittedTitle: 'Creating in new environment' })
+			controller?.onTransactionRequested({ action: 'createQuestion', source: 'zoltar', submittedTitle: 'Creating in new environment' })
 		})
 		expect(controller.transactionState.value.inFlightCount).toBe(1)
 	})
@@ -100,13 +100,13 @@ describe('useTransactionTrayController', () => {
 		let firstAccepted: boolean | void = undefined
 		let secondAccepted: boolean | void = undefined
 		await act(() => {
-			firstAccepted = controller?.onTransactionRequested({ action: 'createMarket', source: 'zoltar', submittedTitle: 'Creating Question' })
+			firstAccepted = controller?.onTransactionRequested({ action: 'createQuestion', source: 'zoltar', submittedTitle: 'Creating Question' })
 			secondAccepted = controller?.onTransactionRequested({ action: 'deploy', source: 'zoltar', submittedTitle: 'Deploying contracts' })
 		})
 
 		expect(Boolean(firstAccepted)).toBe(true)
 		expect(Boolean(secondAccepted)).toBe(false)
 		expect(controller.transactionState.value.inFlightCount).toBe(1)
-		expect(controller.transactionState.value.pendingIntent?.action).toBe('createMarket')
+		expect(controller.transactionState.value.pendingIntent?.action).toBe('createQuestion')
 	})
 })

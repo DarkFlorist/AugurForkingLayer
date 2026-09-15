@@ -6,7 +6,7 @@ export type { ReadClient, WriteClient } from '../wallet/clients.js'
 type ZoltarDeploymentStepId = 'proxyDeployer' | 'deploymentStatusOracle' | 'weth' | 'reputationToken' | 'multicall3' | 'zoltarQuestionData' | 'zoltar'
 
 export type DeploymentStepId = ZoltarDeploymentStepId | 'securityPoolForker' | 'securityPoolOperationsDelegate' | 'escalationGameClaimDelegate' | 'escalationGameFactory' | 'securityPoolFactory'
-export type MarketType = 'binary' | 'categorical' | 'scalar'
+export type QuestionType = 'binary' | 'categorical' | 'scalar'
 
 export type QuestionData = {
 	title: string
@@ -33,7 +33,7 @@ export type ZoltarUniverseSummary = {
 	childUniverses: ZoltarChildUniverseSummary[]
 	forkBurnDivisor?: bigint
 	forkThresholdAttoRep: bigint
-	forkQuestionDetails: MarketDetails | undefined
+	forkQuestionDetails: QuestionDetails | undefined
 	forkTime: bigint
 	forkingOutcomeIndex: bigint
 	hasForked: boolean
@@ -65,10 +65,10 @@ export type DeploymentStatusSnapshot = {
 
 type ActionResult = { hash: Hash }
 
-export type MarketCreationResult = {
+export type QuestionCreationResult = {
 	questionId: string
 	createQuestionHash: Hash
-	marketType: MarketType
+	questionType: QuestionType
 }
 
 export type ZoltarForkActionResult = ActionResult & {
@@ -90,17 +90,17 @@ export type ZoltarMigrationActionResult = ActionResult & {
 	universeId: bigint
 }
 
-export type MarketDetails = QuestionData & {
+export type QuestionDetails = QuestionData & {
 	createdAt: bigint
 	exists: boolean
-	marketType: MarketType
+	questionType: QuestionType
 	outcomeLabels: string[]
 	questionId: string
 }
 
-export type MarketDetailsPage = {
+export type QuestionDetailsPage = {
 	pageIndex: number
 	pageSize: number
 	questionCount: bigint
-	questions: MarketDetails[]
+	questions: QuestionDetails[]
 }

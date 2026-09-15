@@ -42,35 +42,35 @@ describe('routing', () => {
 
 	test('resolves parameterized routes with a configured matcher', () => {
 		installRouting({
-			defaultRoute: 'markets',
+			defaultRoute: 'questions',
 			routes: [
-				{ hash: '#/markets', name: 'markets' },
+				{ hash: '#/questions', name: 'questions' },
 				{
 					match: routeHash => {
-						const match = /^#\/market\/(\d+)$/.exec(routeHash)
-						return match === null ? undefined : `market/${match[1]}`
+						const match = /^#\/question\/(\d+)$/.exec(routeHash)
+						return match === null ? undefined : `question/${match[1]}`
 					},
 				},
 			],
 		})
-		window.location.hash = '#/market/42'
+		window.location.hash = '#/question/42'
 
-		expect(getCurrentRoute()).toBe('market/42')
-		window.location.hash = '#/market'
+		expect(getCurrentRoute()).toBe('question/42')
+		window.location.hash = '#/question'
 		expect(getCurrentRoute()).toBe('not-found')
 	})
 
 	test('normalizes route hashes and resolves configured aliases through a typed router', () => {
 		const routing = createRouting({
-			defaultRoute: 'markets',
+			defaultRoute: 'questions',
 			routes: [
-				{ aliases: ['#/developer'], hash: '#/markets', name: 'markets' },
+				{ aliases: ['#/developer'], hash: '#/questions', name: 'questions' },
 				{ hash: '#/portfolio', name: 'portfolio' },
 			] as const,
 		})
-		expect(parseRouteHash('#/markets?simulate=1')).toEqual({ routeHash: '#/markets', search: '?simulate=1' })
-		expect(routing.resolve('markets?simulate=1')).toBe('markets')
-		expect(routing.resolve('#/developer?simulate=1')).toBe('markets')
+		expect(parseRouteHash('#/questions?simulate=1')).toEqual({ routeHash: '#/questions', search: '?simulate=1' })
+		expect(routing.resolve('questions?simulate=1')).toBe('questions')
+		expect(routing.resolve('#/developer?simulate=1')).toBe('questions')
 		expect(routing.getHash('portfolio')).toBe('#/portfolio')
 	})
 

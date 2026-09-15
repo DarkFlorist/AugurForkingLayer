@@ -89,7 +89,7 @@ describe('Zoltar App route validation', () => {
 				createQuestion: async () => undefined,
 				questionCreating: false,
 				questionError: undefined,
-				questionForm: { answerUnit: '', categoryOutcomes: [''], description: '', displayValueMax: '', displayValueMin: '', endTime: '', feePerCashInAttoCash: '', marketType: 'binary', noShowBondInAttoCash: '', outcomeStructure: 'yes-no', startTime: '', title: '', tickSize: '', yesNoUnknownCount: '2' },
+				questionForm: { answerUnit: '', categoryOutcomes: [''], description: '', displayValueMax: '', displayValueMin: '', endTime: '', feePerCashInAttoCash: '', questionType: 'binary', noShowBondInAttoCash: '', outcomeStructure: 'yes-no', startTime: '', title: '', tickSize: '', yesNoUnknownCount: '2' },
 				questionResult: undefined,
 				resetQuestion: () => undefined,
 				setQuestionForm: () => undefined,

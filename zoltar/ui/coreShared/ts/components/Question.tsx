@@ -7,15 +7,15 @@ import { MetricField } from '../components/MetricField.js'
 import { OutcomeChipRow } from './OutcomeChipRow.js'
 import { TimestampValue } from '../components/TimestampValue.js'
 import { appendInvalidOutcomeLabelIfMissing, isInvalidOutcomeLabel } from '../lib/outcomeLabels.js'
-import { getMarketTypeLabel } from '../lib/marketType.js'
-import * as marketTypeCopy from '../copy/marketType.js'
+import { getQuestionTypeLabel } from '../lib/questionType.js'
+import * as questionTypeCopy from '../copy/questionType.js'
 import { formatScalarDisplayValue } from '../lib/scalarOutcome.js'
-import type { MarketDetails } from '../types/contracts.js'
+import type { QuestionDetails } from '../types/contracts.js'
 
 type QuestionProps = {
 	className?: string
 	loading?: boolean
-	question: MarketDetails | undefined
+	question: QuestionDetails | undefined
 	showTitle?: boolean
 	variant?: 'full' | 'preview'
 }
@@ -37,36 +37,36 @@ type QuestionSummaryField =
 			value: bigint
 	  }
 
-export function getQuestionTitle(question: MarketDetails) {
+export function getQuestionTitle(question: QuestionDetails) {
 	return question.title.trim() === '' ? commonCopy.untitledQuestion : question.title
 }
 
-function getQuestionDescription(question: MarketDetails) {
+function getQuestionDescription(question: QuestionDetails) {
 	// Empty question descriptions are intentionally silent in the UI. These screens are read-only,
 	// and users cannot add resolution notes from here.
 	return question.description.trim()
 }
 
-function getDisplayedOutcomes(question: MarketDetails) {
-	const outcomes = question.outcomeLabels.length === 0 ? [marketTypeCopy.scalar] : question.outcomeLabels
+function getDisplayedOutcomes(question: QuestionDetails) {
+	const outcomes = question.outcomeLabels.length === 0 ? [questionTypeCopy.scalar] : question.outcomeLabels
 	return appendInvalidOutcomeLabelIfMissing(outcomes)
 }
 
-function getDisplayRange(question: MarketDetails) {
+function getDisplayRange(question: QuestionDetails) {
 	const displayRange = `${formatScalarDisplayValue(question.displayValueMin)} to ${formatScalarDisplayValue(question.displayValueMax)}`
 	return question.answerUnit === '' ? displayRange : `${displayRange}\u00a0${question.answerUnit}`
 }
 
-function getQuestionSummaryFields(question: MarketDetails): QuestionSummaryField[] {
+function getQuestionSummaryFields(question: QuestionDetails): QuestionSummaryField[] {
 	const fields: QuestionSummaryField[] = [
-		{ kind: 'text', label: commonCopy.questionType, value: getMarketTypeLabel(question.marketType) },
+		{ kind: 'text', label: commonCopy.questionType, value: getQuestionTypeLabel(question.questionType) },
 		{ kind: 'identifier', label: commonCopy.questionId, value: question.questionId },
 		{ kind: 'timestamp', label: commonCopy.created, value: question.createdAt },
 		{ kind: 'timestamp', label: commonCopy.endTime, value: question.endTime },
 		{ kind: 'text', label: commonCopy.outcomes, value: getDisplayedOutcomes(question).join(', ') },
 	]
 
-	if (question.marketType === 'scalar')
+	if (question.questionType === 'scalar')
 		fields.push({ kind: 'text', label: commonCopy.ticks, value: question.numTicks.toString() }, { kind: 'text', label: commonCopy.displayRange, value: getDisplayRange(question) }, { kind: 'text', label: commonCopy.answerUnit, value: question.answerUnit === '' ? commonCopy.none : question.answerUnit })
 
 	return fields
@@ -114,7 +114,7 @@ export function Question({ className = '', loading = false, question, showTitle 
 		tone: isInvalidOutcomeLabel(outcome) ? ('warning' as const) : ('default' as const),
 	}))
 	const scalarFields =
-		question.marketType !== 'scalar'
+		question.questionType !== 'scalar'
 			? []
 			: [
 					{

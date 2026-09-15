@@ -5,7 +5,7 @@ import { formatRelativeTimestamp, formatTimestamp } from '@zoltar/ui-core-shared
 import { installDomTestLifecycle } from '@zoltar/ui-core-shared/tests/testUtils/domTestLifecycle.js'
 import { fireEvent, within } from '@zoltar/ui-core-shared/tests/testUtils/queries.js'
 import { renderIntoDocument } from '@zoltar/ui-core-shared/tests/testUtils/renderIntoDocument.js'
-import type { MarketDetails, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
+import type { QuestionDetails, ZoltarUniverseSummary } from '@zoltar/ui-core-shared/types/contracts.js'
 import { ChainTimestampContext } from '@zoltar/ui-core-shared/wallet/chainTimestamp.js'
 import { ForkZoltarSection } from '@zoltar/ui-zoltar-shared/features/universes/components/ForkZoltarSection.js'
 import { describe, expect, mock, test } from 'bun:test'
@@ -14,7 +14,7 @@ import { h, render } from 'preact'
 const ATTO_REP = 10n ** 18n
 const ZOLTAR_ADDRESS = '0x00000000000000000000000000000000000000a1' as const
 
-function createQuestion(): MarketDetails {
+function createQuestion(): QuestionDetails {
 	return {
 		answerUnit: '',
 		createdAt: 1n,
@@ -23,7 +23,7 @@ function createQuestion(): MarketDetails {
 		displayValueMin: 0n,
 		endTime: 2n,
 		exists: true,
-		marketType: 'binary',
+		questionType: 'binary',
 		numTicks: 2n,
 		outcomeLabels: ['Yes', 'No'],
 		questionId: '0x01',

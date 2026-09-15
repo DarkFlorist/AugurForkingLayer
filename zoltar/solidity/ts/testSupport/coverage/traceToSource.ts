@@ -168,8 +168,6 @@ const maskBytecodeRanges = (bytecode: string, ranges: readonly BytecodeRange[]):
 	return characters.join('')
 }
 
-export const buildCoveragePcToSourceMapForTest = (bytecode: string, sourceMap: string, linkRanges: readonly BytecodeRange[]) => buildPcToSourceMap(maskBytecodeRanges(normalizeBytecode(bytecode), linkRanges), sourceMap)
-
 const isBytecodeProfile = (bytecode: string | undefined, sourceMap: string | undefined, sourceFileNames: ReadonlyArray<string | undefined>, immutableRanges: readonly BytecodeRange[], linkRanges: readonly BytecodeRange[]): CoverageProfile | undefined => {
 	if (bytecode === undefined || sourceMap === undefined) return undefined
 	const bytecodeHex = normalizeBytecode(bytecode)
@@ -209,7 +207,7 @@ const collectProfilesByBytecode = async (artifactsPath: string): Promise<Coverag
 	return profileMaps
 }
 
-export const isCoverageBytecodeCompatibleForTest = (artifactBytecode: string, runtimeBytecode: string, mutableRanges: readonly BytecodeRange[]): boolean => {
+const isCoverageBytecodeCompatibleForTest = (artifactBytecode: string, runtimeBytecode: string, mutableRanges: readonly BytecodeRange[]): boolean => {
 	const normalizedArtifact = normalizeBytecode(artifactBytecode)
 	const normalizedRuntime = normalizeBytecode(runtimeBytecode)
 	if (normalizedArtifact.length !== normalizedRuntime.length) return false
@@ -279,20 +277,6 @@ const findProfilesForCreationBytecode = (profileByBytecode: CoverageProfileMap, 
 		matches.push(profiles)
 	}
 	return selectUnambiguousProfiles(matches)
-}
-
-const testProfile = (profileId: string, mutableRanges: readonly BytecodeRange[]): CoverageProfile => ({ sourceFileNames: [profileId], pcToSource: new Map(), mutableRanges })
-
-export const resolveCoverageBytecodeCandidateForTest = (candidates: readonly { readonly artifactBytecode: string; readonly mutableRanges: readonly BytecodeRange[]; readonly profileId: string }[], runtimeBytecode: string): string | undefined => {
-	const profilesByBytecode: CoverageProfileMap = new Map()
-	for (const candidate of candidates) profilesByBytecode.set(normalizeBytecode(candidate.artifactBytecode), [testProfile(candidate.profileId, candidate.mutableRanges)])
-	return findCompatibleProfilesForBytecode(profilesByBytecode, normalizeBytecode(runtimeBytecode))?.[0]?.sourceFileNames[0]
-}
-
-export const resolveCoverageCreationCandidateForTest = (candidates: readonly { readonly artifactBytecode: string; readonly mutableRanges: readonly BytecodeRange[]; readonly profileId: string }[], creationBytecodeWithArguments: string): string | undefined => {
-	const profilesByBytecode: CoverageProfileMap = new Map()
-	for (const candidate of candidates) profilesByBytecode.set(normalizeBytecode(candidate.artifactBytecode), [testProfile(candidate.profileId, candidate.mutableRanges)])
-	return findProfilesForCreationBytecode(profilesByBytecode, normalizeBytecode(creationBytecodeWithArguments))?.[0]?.sourceFileNames[0]
 }
 
 const traceStepAddress = (step: Record<string, unknown>): string | undefined => {
@@ -473,13 +457,6 @@ const isKnownSourceMapCoverageGapLine = (absoluteSourcePath: string, lines: read
 	return fileGap.lineRules.some(rule => isKnownSourceMapCoverageGapRuleMatch(rule, lines, lineIndex))
 }
 
-export const getKnownSourceMapCoverageGapRuleMatchCountsForTest = (absoluteSourcePath: string, source: string): readonly number[] => {
-	const fileGap = knownSourceMapCoverageGaps.find(gap => sourcePathMatchesKnownGap(absoluteSourcePath, gap.sourcePath))
-	if (fileGap === undefined) return []
-	const lines = stripSolidityComments(source)
-	return fileGap.lineRules.map(rule => lines.filter((_, lineIndex) => isKnownSourceMapCoverageGapRuleMatch(rule, lines, lineIndex)).length)
-}
-
 // Bytecode coverage reports production executable lines, not every source-map-spanned declaration or harness line.
 const isSolidityCoverableLine = (line: string, absoluteSourcePath: string, lines: readonly string[], lineIndex: number): boolean => {
 	if (line === '') return false
@@ -501,11 +478,6 @@ const getCoverableLinesForSource = (absoluteSourcePath: string, source: string):
 	const coverableLines = lines.map((line, lineIndex) => isSolidityCoverableLine(line, absoluteSourcePath, lines, lineIndex))
 	coverableLinesByFile.set(absoluteSourcePath, coverableLines)
 	return coverableLines
-}
-
-export const getSolidityCoverableLineNumbersForTest = (absoluteSourcePath: string, source: string): readonly number[] => {
-	const lines = stripSolidityComments(source)
-	return lines.flatMap((line, lineIndex) => (isSolidityCoverableLine(line, absoluteSourcePath, lines, lineIndex) ? [lineIndex + 1] : []))
 }
 
 const readSourceFileBySourcePath = async (rootPath: string, sourcePath: string): Promise<SourceFileData | undefined> => {
@@ -602,12 +574,6 @@ const resolveTraceSteps = (rawSteps: readonly unknown[], rootCodeAddress?: strin
 
 	return resolvedSteps
 }
-
-export const resolveTraceStepAddressesForTest = (rawSteps: readonly unknown[], rootCodeAddress?: string) =>
-	resolveTraceSteps(rawSteps, rootCodeAddress).map(step => ({
-		codeAddress: step.codeAddress,
-		stepAddress: step.stepAddress,
-	}))
 
 const collectProfilesForAddresses = async (addresses: readonly string[], request: RpcRequest, profileByBytecode: CoverageProfileMap, addressProfileCache: Map<string, CachedAddressProfiles>, callContext?: CallCoverageContext): Promise<Map<string, CoverageProfile[]>> => {
 	const result: Map<string, CoverageProfile[]> = new Map()
@@ -786,7 +752,7 @@ const scheduleCoverageWrite = (): void => {
 	}, 250)
 }
 
-export const flushSolidityBytecodeCoverageForTest = async (): Promise<void> => {
+const flushSolidityBytecodeCoverageForTest = async (): Promise<void> => {
 	if (scheduledCoverageWrite !== undefined) {
 		clearTimeout(scheduledCoverageWrite)
 		scheduledCoverageWrite = undefined
@@ -799,29 +765,6 @@ export const flushSolidityBytecodeCoverageForTest = async (): Promise<void> => {
 		}
 		await writeCoverage()
 	}
-}
-
-export const getSolidityBytecodeCoverageProfileHitCountForTest = async (sourceSuffix: string, lineNumber: number): Promise<number> => {
-	const config = getSolidityBytecodeCoverageConfig()
-	let hitCount = 0
-	for (const [profile, segmentHits] of profileSegmentHitsForTest) {
-		for (const { segment, hitCount: segmentHitCount } of segmentHits.values()) {
-			const sourcePath = profile.sourceFileNames[segment.sourceIndex]
-			if (sourcePath === undefined || !sourcePath.endsWith(sourceSuffix)) continue
-			const candidates = [path.join(config.rootPath, sourcePath), path.join(config.rootPath, 'solidity', sourcePath)]
-			for (const candidate of candidates) {
-				try {
-					const source = await fs.readFile(candidate, 'utf8')
-					const { startLine, endLine } = lineRangeFromSourceOffset(source.length, computeLineStartOffsets(source), segment.sourceOffset, segment.sourceLength)
-					if (lineNumber >= startLine && lineNumber <= endLine) hitCount += segmentHitCount
-					break
-				} catch (error) {
-					if (!(error instanceof Error) || !('code' in error) || error.code !== 'ENOENT') throw error
-				}
-			}
-		}
-	}
-	return hitCount
 }
 
 function isIgnorableTraceRequestError(error: unknown) {

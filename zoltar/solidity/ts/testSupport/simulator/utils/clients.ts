@@ -21,8 +21,6 @@ export const createWriteClient = (ethereum: EIP1193Provider | undefined | AnvilW
 	return client
 }
 
-export const getClientAnvilWindow = (client: object) => anvilWindowByClient.get(client)
-
 export type WriteClient = ReturnType<typeof createWriteClient>
 export type ReadClient = ReturnType<typeof createReadClient> | ReturnType<typeof createWriteClient>
 

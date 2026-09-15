@@ -7,9 +7,6 @@ type ZoltarDeploymentStepId = 'proxyDeployer' | 'deploymentStatusOracle' | 'weth
 
 export type DeploymentStepId = ZoltarDeploymentStepId | 'securityPoolForker' | 'securityPoolOperationsDelegate' | 'escalationGameClaimDelegate' | 'escalationGameFactory' | 'securityPoolFactory'
 export type MarketType = 'binary' | 'categorical' | 'scalar'
-export type ReportingOutcomeKey = 'invalid' | 'yes' | 'no'
-export type ForkOutcomeKey = ReportingOutcomeKey | 'none'
-export type SecurityPoolSystemState = 'operational' | 'poolForked' | 'forkMigration' | 'forkTruthAuction'
 
 export type QuestionData = {
 	title: string

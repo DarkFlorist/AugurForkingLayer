@@ -31,8 +31,6 @@ export type TransactionLifecycleParameters = {
 	onTransactionSubmitted: WriteOperationsParameters['onTransactionSubmitted']
 }
 
-export type TransactionCancellationParameters = Pick<WriteOperationsParameters, 'onTransactionCanceled'>
-
 export type WriteOperationContext = Pick<WriteOperationsParameters, 'accountAddress' | 'refreshState'>
 
 export type AccountState = {

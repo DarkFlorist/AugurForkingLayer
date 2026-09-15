@@ -13,10 +13,6 @@ type ContractLabelResolver = (abi: readonly unknown[], functionName: string) => 
 
 let appContractLabelResolver: ContractLabelResolver | undefined
 
-export function installAppContractLabelResolver(resolver: ContractLabelResolver) {
-	appContractLabelResolver = resolver
-}
-
 function resolveContractLabel(abi: readonly unknown[], functionName: string) {
 	return getContractLabel(abi, functionName) ?? appContractLabelResolver?.(abi, functionName)
 }
@@ -109,6 +105,7 @@ export async function writeContractAndWait<TCallParams extends ContractRevertRea
 	return hash
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export async function writeContractAndWaitForReceipt<TCallParams extends ContractRevertReasonParams, TReceipt extends Pick<TransactionReceipt, 'status'>>(client: WriteContractClient<TReceipt>, getCallParams: () => TCallParams): Promise<{ hash: Hash; receipt: TReceipt }> {
 	const callParams = getCallParams()
 	const data = encodeFunctionData({

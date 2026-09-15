@@ -1,10 +1,5 @@
 import { sameAddress as addressesMatch } from '@zoltar/core-shared/evm/address'
 import type { Address } from '@zoltar/core-shared/evm/ethereum'
-import { normalizeCaseInsensitiveText } from './caseInsensitive.js'
-
-export function normalizeAddress(address: Address | string | undefined) {
-	return normalizeCaseInsensitiveText(address)
-}
 
 export function sameAddress(left: Address | string | undefined, right: Address | string | undefined) {
 	return addressesMatch(left?.trim(), right?.trim())

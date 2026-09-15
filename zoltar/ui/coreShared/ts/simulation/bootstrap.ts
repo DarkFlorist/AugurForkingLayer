@@ -310,20 +310,6 @@ export async function deploySimulationAppContracts(
 	}
 }
 
-export type ProgressRange = {
-	end: number
-	start: number
-}
-
-export function createRangeProgressReporter(onProgress: BootstrapProgressHandler | undefined, range: ProgressRange, stepCount: number) {
-	let completedStepCount = 0
-
-	return async (label: string) => {
-		completedStepCount += 1
-		await reportBootstrapProgress(onProgress, label, range.start + (completedStepCount / Math.max(stepCount, 1)) * (range.end - range.start))
-	}
-}
-
 export function requireQaAccount(account: Address | undefined, label: string) {
 	if (account === undefined) throw new Error(label)
 	return account

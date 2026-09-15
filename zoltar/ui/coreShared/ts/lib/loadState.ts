@@ -34,20 +34,6 @@ export function resolveLoadableValueState<TValue>({ isLoading, isMissing, value 
 	return 'unknown'
 }
 
-type ResolveRequestedLoadableValueStateOptions<TValue, TKey> = {
-	currentKey: TKey | undefined
-	isLoading: boolean
-	resolvedKey: TKey | undefined
-	value: TValue | undefined
-}
-
-export function resolveRequestedLoadableValueState<TValue, TKey>({ currentKey, isLoading, resolvedKey, value }: ResolveRequestedLoadableValueStateOptions<TValue, TKey>): LoadableValueState {
-	if (value !== undefined) return 'ready'
-	if (isLoading) return 'loading'
-	if (currentKey !== undefined && resolvedKey !== undefined && currentKey === resolvedKey) return 'missing'
-	return 'unknown'
-}
-
 export function createLoadController({ timeoutMilliseconds = 30_000 }: { timeoutMilliseconds?: number } = {}): LoadController {
 	const phase = signal<LoadPhase>('idle')
 	const isLoading = computed(() => phase.value === 'loading')

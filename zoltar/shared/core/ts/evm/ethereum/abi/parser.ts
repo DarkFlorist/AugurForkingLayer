@@ -1,4 +1,4 @@
-import { type Abi, type AbiParameter } from '../types.js'
+import { type AbiParameter } from '../types.js'
 
 function findMatchingParenthesis(value: string, openingIndex: number) {
 	let depth = 0
@@ -105,14 +105,12 @@ function parseParameterList(value: string) {
 	return splitTopLevelCommaSeparated(value).map<AbiParameter>(parseAbiParameterEntry)
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function parseAbiParameters(value: string) {
 	return parseParameterList(value)
 }
 
-export function parseAbi(values: readonly string[]): Abi {
-	return values.map(parseAbiItem)
-}
-
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function parseAbiItem(value: string) {
 	const trimmed = value.trim()
 	const functionHeaderMatch = /^function\s+(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*\(/u.exec(trimmed)

@@ -7,7 +7,3 @@ export const ChainBlockNumberContext = createContext<bigint | undefined>(undefin
 export function useChainTimestamp() {
 	return useContext(ChainTimestampContext)
 }
-
-export function useChainBlockNumber() {
-	return useContext(ChainBlockNumberContext)
-}

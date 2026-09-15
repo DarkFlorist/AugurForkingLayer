@@ -109,6 +109,7 @@ export async function requestTransportWithRateLimitRetries<TValue>(transport: Tr
 	})
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export async function requestRpc<TValue>(transport: Transport, parameters: { method: string; params?: unknown }) {
 	return await requestTransport<TValue>(transport, parameters)
 }

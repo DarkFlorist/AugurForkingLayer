@@ -6,8 +6,8 @@ import { installActiveEnvironmentForTesting } from '../lib/activeEnvironment.js'
 import type { ChainBackend } from '../wallet/chainBackend.js'
 import { MAINNET_NETWORK_PROFILE } from '../wallet/networkProfile.js'
 import { createInitialTransactionTrayState, markTransactionCanceled, markTransactionFailed, markTransactionFinished, markTransactionRequested } from '../transactions/transactionTray.js'
-import { buildWriteActionConfig, runWriteAction } from '../transactions/writeAction.js'
-import { createFakeBackend, createFakeSimulationProfile } from './testUtils/fakeBackend.js'
+import { runWriteAction } from '../transactions/writeAction.js'
+import { createFakeBackend } from './testUtils/fakeBackend.js'
 
 const walletAddress = getAddress('0x00000000000000000000000000000000000000a1')
 const nextWalletAddress = getAddress('0x00000000000000000000000000000000000000b2')
@@ -390,50 +390,6 @@ describe('runWriteAction', () => {
 		expect(writeExecuted).toBe(true)
 		expect(activeChainId).toBe('0x01')
 		expect(errorMessage).toBeUndefined()
-	})
-
-	test('uses simulation transaction copy through the shared write action config', async () => {
-		restoreActiveEnvironment?.()
-		restoreActiveEnvironment = installActiveEnvironmentForTesting(createFakeBackend({ accountAddress: walletAddress, profile: createFakeSimulationProfile() }))
-		let transactionState = createInitialTransactionTrayState()
-		let requestedRequiresWalletConfirmation: boolean | undefined
-		const errorSignal: { value: string | undefined } = { value: undefined }
-		const writeActionConfig = buildWriteActionConfig(
-			{
-				accountAddress: walletAddress,
-				onTransactionCanceled: () => {
-					transactionState = markTransactionCanceled(transactionState)
-				},
-				onTransactionFailed: undefined,
-				onTransactionFinished: () => {
-					transactionState = markTransactionFinished(transactionState)
-				},
-				onTransactionPresented: () => undefined,
-				onTransactionPrepared: undefined,
-				onTransactionRequested: intent => {
-					transactionState = markTransactionRequested(transactionState, intent)
-					requestedRequiresWalletConfirmation = transactionState.pendingIntent?.requiresWalletConfirmation
-				},
-				refreshState: async () => undefined,
-			},
-			errorSignal,
-			'Connect wallet',
-			{
-				action: 'createMarket',
-				source: 'zoltar',
-				submittedDetail: 'Question creation transaction submitted.',
-				submittedTitle: 'Creating Question',
-			},
-		)
-
-		await runWriteAction(writeActionConfig, async () => ({ hash: transactionHash }), 'Failed to create question')
-
-		expect(transactionState.active?.tone).toBe('preparing')
-		expect(transactionState.active?.detail).toBe('Submitting in browser simulation. No wallet confirmation is required.')
-		expect(requestedRequiresWalletConfirmation).toBe(false)
-		expect(transactionState.pendingIntent).toBeUndefined()
-		expect(transactionState.inFlightCount).toBe(0)
-		expect(errorSignal.value).toBeUndefined()
 	})
 
 	test('clears pending transaction state when the write action cancels before submission', async () => {

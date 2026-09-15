@@ -1,20 +1,7 @@
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from 'bun:test'
-import {
-	readSecurityPoolsViewQueryParam,
-	readSecurityPoolQuestionIdQueryParam,
-	readSecurityPoolQueryParam,
-	readSelectedPoolViewQueryParam,
-	readUniverseQueryParam,
-	readZoltarViewQueryParam,
-	writeSecurityPoolsViewQueryParam,
-	writeSecurityPoolQuestionIdQueryParam,
-	writeSecurityPoolQueryParam,
-	writeSelectedPoolViewQueryParam,
-	writeUniverseQueryParam,
-	writeZoltarViewQueryParam,
-} from '../navigation/urlParams.js'
+import { readUniverseQueryParam, readZoltarViewQueryParam, writeUniverseQueryParam, writeZoltarViewQueryParam } from '../navigation/urlParams.js'
 
 void describe('url params', () => {
 	void test('reads a universe query param', () => {
@@ -30,47 +17,11 @@ void describe('url params', () => {
 		expect(writeUniverseQueryParam('?foo=bar&universe=12', undefined)).toBe('?foo=bar')
 	})
 
-	void test('reads and writes a security pool query param', () => {
-		expect(readSecurityPoolQueryParam('?securityPool=0x1234')).toBe('0x1234')
-		expect(readSecurityPoolQueryParam('?securityPool=')).toBe(undefined)
-		expect(writeSecurityPoolQueryParam('', '0x1234')).toBe('?securityPool=0x1234&securityPoolsView=operate')
-		expect(writeSecurityPoolQueryParam('?foo=bar', '0x1234')).toBe('?foo=bar&securityPool=0x1234&securityPoolsView=operate')
-		expect(writeSecurityPoolQueryParam('?foo=bar&securityPool=0x1234', undefined)).toBe('?foo=bar')
-		expect(writeSecurityPoolQueryParam('?securityPoolsView=create&selectedPoolView=reporting', '0x1234')).toBe('?securityPoolsView=operate&selectedPoolView=reporting&securityPool=0x1234')
-		expect(writeSecurityPoolQueryParam('?securityPoolsView=operate&selectedPoolView=reporting&securityPool=0x1234', undefined)).toBe('?securityPoolsView=operate')
-	})
-
-	void test('reads and writes a security pool question id query param', () => {
-		expect(readSecurityPoolQuestionIdQueryParam('?questionId=0x42')).toBe('0x42')
-		expect(readSecurityPoolQuestionIdQueryParam('?questionId=')).toBe(undefined)
-		expect(writeSecurityPoolQuestionIdQueryParam('', '0x42')).toBe('?questionId=0x42&securityPoolsView=create')
-		expect(writeSecurityPoolQuestionIdQueryParam('?securityPool=0x1234&selectedPoolView=vaults', '0x42')).toBe('?questionId=0x42&securityPoolsView=create')
-		expect(writeSecurityPoolQuestionIdQueryParam('?securityPoolsView=create&questionId=0x42', undefined)).toBe('?securityPoolsView=create')
-	})
-
 	void test('reads and writes a zoltar view query param', () => {
 		expect(readZoltarViewQueryParam('?zoltarView=questions')).toBe('questions')
 		expect(readZoltarViewQueryParam('?zoltarView=')).toBe(undefined)
 		expect(writeZoltarViewQueryParam('', 'questions')).toBe('?zoltarView=questions')
 		expect(writeZoltarViewQueryParam('?foo=bar', 'questions')).toBe('?foo=bar&zoltarView=questions')
 		expect(writeZoltarViewQueryParam('?foo=bar&zoltarView=questions', undefined)).toBe('?foo=bar')
-	})
-
-	void test('reads and writes a security pools view query param', () => {
-		expect(readSecurityPoolsViewQueryParam('?securityPoolsView=operate')).toBe('operate')
-		expect(readSecurityPoolsViewQueryParam('?securityPoolsView=')).toBe(undefined)
-		expect(writeSecurityPoolsViewQueryParam('', 'operate')).toBe('?securityPoolsView=operate')
-		expect(writeSecurityPoolsViewQueryParam('?foo=bar', 'operate')).toBe('?foo=bar&securityPoolsView=operate')
-		expect(writeSecurityPoolsViewQueryParam('?foo=bar&securityPoolsView=operate', undefined)).toBe('?foo=bar')
-		expect(writeSecurityPoolsViewQueryParam('?securityPoolsView=operate&selectedPoolView=staged-operations&securityPool=0x1234', 'create')).toBe('?securityPoolsView=create&securityPool=0x1234')
-		expect(writeSecurityPoolsViewQueryParam('?securityPoolsView=create&questionId=0x42', 'browse')).toBe('?securityPoolsView=browse')
-	})
-
-	void test('reads and writes a selected pool view query param', () => {
-		expect(readSelectedPoolViewQueryParam('?selectedPoolView=fork-auction')).toBe('fork-auction')
-		expect(readSelectedPoolViewQueryParam('?selectedPoolView=')).toBe(undefined)
-		expect(writeSelectedPoolViewQueryParam('', 'fork-auction')).toBe('?selectedPoolView=fork-auction&securityPoolsView=operate')
-		expect(writeSelectedPoolViewQueryParam('?foo=bar', 'fork-settlement')).toBe('?foo=bar&selectedPoolView=fork-settlement&securityPoolsView=operate')
-		expect(writeSelectedPoolViewQueryParam('?foo=bar&selectedPoolView=fork-migration', undefined)).toBe('?foo=bar')
 	})
 })

@@ -1,13 +1,10 @@
 import { parseDecimalInput } from '../forms/decimal.js'
 import { getVisualRatio } from './visualMetrics.js'
-import { formatScalarOutcomeIndexLabel as formatSharedScalarOutcomeIndexLabel, formatScalarOutcomeLabel as formatSharedScalarOutcomeLabel, MAX_PRECISE_SCALAR_TICK_COUNT, type ScalarQuestionDetails } from '@zoltar/zoltar-shared/questions/scalarOutcome'
+import { formatScalarOutcomeLabel as formatSharedScalarOutcomeLabel, MAX_PRECISE_SCALAR_TICK_COUNT, type ScalarQuestionDetails } from '@zoltar/zoltar-shared/questions/scalarOutcome'
 
 export {
 	clampScalarTickIndex,
 	formatScalarDisplayValue,
-	getScalarOutcomeIndex,
-	getScalarOutcomeIndexDescriptor,
-	isValidScalarOutcomeIndex,
 	MAX_PRECISE_SCALAR_TICK_COUNT,
 } from '@zoltar/zoltar-shared/questions/scalarOutcome'
 
@@ -17,10 +14,6 @@ function keepScalarUnitWithValue(label: string) {
 
 export function formatScalarOutcomeLabel(question: ScalarQuestionDetails, tickIndex: bigint) {
 	return keepScalarUnitWithValue(formatSharedScalarOutcomeLabel(question, tickIndex))
-}
-
-export function formatScalarOutcomeIndexLabel(question: ScalarQuestionDetails, outcomeIndex: bigint) {
-	return keepScalarUnitWithValue(formatSharedScalarOutcomeIndexLabel(question, outcomeIndex))
 }
 
 type ScalarFormInputs = {

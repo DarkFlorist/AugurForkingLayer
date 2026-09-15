@@ -4,7 +4,7 @@ import { describe, expect, mock, test } from 'bun:test'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import { type Address, type Hash, type Hex, type TransactionReceipt, encodeDeployData, getAddress, getCreate2Address, keccak256 } from '@zoltar/core-shared/evm/ethereum'
-import { getDeploymentSteps, loadDeploymentStatusOracleSnapshot, loadErc20Allowance, loadErc20Balance } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
+import { getDeploymentSteps, loadDeploymentStatusOracleSnapshot, loadErc20Balance } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
 import { getGenesisReputationTokenAddress } from '@zoltar/ui-zoltar-shared/protocol/activeProtocolAddresses.js'
 import { PROXY_DEPLOYER_ADDRESS, ZERO_SALT } from '@zoltar/ui-zoltar-shared/protocol/zoltarDeploymentHelpers.js'
 import type { ReadClient, WriteClient } from '@zoltar/ui-core-shared/types/contracts.js'
@@ -1189,10 +1189,9 @@ describe('contract deployment internals', () => {
 		}
 	})
 
-	test('ERC20 helper readers call the expected contract methods', async () => {
+	test('ERC20 balance reader calls the expected contract method', async () => {
 		const tokenAddress = getAddress('0x1111111111111111111111111111111111111111')
 		const ownerAddress = getAddress('0x2222222222222222222222222222222222222222')
-		const spenderAddress = getAddress('0x3333333333333333333333333333333333333333')
 		const seen: Array<{ functionName: string; address: Address; args: readonly unknown[] }> = []
 		const readClient: MockReadClient = {
 			getCode: async () => '0x',
@@ -1206,23 +1205,16 @@ describe('contract deployment internals', () => {
 					functionName: request.functionName,
 				})
 				if (request.functionName === 'balanceOf') return 2_000n as never
-				if (request.functionName === 'allowance') return 500n as never
 				throw new Error(`Unexpected function name: ${request.functionName}`)
 			},
 		}
 
 		expect(await loadErc20Balance(readClient as ReadClient, tokenAddress, ownerAddress)).toBe(2_000n)
-		expect(await loadErc20Allowance(readClient as ReadClient, tokenAddress, ownerAddress, spenderAddress)).toBe(500n)
 		expect(seen).toEqual([
 			{
 				functionName: 'balanceOf',
 				address: tokenAddress,
 				args: [ownerAddress],
-			},
-			{
-				functionName: 'allowance',
-				address: tokenAddress,
-				args: [ownerAddress, spenderAddress],
 			},
 		])
 	})

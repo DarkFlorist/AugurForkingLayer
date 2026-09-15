@@ -197,7 +197,3 @@ export function resolveConfiguredRpcConfig({ fallbackRpcUrl = DEFAULT_RPC_URL, l
 
 	return { source: 'default', url: fallbackRpcUrl }
 }
-
-export function resolveConfiguredRpcUrl(options: Parameters<typeof resolveConfiguredRpcConfig>[0] = {}) {
-	return resolveConfiguredRpcConfig(options).url
-}

@@ -166,6 +166,7 @@ export function hexToBytes(value: Hex | string) {
 	return nobleHexToBytes(ensureEvenHex(stripHexPrefix(value)))
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function concatHex(values: readonly Hex[]) {
 	return ensure0x(values.map(value => stripHexPrefix(value)).join(''))
 }
@@ -185,10 +186,6 @@ export function toHex(value: bigint | number | string | Uint8Array, options: { s
 	if (options.size === undefined) return ensure0x(nobleBytesToHex(bytes))
 	if (bytes.length > options.size) throw new Error(`Value exceeds requested size of ${options.size.toString()} bytes`)
 	return ensure0x(nobleBytesToHex(Uint8Array.from([...new Uint8Array(options.size - bytes.length), ...bytes])))
-}
-
-export function stringToHex(value: string): Hex {
-	return toHex(value)
 }
 
 export function keccak256(value: Hex | Uint8Array | string) {

@@ -2,7 +2,7 @@
 
 import { describe, expect, test } from 'bun:test'
 import { getAddress } from '@zoltar/core-shared/evm/ethereum'
-import { abbreviateAddress, normalizeAddress, sameAddress } from '../lib/address.js'
+import { abbreviateAddress, sameAddress } from '../lib/address.js'
 import { sameCaseInsensitiveText } from '../lib/caseInsensitive.js'
 
 void describe('case-insensitive text helpers', () => {
@@ -11,11 +11,6 @@ void describe('case-insensitive text helpers', () => {
 		expect(sameAddress(address, address.toUpperCase())).toBe(true)
 		expect(sameAddress(address, getAddress('0x00000000000000000000000000000000000000a2'))).toBe(false)
 		expect(sameAddress(undefined, address)).toBe(false)
-	})
-
-	void test('normalizeAddress trims and lowercases address text', () => {
-		expect(normalizeAddress(' 0x00000000000000000000000000000000000000A1 ')).toBe('0x00000000000000000000000000000000000000a1')
-		expect(normalizeAddress(undefined)).toBe(undefined)
 	})
 
 	void test('abbreviateAddress supports shared and caller-selected edge lengths', () => {

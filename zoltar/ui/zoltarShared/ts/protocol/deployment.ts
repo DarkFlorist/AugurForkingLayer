@@ -1,7 +1,7 @@
 import { encodeDeployData, getAddress, keccak256, type Address, type Hash, type Hex } from '@zoltar/core-shared/evm/ethereum'
 import { ABIS } from '@zoltar/ui-core-shared/abis.js'
-import { constructorArgumentsFromInitCode, createDeploymentStatusOracleAddressHelper } from '@zoltar/core-shared/deployment/deploymentAddresses'
-import { DeploymentStatusOracle_DeploymentStatusOracle, GenesisReputationToken_GenesisReputationToken, Zoltar_Zoltar, ZoltarQuestionData_ZoltarQuestionData, infrastructure_Multicall3_Multicall3, infrastructure_WETH9_WETH9 } from '@zoltar/ui-core-shared/contractArtifact.js'
+import { createDeploymentStatusOracleAddressHelper } from '@zoltar/core-shared/deployment/deploymentAddresses'
+import { DeploymentStatusOracle_DeploymentStatusOracle, ZoltarQuestionData_ZoltarQuestionData, infrastructure_Multicall3_Multicall3, infrastructure_WETH9_WETH9 } from '@zoltar/ui-core-shared/contractArtifact.js'
 import { MULTICALL3_BYTECODE, PROXY_DEPLOYER_ADDRESS, ZERO_SALT, getZoltarContractAddresses, getZoltarInitCode, getZoltarQuestionDataByteCode } from './zoltarDeploymentHelpers.js'
 import { readWithRpcStateRetries, waitForSubmittedTransactionReceipt, type RpcStateRetryWait } from './core.js'
 import type { DeploymentStatusSnapshot, DeploymentStep, DeploymentStepId, ReadClient, WriteClient } from '@zoltar/ui-core-shared/types/contracts.js'
@@ -102,7 +102,7 @@ async function proxyDeployerIsInstalled(client: Pick<ReadClient, 'getCode'>) {
 	return true
 }
 
-export async function assertCanonicalRawTransactionFeeCompatible(client: Pick<ReadClient, 'getBlock'>, label: string) {
+async function assertCanonicalRawTransactionFeeCompatible(client: Pick<ReadClient, 'getBlock'>, label: string) {
 	const { baseFeePerGas } = await client.getBlock()
 	if (baseFeePerGas === undefined) throw new Error(`${label} requires an EIP-1559 base fee before its canonical raw transaction can be funded`)
 	if (baseFeePerGas > CANONICAL_DEPLOYER_RAW_GAS_PRICE) {
@@ -110,12 +110,13 @@ export async function assertCanonicalRawTransactionFeeCompatible(client: Pick<Re
 	}
 }
 
-export function isInsufficientFundsError(error: unknown) {
+function isInsufficientFundsError(error: unknown) {
 	if (!(error instanceof Error)) return false
 	const message = `${error.message} ${'shortMessage' in error && typeof error.shortMessage === 'string' ? error.shortMessage : ''}`.toLowerCase()
 	return message.includes('insufficient funds') || message.includes('insufficient balance') || message.includes('funds for gas')
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export async function fundCanonicalDeployerSigner(client: WriteClient, parameters: { expectedDeployer: Address; label: string; requiredBalance: bigint; signer: Address }) {
 	const data = encodeDeployData({
 		abi: ATOMIC_FUNDING_CONSTRUCTOR_ABI,
@@ -231,7 +232,7 @@ function markDeploymentTransactionPrepared(
 	})
 }
 
-export function getZoltarDeploymentStatusOracleStepAddresses(profile = getRuntimeNetworkProfile()) {
+function getZoltarDeploymentStatusOracleStepAddresses(profile = getRuntimeNetworkProfile()) {
 	const addresses = getZoltarContractAddresses(profile)
 	return [PROXY_DEPLOYER_ADDRESS, ...(profile.id === 'sepolia' ? [profile.wethAddress, profile.genesisRepTokenAddress] : []), addresses.multicall3, addresses.zoltarQuestionData, addresses.zoltar] satisfies Address[]
 }
@@ -244,7 +245,7 @@ function getDeploymentStatusOracleByteCode(profile = getRuntimeNetworkProfile())
 	})
 }
 
-export function buildDeploymentStatusSnapshot(steps: readonly DeploymentStep[], deployedMask: bigint, deploymentStatusOracleDeployed: boolean): DeploymentStatusSnapshot {
+function buildDeploymentStatusSnapshot(steps: readonly DeploymentStep[], deployedMask: bigint, deploymentStatusOracleDeployed: boolean): DeploymentStatusSnapshot {
 	let maskIndex = 0n
 	const deploymentStatuses = steps.map(step => {
 		if (step.id === 'deploymentStatusOracle')
@@ -278,7 +279,7 @@ function getDeploymentStatusOracleAddress(profile = getRuntimeNetworkProfile()) 
 	}).getDeploymentStatusOracleAddress()
 }
 
-export async function deployViaProxy(client: WriteClient, bytecode: Hex) {
+async function deployViaProxy(client: WriteClient, bytecode: Hex) {
 	markDeploymentTransactionPrepared(client, {
 		data: bytecode,
 		functionName: 'Deploy contract through deterministic proxy',
@@ -352,7 +353,7 @@ async function ensureProxyDeployerDeployed(client: WriteClient, wait?: RpcStateR
 	return resolvedDeployHash
 }
 
-export async function loadDeploymentStatusOracleMaskAtAddress(client: Pick<ReadClient, 'readContract'>, address: Address): Promise<bigint> {
+async function loadDeploymentStatusOracleMaskAtAddress(client: Pick<ReadClient, 'readContract'>, address: Address): Promise<bigint> {
 	return BigInt(
 		await client.readContract({
 			abi: DeploymentStatusOracle_DeploymentStatusOracle.abi,
@@ -443,22 +444,8 @@ export function getDeploymentSteps(profile: NetworkProfile = getRuntimeNetworkPr
 // Constructor arguments for the proxy-deployed steps, keyed by step id, as
 // appended to each step's init code. Deployment manifests record these so
 // explorer source verification never re-derives deployment parameters.
-export function getZoltarDeploymentStepConstructorArguments(profile: NetworkProfile = getRuntimeNetworkProfile()): Partial<Record<DeploymentStepId, string>> {
-	const addresses = getZoltarContractAddresses(profile)
-	const constructorArguments: Partial<Record<DeploymentStepId, string>> = {
-		deploymentStatusOracle: constructorArgumentsFromInitCode(getDeploymentStatusOracleByteCode(profile), DeploymentStatusOracle_DeploymentStatusOracle.evm.bytecode.object),
-		multicall3: constructorArgumentsFromInitCode(MULTICALL3_BYTECODE, infrastructure_Multicall3_Multicall3.evm.bytecode.object),
-		zoltarQuestionData: constructorArgumentsFromInitCode(getZoltarQuestionDataByteCode(), ZoltarQuestionData_ZoltarQuestionData.evm.bytecode.object),
-		zoltar: constructorArgumentsFromInitCode(getZoltarInitCode(addresses.zoltarQuestionData, profile.genesisRepTokenAddress), Zoltar_Zoltar.evm.bytecode.object),
-	}
-	if (profile.id === 'sepolia') {
-		constructorArguments.weth = constructorArgumentsFromInitCode(SEPOLIA_WETH_INIT_CODE, infrastructure_WETH9_WETH9.evm.bytecode.object)
-		constructorArguments.reputationToken = constructorArgumentsFromInitCode(SEPOLIA_GENESIS_REP_INIT_CODE, GenesisReputationToken_GenesisReputationToken.evm.bytecode.object)
-	}
-	return constructorArguments
-}
 
-export function withExpectedDeploymentRuntimeCodeHashes(steps: readonly DeploymentStep[], profile: NetworkProfile): DeploymentStep[] {
+function withExpectedDeploymentRuntimeCodeHashes(steps: readonly DeploymentStep[], profile: NetworkProfile): DeploymentStep[] {
 	return steps.map(step => ({
 		...step,
 		...(profile.id === 'sepolia' ? { expectedRuntimeCodeHash: EXPECTED_SEPOLIA_DEPLOYMENT_RUNTIME_CODE_HASHES[step.id] } : {}),
@@ -522,14 +509,4 @@ export async function loadErc20Balance(client: ReadClient, tokenAddress: Address
 		args: [ownerAddress],
 	})
 	return typeof balance === 'bigint' ? balance : BigInt(balance)
-}
-
-export async function loadErc20Allowance(client: ReadClient, tokenAddress: Address, ownerAddress: Address, spenderAddress: Address): Promise<bigint> {
-	const allowance = await client.readContract({
-		abi: ABIS.mainnet.erc20,
-		functionName: 'allowance',
-		address: tokenAddress,
-		args: [ownerAddress, spenderAddress],
-	})
-	return typeof allowance === 'bigint' ? allowance : BigInt(allowance)
 }

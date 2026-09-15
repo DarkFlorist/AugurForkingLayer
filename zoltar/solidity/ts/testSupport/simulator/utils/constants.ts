@@ -1,9 +1,6 @@
 export const GENESIS_REPUTATION_TOKEN = 0x221657776846890989a759ba2973e427dff5c9bbn
-export const BURN_ADDRESS = 0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefn
 
 export const PROXY_DEPLOYER_ADDRESS = 0x7a0d94f55792c434d74a40883c6ed8545e406d12n
-
-export const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
 
 export const TEST_ADDRESSES = [
 	0x0000000000010000000000000000000000000011n,
@@ -15,7 +12,4 @@ export const TEST_ADDRESSES = [
 	0x0000000000010000000000000000000000000017n,
 ] as const
 
-export const DAY = 86400n
-
 // High-gas contract setup paths can outgrow Anvil/viem estimates in tests.
-export const HIGH_GAS_SIMULATOR_WRITE_GAS = 25_000_000n

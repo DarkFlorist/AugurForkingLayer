@@ -5,45 +5,7 @@ export function parseRepAmountInput(value: string, label: string) {
 	return parseDecimalInput(value, label, 18)
 }
 
-export function parseEthAmountInput(value: string, label: string) {
-	return parseDecimalInput(value, label, 18)
-}
-
 export function tryParseRepAmountInput(value: string) {
-	return tryParseDecimalInput(value, 18)
-}
-
-export function tryParseEthAmountInput(value: string) {
-	return tryParseDecimalInput(value, 18)
-}
-
-export function parseOptionalRepAmountInput(value: string) {
-	const trimmed = value.trim()
-	if (trimmed === '') return undefined
-	return tryParseRepAmountInput(trimmed)
-}
-
-export function parseTradingAmountInput(value: string, label: string) {
-	return parseDecimalInput(value, label, 18)
-}
-
-export function tryParseTradingAmountInput(value: string) {
-	return tryParseDecimalInput(value, 18)
-}
-
-export function parseTruthAuctionPriceInput(value: string, label: string) {
-	return parseDecimalInput(value, label, 18)
-}
-
-export function tryParseTruthAuctionPriceInput(value: string) {
-	return tryParseDecimalInput(value, 18)
-}
-
-export function parseTruthAuctionAmountInput(value: string, label: string) {
-	return parseDecimalInput(value, label, 18)
-}
-
-export function tryParseTruthAuctionAmountInput(value: string) {
 	return tryParseDecimalInput(value, 18)
 }
 

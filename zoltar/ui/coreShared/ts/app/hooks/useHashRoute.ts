@@ -4,7 +4,7 @@ import { buildRouteHref, ensureRouteHash, getCurrentRoute, getRouteHash, getTopL
 
 type Route = string
 
-export function useRouteSignal<TRoute extends string>(readRoute: () => TRoute, acceptChange?: (next: TRoute, previous: TRoute) => boolean) {
+function useRouteSignal<TRoute extends string>(readRoute: () => TRoute, acceptChange?: (next: TRoute, previous: TRoute) => boolean) {
 	const route = useSignal(readRoute())
 	const options = useRef({ readRoute, acceptChange })
 	options.current = { readRoute, acceptChange }

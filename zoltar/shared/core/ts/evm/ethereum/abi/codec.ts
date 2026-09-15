@@ -1,6 +1,6 @@
 import { type Abi, type AbiParameter, type AbiValue, type ContractFunctionResult, type DecodedFunctionData, type Hex } from '../types.js'
 
-import { bytesToHex, ensure0x, getAddress, isAddress, isHex, keccak256, normalizeRpcHex, stripHexPrefix } from '../encoding.js'
+import { bytesToHex, ensure0x, getAddress, isAddress, isHex, normalizeRpcHex, stripHexPrefix } from '../encoding.js'
 
 import { bytesToHex as nobleBytesToHex, hexToBytes as nobleHexToBytes } from '@noble/hashes/utils.js'
 
@@ -369,11 +369,12 @@ export function getAbiSignature(parameter: AbiParameter): string {
 	return parameter.type
 }
 
-export function formatAbiParameter(parameter: AbiParameter): string {
+function formatAbiParameter(parameter: AbiParameter): string {
 	const type = parameter.type.startsWith('tuple') ? `(${(parameter.components ?? []).map(formatAbiParameter).join(', ')})${parameter.type.slice(5)}` : parameter.type
 	return [type, parameter.indexed === true ? 'indexed' : undefined, parameter.name].filter((value): value is string => value !== undefined && value !== '').join(' ')
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function formatAbiItem(parameter: AbiParameter): string {
 	if (parameter.type !== 'event' && parameter.type !== 'function') return getAbiSignature(parameter)
 	const inputs = (parameter.inputs ?? []).map(formatAbiParameter).join(', ')
@@ -381,11 +382,6 @@ export function formatAbiItem(parameter: AbiParameter): string {
 	const stateMutability = parameter.type === 'function' && parameter.stateMutability !== undefined && parameter.stateMutability !== 'nonpayable' ? ` ${parameter.stateMutability}` : ''
 	const anonymous = parameter.type === 'event' && parameter.anonymous === true ? ' anonymous' : ''
 	return `${parameter.type} ${parameter.name ?? ''}(${inputs})${stateMutability}${outputs}${anonymous}`
-}
-
-export function toFunctionSelector(parameter: AbiParameter): Hex {
-	if (parameter.type !== 'function') throw new Error('ABI item is not a function')
-	return `0x${keccak256(getAbiSignature(parameter)).slice(2, 10)}`
 }
 
 function ensureConstructorAbi(abi: readonly unknown[]) {
@@ -422,13 +418,16 @@ export function encodeFunctionData(parameters: { abi: readonly unknown[]; args?:
 	return ensure0x(nobleBytesToHex(method.encodeInput(normalizeCodecArguments(abiItem.inputs, parameters.args))))
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function decodeFunctionData<TAbi extends Abi>(parameters: { abi: TAbi; data: Hex }): DecodedFunctionData<TAbi>
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function decodeFunctionData(parameters: { abi: Abi; data: Hex }): {
 	args: readonly AbiValue[]
 	functionName: string
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function decodeFunctionData(parameters: { abi: Abi; data: Hex }) {
 	const strippedAbi = normalizeAbi(parameters.abi)
 		.filter((entry: AbiParameter) => entry.type === 'function')

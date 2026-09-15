@@ -18,16 +18,6 @@
 			"bun": "./ts/evm/ethereum.ts",
 			"default": "./js/evm/ethereum.js"
 		},
-		"./evm/logScan": {
-			"types": "./ts/evm/logScan.ts",
-			"bun": "./ts/evm/logScan.ts",
-			"default": "./js/evm/logScan.js"
-		},
-		"./serialization/bigInt": {
-			"types": "./ts/serialization/bigInt.ts",
-			"bun": "./ts/serialization/bigInt.ts",
-			"default": "./js/serialization/bigInt.js"
-		},
 		"./serialization/sortStringArrayByKeccak": {
 			"types": "./ts/serialization/sortStringArrayByKeccak.ts",
 			"bun": "./ts/serialization/sortStringArrayByKeccak.ts",
@@ -37,11 +27,6 @@
 			"types": "./ts/errors/errorChain.ts",
 			"bun": "./ts/errors/errorChain.ts",
 			"default": "./js/errors/errorChain.js"
-		},
-		"./math/bigint": {
-			"types": "./ts/math/bigint.ts",
-			"bun": "./ts/math/bigint.ts",
-			"default": "./js/math/bigint.js"
 		},
 		"./evm/address": {
 			"types": "./ts/evm/address.ts",

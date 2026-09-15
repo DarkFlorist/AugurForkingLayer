@@ -1,28 +1,9 @@
 /// <reference types='bun-types' />
 
 import { describe, expect, test } from 'bun:test'
-import { getMetricPlaceholderPresentation, getPoolRegistryPresentation, getReportPresentation, getUniversePresentation, getWalletPresentation } from '../lib/userCopy.js'
+import { getMetricPlaceholderPresentation, getReportPresentation, getUniversePresentation, getWalletPresentation } from '../lib/userCopy.js'
 
 void describe('user copy helpers', () => {
-	void test('maps pool selection states semantically', () => {
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'unknown' })?.key).toBe('not_checked')
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'unknown' })?.detail).toBeUndefined()
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'unknown' })?.actionHint).toBeUndefined()
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'loading' })?.key).toBe('loading')
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'missing' })?.key).toBe('not_found')
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'missing' })?.detail).toBeUndefined()
-		expect(getPoolRegistryPresentation({ mode: 'selection', state: 'ready' })).toBeUndefined()
-	})
-
-	void test('maps empty pool collection states semantically', () => {
-		expect(getPoolRegistryPresentation({ hasLoaded: false, isLoading: false, mode: 'collection', poolCount: 0 })?.key).toBe('not_checked')
-		expect(getPoolRegistryPresentation({ hasLoaded: false, isLoading: false, mode: 'collection', poolCount: 0 })?.detail).toBe('Loading security pools…')
-		expect(getPoolRegistryPresentation({ hasLoaded: false, isLoading: false, mode: 'collection', poolCount: 0 })?.actionHint).toBeUndefined()
-		expect(getPoolRegistryPresentation({ hasLoaded: true, isLoading: false, mode: 'collection', poolCount: 0 })?.key).toBe('empty')
-		expect(getPoolRegistryPresentation({ hasLoaded: true, isLoading: false, mode: 'collection', poolCount: 0 })?.detail).toBe('No security pools are available in this universe.')
-		expect(getPoolRegistryPresentation({ hasLoaded: true, isLoading: false, mode: 'collection', poolCount: 0 })?.actionHint).toBe('Create a pool from an exact Yes / No question to enable shares, reporting, and vault workflows.')
-	})
-
 	void test('maps universe and report lookup states semantically', () => {
 		expect(getUniversePresentation('missing')?.key).toBe('not_found')
 		expect(getReportPresentation({ kind: 'question', state: 'unknown' })).toBeUndefined()
@@ -59,16 +40,6 @@ void describe('user copy helpers', () => {
 			key: 'unavailable',
 			placeholder: '—',
 		})
-	})
-
-	void test('covers collection and loading report states', () => {
-		expect(getPoolRegistryPresentation({ hasLoaded: true, isLoading: true, mode: 'collection', poolCount: 0 })?.key).toBe('loading')
-		expect(getPoolRegistryPresentation({ hasLoaded: true, isLoading: false, mode: 'collection', poolCount: 0 })?.key).toBe('empty')
-		expect(getPoolRegistryPresentation({ hasLoaded: false, isLoading: true, mode: 'collection', poolCount: 0 })?.key).toBe('loading')
-		expect(getUniversePresentation('loading')?.key).toBe('loading')
-		expect(getUniversePresentation('ready')).toBeUndefined()
-		expect(getReportPresentation({ kind: 'report', state: 'loading' })?.detail).toBe('retrieving…')
-		expect(getReportPresentation({ kind: 'report', state: 'ready' })).toBeUndefined()
 	})
 
 	void test('maps wallet branch states with non-increasing permission checks', () => {

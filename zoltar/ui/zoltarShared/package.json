@@ -152,10 +152,6 @@
 			"bun": "./ts/protocol/tokenActions.ts",
 			"default": "./js/protocol/tokenActions.js"
 		},
-		"./protocol/uniswapQuoter.js": {
-			"bun": "./ts/protocol/uniswapQuoter.ts",
-			"default": "./js/protocol/uniswapQuoter.js"
-		},
 		"./protocol/zoltar.js": {
 			"bun": "./ts/protocol/zoltar.ts",
 			"default": "./js/protocol/zoltar.js"

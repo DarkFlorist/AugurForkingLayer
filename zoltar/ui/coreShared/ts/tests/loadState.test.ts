@@ -2,7 +2,7 @@ import { createDeferred } from './testUtils/deferred.js'
 /// <reference types="bun-types" />
 
 import { describe, expect, spyOn, test } from 'bun:test'
-import { createLoadController, resolveLoadableValueState, resolveRequestedLoadableValueState, type LoadPhase } from '../lib/loadState.js'
+import { createLoadController, resolveLoadableValueState, type LoadPhase } from '../lib/loadState.js'
 
 void describe('load state helpers', () => {
 	void test('bounds backend readiness and allows retry without running a premature read', async () => {
@@ -243,13 +243,5 @@ void describe('load state helpers', () => {
 		expect(resolveLoadableValueState({ isLoading: true, isMissing: false, value: undefined })).toBe('loading')
 		expect(resolveLoadableValueState({ isLoading: false, isMissing: true, value: undefined })).toBe('missing')
 		expect(resolveLoadableValueState({ isLoading: false, isMissing: false, value: 42 })).toBe('ready')
-	})
-
-	void test('resolves requested loadable value states for the current key only', () => {
-		expect(resolveRequestedLoadableValueState({ currentKey: 'pool-a', isLoading: false, resolvedKey: undefined, value: undefined })).toBe('unknown')
-		expect(resolveRequestedLoadableValueState({ currentKey: 'pool-a', isLoading: true, resolvedKey: undefined, value: undefined })).toBe('loading')
-		expect(resolveRequestedLoadableValueState({ currentKey: 'pool-a', isLoading: false, resolvedKey: 'pool-b', value: undefined })).toBe('unknown')
-		expect(resolveRequestedLoadableValueState({ currentKey: 'pool-a', isLoading: false, resolvedKey: 'pool-a', value: undefined })).toBe('missing')
-		expect(resolveRequestedLoadableValueState({ currentKey: 'pool-a', isLoading: false, resolvedKey: 'pool-a', value: 42 })).toBe('ready')
 	})
 })

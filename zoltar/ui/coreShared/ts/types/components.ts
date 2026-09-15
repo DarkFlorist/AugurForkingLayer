@@ -49,24 +49,10 @@ export type GlobalTransactionPresentation = {
 	universeId?: bigint | undefined
 }
 
-export type StickyContextItem = {
-	label: string
-	value: ComponentChildren
-}
-
 export type TransactionContextItem = {
 	identityKey?: string
 	label: ComponentChildren
 	value: ComponentChildren
-}
-
-export type LifecycleStagePresentation = {
-	availableActions: string[]
-	blockedActions: string[]
-	detail?: string
-	key: string
-	label: string
-	tone: 'critical' | 'default' | 'success' | 'warning'
 }
 
 export type ReadinessAction = {
@@ -114,14 +100,6 @@ export type SectionBlockProps = {
 	variant?: 'default' | 'embedded' | 'plain' | 'surface'
 }
 
-export type RouteWorkflowPanelProps = {
-	children: ComponentChildren
-	className?: string
-	description?: ComponentChildren
-	showHeader?: boolean
-	title: ComponentChildren
-}
-
 export type DataGridProps = {
 	children: ComponentChildren
 	className?: string
@@ -129,7 +107,7 @@ export type DataGridProps = {
 	dense?: boolean
 }
 
-export type MetricGridVariant = 'context' | 'default' | 'question' | 'summary' | 'vault'
+type MetricGridVariant = 'context' | 'default' | 'question' | 'summary' | 'vault'
 
 export type MetricGridProps = {
 	children: ComponentChildren
@@ -137,30 +115,6 @@ export type MetricGridProps = {
 	columns?: 2 | 3 | 4 | 'auto'
 	dense?: boolean
 	variant?: MetricGridVariant
-}
-
-export type ProgressMeterProps = {
-	className?: string
-	detail?: ComponentChildren
-	label: ComponentChildren
-	maxValue?: bigint
-	secondaryValue?: ComponentChildren
-	tone?: 'default' | 'danger' | 'muted' | 'success' | 'warning'
-	value?: bigint
-	valueText: ComponentChildren
-}
-
-export type RankedBarListProps = {
-	className?: string
-	emptyMessage?: ComponentChildren
-	items: Array<{
-		detail?: ComponentChildren
-		key: string
-		label: ComponentChildren
-		tone?: 'default' | 'danger' | 'muted' | 'success' | 'warning'
-		value?: bigint
-		valueText: ComponentChildren
-	}>
 }
 
 export type ViewTabOption<TValue extends string> = {

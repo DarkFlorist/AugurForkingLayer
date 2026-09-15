@@ -1,4 +1,4 @@
-export function normalizeCaseInsensitiveText(value: string | undefined) {
+function normalizeCaseInsensitiveText(value: string | undefined) {
 	return value?.trim().toLowerCase()
 }
 

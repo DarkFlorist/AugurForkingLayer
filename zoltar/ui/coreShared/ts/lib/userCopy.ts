@@ -38,67 +38,6 @@ export function getMetricPlaceholderPresentation(value: unknown, options?: { loa
 	})
 }
 
-export function getPoolRegistryPresentation(
-	input:
-		| {
-				hasLoaded: boolean
-				isLoading: boolean
-				mode: 'collection'
-				poolCount: number
-		  }
-		| {
-				mode: 'selection'
-				state: LoadableValueState
-		  },
-) {
-	if (input.mode === 'collection') {
-		if (input.poolCount > 0) return undefined
-		if (input.isLoading)
-			return createPresentation('loading', {
-				badgeLabel: commonCopy.loading,
-				badgeTone: 'pending',
-				detail: userMessagesCopy.refreshingPoolRegistryDetail,
-				detailIsLoading: true,
-			})
-		if (!input.hasLoaded)
-			return createPresentation('not_checked', {
-				badgeLabel: userMessagesCopy.notChecked,
-				badgeTone: 'muted',
-				detail: userMessagesCopy.uncheckedPoolRegistryDetail,
-			})
-		return createPresentation('empty', {
-			actionHint: userMessagesCopy.emptyPoolRegistryActionHint,
-			badgeLabel: commonCopy.none,
-			badgeTone: 'muted',
-			detail: userMessagesCopy.emptyPoolRegistryDetail,
-		})
-	}
-
-	switch (input.state) {
-		case 'loading':
-			return createPresentation('loading', {
-				badgeLabel: commonCopy.loading,
-				badgeTone: 'pending',
-				detail: commonCopy.loadingWithEllipsis,
-				detailIsLoading: true,
-			})
-		case 'unknown':
-			return createPresentation('not_checked', {
-				badgeLabel: userMessagesCopy.notChecked,
-				badgeTone: 'muted',
-			})
-		case 'missing':
-			return createPresentation('not_found', {
-				badgeLabel: commonCopy.notFound,
-				badgeTone: 'blocked',
-			})
-		case 'ready':
-			return undefined
-		default:
-			return assertNever(input.state)
-	}
-}
-
 export function getUniversePresentation(state: LoadableValueState) {
 	switch (state) {
 		case 'loading':

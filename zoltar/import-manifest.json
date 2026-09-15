@@ -74,13 +74,13 @@
 			"path": "shared/core/package.json",
 			"upstreamPath": "shared/core/package.json",
 			"upstreamSha256": "945965fce69b6a4666012d7eb2be44b241e828a1d4bbef7881aceae9ec98b1c0",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/deployment/deploymentAddresses.ts",
 			"upstreamPath": "shared/core/ts/deployment/deploymentAddresses.ts",
 			"upstreamSha256": "9ad63a75aa5ed701bc07bc07a9cd38de3a987d31cf68a00c872e93c3fcabdfaa",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/deployment/protocolConfig.ts",
@@ -122,31 +122,31 @@
 			"path": "shared/core/ts/evm/ethereum.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum.ts",
 			"upstreamSha256": "1822149cb49018a4d5d873eb8b95a0ea54de8fbdd3732cc232fe021adcd9f847",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/abi.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/abi.ts",
 			"upstreamSha256": "04459c6c9c8f61e15a7ccdd4b9521e8ed74a8497bc87c9896d9d76b590c27d28",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/abi/codec.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/abi/codec.ts",
 			"upstreamSha256": "3d7ae66b3e3bcc3861edacdba66af4d1db1f613a5fc9e4e71cf0c74943a0ee87",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/abi/events.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/abi/events.ts",
 			"upstreamSha256": "c7a13b6378b3397f07d984b890d8aaf8a9347bc196dbe38dcc6b172e81fd9085",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/abi/parser.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/abi/parser.ts",
 			"upstreamSha256": "96e976c86e923205b7a228e96592f4e62a8777ab60f5c80b2786f221b875db7d",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/accounts.ts",
@@ -158,7 +158,7 @@
 			"path": "shared/core/ts/evm/ethereum/chains.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/chains.ts",
 			"upstreamSha256": "9a04d61db53acaba11df587ed8679d31390ccced8202a4e5aa7f741cea66d540",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/clients.ts",
@@ -182,7 +182,7 @@
 			"path": "shared/core/ts/evm/ethereum/encoding.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/encoding.ts",
 			"upstreamSha256": "6aa27218e0c99b8ed4f9a61397a0c27b67f38617f53a22a6e8cc8f19faf935c2",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/errors.ts",
@@ -200,54 +200,18 @@
 			"path": "shared/core/ts/evm/ethereum/transport.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/transport.ts",
 			"upstreamSha256": "83a8099991e726aceedb08dc0a7918495542cd8a403c64e5053f1215cdfc9ed9",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/ethereum/types.ts",
 			"upstreamPath": "shared/core/ts/evm/ethereum/types.ts",
 			"upstreamSha256": "a9cfd34626c79ca3da5f9301d6fa67bfc1a0005fc93af67d6522c53f96f58a44",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "shared/core/ts/evm/logScan.test.ts",
-			"upstreamPath": "shared/core/ts/evm/logScan.test.ts",
-			"upstreamSha256": "251f2b2f9e16be772e5defa114d3c0fbd92de702eb05c5ec91696f28da4c2fa1",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "shared/core/ts/evm/logScan.ts",
-			"upstreamPath": "shared/core/ts/evm/logScan.ts",
-			"upstreamSha256": "c540745b49f892ee84c2ef4c6fc3bfb03fcf2e5b6b1423bdf82941cd2d4b86fc",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/core/ts/evm/multicallFailure.ts",
 			"upstreamPath": "shared/core/ts/evm/multicallFailure.ts",
 			"upstreamSha256": "4290950d7ec239c80669fb9280ec142694bfb022e30d3195880b85f169a06b53",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "shared/core/ts/math/bigint.test.ts",
-			"upstreamPath": "shared/core/ts/math/bigint.test.ts",
-			"upstreamSha256": "5d039d62dbb8ce035ce141df5c44e44542205e8e2f999fbc03567ed26a93c93a",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "shared/core/ts/math/bigint.ts",
-			"upstreamPath": "shared/core/ts/math/bigint.ts",
-			"upstreamSha256": "46e838387d2a001666072ed3d82c31007485fb3c95ec43728e35eadb822ad549",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "shared/core/ts/serialization/bigInt.test.ts",
-			"upstreamPath": "shared/core/ts/serialization/bigInt.test.ts",
-			"upstreamSha256": "f11af93357b6f8b88480d3fec2f58baec35e07f08232ca28f125f7542c60bcff",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "shared/core/ts/serialization/bigInt.ts",
-			"upstreamPath": "shared/core/ts/serialization/bigInt.ts",
-			"upstreamSha256": "e814e2b2b65bf878e6dc3f883c4b9d75b6d75ae74619d2c7c2a4ae049c19571d",
 			"treatment": "unchanged"
 		},
 		{
@@ -326,7 +290,7 @@
 			"path": "shared/zoltar/ts/questions/scalarOutcome.ts",
 			"upstreamPath": "shared/zoltar/ts/questions/scalarOutcome.ts",
 			"upstreamSha256": "97d9faf86a27fa8b1e1b5d90a8cbedd962a460caab3ce675280babce61a454ad",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "shared/zoltar/ts/testing/scalarOutcomeParityFixtures.ts",
@@ -526,7 +490,7 @@
 			"path": "solidity/ts/testSupport/coverage/traceToSource.ts",
 			"upstreamPath": "solidity/ts/testSupport/coverage/traceToSource.ts",
 			"upstreamSha256": "1b44fb0088a9f11d84eb853706664888bb080db5de06c5a7654610af34c5a7aa",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "solidity/ts/testSupport/deployContract.ts",
@@ -550,7 +514,7 @@
 			"path": "solidity/ts/testSupport/simulator/types/types.ts",
 			"upstreamPath": "solidity/ts/testSupport/simulator/types/types.ts",
 			"upstreamSha256": "47b84f83ed6dddc240dc0440af5c1d18709cdb137fbc15cb13a8f1da3c1e8b85",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "solidity/ts/testSupport/simulator/types/wire-types.ts",
@@ -580,13 +544,13 @@
 			"path": "solidity/ts/testSupport/simulator/utils/bigint.ts",
 			"upstreamPath": "solidity/ts/testSupport/simulator/utils/bigint.ts",
 			"upstreamSha256": "3dfb4c10f2a93cbb2333ebbea3dc101ad7231da53c64e72475652085324a8e16",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "solidity/ts/testSupport/simulator/utils/clients.ts",
 			"upstreamPath": "solidity/ts/testSupport/simulator/utils/clients.ts",
 			"upstreamSha256": "454d87bd383311881046476e5dab3b90a41d70d58464c9c8315552ffa075220c",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "solidity/ts/testSupport/simulator/utils/constants.ts",
@@ -622,7 +586,7 @@
 			"path": "solidity/ts/testSupport/simulator/utils/testUtils.ts",
 			"upstreamPath": "solidity/ts/testSupport/simulator/utils/testUtils.ts",
 			"upstreamSha256": "f717222c3a7e2b425f7263a365940650f111cef4a2acd38ef399d92a74edba2f",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "solidity/ts/testSupport/simulator/utils/utilities.ts",
@@ -804,7 +768,7 @@
 			"path": "tooling/ui/bundlerPaths.mts",
 			"upstreamPath": "tooling/ui/bundlerPaths.mts",
 			"upstreamSha256": "2bafad8d7ad5e777defd8c30c89db10db9ce11756f3d1362a15819afeed8d309",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "tooling/ui/chromiumDevTools.mts",
@@ -1058,7 +1022,7 @@
 			"path": "ui/coreShared/ts/app/hooks/useHashRoute.ts",
 			"upstreamPath": "ui/coreShared/ts/app/hooks/useHashRoute.ts",
 			"upstreamSha256": "464790d7d9934f2605ca2144bf769752e7244db54910f17dcf332812ba81a50a",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/app/hooks/useMissingDeploymentRedirect.ts",
@@ -1127,12 +1091,6 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/components/AddressInfo.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/AddressInfo.tsx",
-			"upstreamSha256": "d33945522d361325274df59f2501c3acfd683c27edcfac67b3e2bc8b046b8c21",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/components/AddressValue.tsx",
 			"upstreamPath": "ui/coreShared/ts/components/AddressValue.tsx",
 			"upstreamSha256": "2be4253baf7ce61e6edc5f0c3ec5415ff373f1d8bfcf9158c5b3bd4aea2e7ed3",
@@ -1148,12 +1106,6 @@
 			"path": "ui/coreShared/ts/components/Badge.tsx",
 			"upstreamPath": "ui/coreShared/ts/components/Badge.tsx",
 			"upstreamSha256": "13677e1d5d8560e2b89f8a40628d443ca77a6432fa8101fc38ae936985a90571",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/coreShared/ts/components/ComparisonRecord.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/ComparisonRecord.tsx",
-			"upstreamSha256": "db491b3725ecd98ba4dd9646f6beaac9d880784ea700e540ee83cea5f5745925",
 			"treatment": "unchanged"
 		},
 		{
@@ -1229,12 +1181,6 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/components/LifecycleStageBanner.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/LifecycleStageBanner.tsx",
-			"upstreamSha256": "9f94169d60a2f3545ecd5580866c055d29c6bddac0f4eac479a776339afb1c7f",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/components/LoadableValue.tsx",
 			"upstreamPath": "ui/coreShared/ts/components/LoadableValue.tsx",
 			"upstreamSha256": "c699334df4dc2113da92883ad699e1e83a9f805b5d02e6528e7218113e94221a",
@@ -1295,21 +1241,9 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/components/ProgressMeter.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/ProgressMeter.tsx",
-			"upstreamSha256": "e0d55e00da7c0f36b8a374ac30b7df8f9f573fb084216d8b31c2745900c0761b",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/components/Question.tsx",
 			"upstreamPath": "ui/coreShared/ts/components/Question.tsx",
 			"upstreamSha256": "7d455865f69b8626666eff77276670ea9db2fceb98e8ed619e78c11f425c6b54",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/coreShared/ts/components/RankedBarList.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/RankedBarList.tsx",
-			"upstreamSha256": "56fc515ec1a98b4be62152d3a2c758624585119d7b90e639e05c308d7ecfc21d",
 			"treatment": "unchanged"
 		},
 		{
@@ -1322,12 +1256,6 @@
 			"path": "ui/coreShared/ts/components/RouteHeader.tsx",
 			"upstreamPath": "ui/coreShared/ts/components/RouteHeader.tsx",
 			"upstreamSha256": "daf8b4562963d035f3bd4c3d939d80a116f440c4c1c224c7acc68444aa6210d8",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/coreShared/ts/components/RouteWorkflowPanel.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/RouteWorkflowPanel.tsx",
-			"upstreamSha256": "a3e347436a67eb2267ff28b6cd4d8b27b1457a1c7cba9c27ebcfbc8c2bf7f088",
 			"treatment": "unchanged"
 		},
 		{
@@ -1352,12 +1280,6 @@
 			"path": "ui/coreShared/ts/components/StateHint.tsx",
 			"upstreamPath": "ui/coreShared/ts/components/StateHint.tsx",
 			"upstreamSha256": "b5deead6e7bfca66522b5c14c228d5a096f3fabd810e5f72e92fb5ace80ec800",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/coreShared/ts/components/StickyObjectContext.tsx",
-			"upstreamPath": "ui/coreShared/ts/components/StickyObjectContext.tsx",
-			"upstreamSha256": "18a6e1c778e0bc4c13be354ff339cddbe33bc9139f2671e32de41ef06076b977",
 			"treatment": "unchanged"
 		},
 		{
@@ -1466,13 +1388,13 @@
 			"path": "ui/coreShared/ts/copy/app.ts",
 			"upstreamPath": "ui/coreShared/ts/copy/app.ts",
 			"upstreamSha256": "6b96b13dd91291e5534b8dbf203a01302d16d09a386fa9b3e665e7b6387d0eb6",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/copy/common.ts",
 			"upstreamPath": "ui/coreShared/ts/copy/common.ts",
 			"upstreamSha256": "7a2fc1b8b29dcefa370be38fa606235242caa67cc6d52e762f0accef81fbefaa",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/copy/marketType.ts",
@@ -1496,13 +1418,13 @@
 			"path": "ui/coreShared/ts/copy/transaction.ts",
 			"upstreamPath": "ui/coreShared/ts/copy/transaction.ts",
 			"upstreamSha256": "b98b550a2c2bf96585b363301498a473db63f043ee01b66dbe6e95f1ae444833",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/copy/transactionReview.ts",
 			"upstreamPath": "ui/coreShared/ts/copy/transactionReview.ts",
 			"upstreamSha256": "40105c2787d0d04dd654a2d7334ca63d2329a6ca5aab010766a3f0815e3d6992",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/copy/types.ts",
@@ -1514,7 +1436,7 @@
 			"path": "ui/coreShared/ts/copy/userMessages.ts",
 			"upstreamPath": "ui/coreShared/ts/copy/userMessages.ts",
 			"upstreamSha256": "9b05437bfcb7cc769830afd62ed23dc6c82eb64e61a1c3d2feb11956f5f0ff5b",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/forms/decimal.ts",
@@ -1526,13 +1448,13 @@
 			"path": "ui/coreShared/ts/forms/formInputs.ts",
 			"upstreamPath": "ui/coreShared/ts/forms/formInputs.ts",
 			"upstreamSha256": "2831ebbc58d25bb59be5437abc49b5e24fa201288bbf4cd295fc63e42774b6a0",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/forms/inputs.ts",
 			"upstreamPath": "ui/coreShared/ts/forms/inputs.ts",
 			"upstreamSha256": "ec64b0cf705ac90008964b3d976469afc189fbd71263056ae6b32b228d2948cf",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/forms/integerInput.ts",
@@ -1541,27 +1463,15 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/forms/required.ts",
-			"upstreamPath": "ui/coreShared/ts/forms/required.ts",
-			"upstreamSha256": "176f8d2d3a87547ba21347694ad579a3844e54df047910380ac360a41054b29c",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/forms/viewState.ts",
 			"upstreamPath": "ui/coreShared/ts/forms/viewState.ts",
 			"upstreamSha256": "8d83cff7446a32a79ff7265888a4028e7e8042991d322497700bed016402613f",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/hooks/useCopyToClipboard.ts",
 			"upstreamPath": "ui/coreShared/ts/hooks/useCopyToClipboard.ts",
 			"upstreamSha256": "6060841e054905c8eb9e95889b2caa478ecda18abd26a03c61af6b15f28e9e0c",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/coreShared/ts/hooks/useErc20Loader.ts",
-			"upstreamPath": "ui/coreShared/ts/hooks/useErc20Loader.ts",
-			"upstreamSha256": "87041b231ccf8c45a932b80b48dfd7bf34a0efd82826a8f17eb5ca747fd652a4",
 			"treatment": "unchanged"
 		},
 		{
@@ -1592,7 +1502,7 @@
 			"path": "ui/coreShared/ts/lib/address.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/address.ts",
 			"upstreamSha256": "2d35d0aa4d9fa14cdc74b60cf1c4f50db6913335ff9fb8dbd7921ff4d1b7405f",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/assert.ts",
@@ -1610,7 +1520,7 @@
 			"path": "ui/coreShared/ts/lib/caseInsensitive.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/caseInsensitive.ts",
 			"upstreamSha256": "311f1738977674d3f721223332e0a617fbfb711d7ee97aaf5971a81d89a318f7",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/deploymentStatus.ts",
@@ -1622,19 +1532,19 @@
 			"path": "ui/coreShared/ts/lib/errors.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/errors.ts",
 			"upstreamSha256": "75ed8941a68d45e9580dca3ab8525d535d0f44973585ccacce8d00122abb0eb9",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/formatters.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/formatters.ts",
 			"upstreamSha256": "121c8be1390bf361e4841de499cadf586e8e02854a4dd8ac699dba5878d20d9e",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/loadState.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/loadState.ts",
 			"upstreamSha256": "b383f803d6a4cbb328c2338d06127085d56145cebd82ba7994cc241b5a6c13d0",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/marketType.ts",
@@ -1664,7 +1574,7 @@
 			"path": "ui/coreShared/ts/lib/pagination.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/pagination.ts",
 			"upstreamSha256": "7ea7fcf2c12fc099c32c75be495891e82d1450ae2f888a5717756327fd50b750",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/promise.ts",
@@ -1688,7 +1598,7 @@
 			"path": "ui/coreShared/ts/lib/repPriceSource.tsx",
 			"upstreamPath": "ui/coreShared/ts/lib/repPriceSource.tsx",
 			"upstreamSha256": "7d4c3a1558b9f421c098d3f12c836f8b765146dff0665fcf039955286f1e3261",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/requestGuard.ts",
@@ -1700,7 +1610,7 @@
 			"path": "ui/coreShared/ts/lib/scalarOutcome.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/scalarOutcome.ts",
 			"upstreamSha256": "adc560d4e50b361b3cb1f3754ebcb9e1b5cf3e2bbcd9992a48ab202d63fb3a2e",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/sepoliaDeploymentConfig.ts",
@@ -1715,22 +1625,16 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/lib/time.ts",
-			"upstreamPath": "ui/coreShared/ts/lib/time.ts",
-			"upstreamSha256": "231146f291dcfa866e4c4bedbd7f7430814ee8d63c93bb79032e71c8725cbd1c",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/lib/userCopy.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/userCopy.ts",
 			"upstreamSha256": "14f66e2cb22814cbdc7019233fc658a61c2549916167833c120579aa4c74e22b",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/lib/visualMetrics.ts",
 			"upstreamPath": "ui/coreShared/ts/lib/visualMetrics.ts",
 			"upstreamSha256": "b088a6434b7ebe39c54a64c6fe0ac7c545d0bada8bb8c14c9de86a7a87489dcb",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/navigation/routing.ts",
@@ -1742,7 +1646,7 @@
 			"path": "ui/coreShared/ts/navigation/urlParams.ts",
 			"upstreamPath": "ui/coreShared/ts/navigation/urlParams.ts",
 			"upstreamSha256": "f5675d642915756d000f23c218052049992391ee5cc49818215cb732078247ad",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/simulation/bootstrap.ts",
@@ -1838,7 +1742,7 @@
 			"path": "ui/coreShared/ts/tests/address.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/address.test.ts",
 			"upstreamSha256": "e2f7557b376318c428379fb2da036b38b93bb0fb98875df368e7862bb71c5c25",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/addressValue.test.tsx",
@@ -1982,7 +1886,7 @@
 			"path": "ui/coreShared/ts/tests/formatters.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/formatters.test.ts",
 			"upstreamSha256": "072ac973163dd260369ef4a90449cb9babba427bafb43e181be0892844004221",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/headerToolbar.test.tsx",
@@ -2000,13 +1904,13 @@
 			"path": "ui/coreShared/ts/tests/injectedEthereum.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/injectedEthereum.test.ts",
 			"upstreamSha256": "e52cce6e1abb9a906bfc4246c79ac671a8f43f40d2c021000be8a49bd5c02d52",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/inputs.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/inputs.test.ts",
 			"upstreamSha256": "5d98291712c063667cbb2b1189c6dd70d753193afe165fb8f01e038fd0403e9e",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/loadState.test.ts",
@@ -2057,12 +1961,6 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/tests/required.test.ts",
-			"upstreamPath": "ui/coreShared/ts/tests/required.test.ts",
-			"upstreamSha256": "79c0da9ca56dab72bafcfa6bc0eaadc90ab0dcebc9eaf78c9f9518a43e14834d",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/tests/routing.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/routing.test.ts",
 			"upstreamSha256": "4b1d36cd8730d23922de6ad716fe988c658e387f8d3560fe120bd0cf3aa63fba",
@@ -2072,7 +1970,7 @@
 			"path": "ui/coreShared/ts/tests/rpcConfig.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/rpcConfig.test.ts",
 			"upstreamSha256": "271da0600cf6eb78c45c919e0b74ae0055d03590a1f97925ef9e0c77f7d28066",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/sectionBlock.test.tsx",
@@ -2213,12 +2111,6 @@
 			"treatment": "unchanged"
 		},
 		{
-			"path": "ui/coreShared/ts/tests/time.test.ts",
-			"upstreamPath": "ui/coreShared/ts/tests/time.test.ts",
-			"upstreamSha256": "b1cb1d40e37414c4bbbf49d4f2e59398d923ac0f370b822f64017473a4d13556",
-			"treatment": "unchanged"
-		},
-		{
 			"path": "ui/coreShared/ts/tests/timestampValue.test.tsx",
 			"upstreamPath": "ui/coreShared/ts/tests/timestampValue.test.tsx",
 			"upstreamSha256": "67071e5f377d2cc0aaa2f54aff9436df94501a651db762dd45195a9dae7944a3",
@@ -2300,13 +2192,13 @@
 			"path": "ui/coreShared/ts/tests/userCopy.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/userCopy.test.ts",
 			"upstreamSha256": "533a043dccd39cce18afe5a68c5344c69e2442afc4c3b24071d752e8df025cc0",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/viewState.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/viewState.test.ts",
 			"upstreamSha256": "7fd6db62201382861fea3219319ba5a0fc66e9551de7eac9009783260d2acec3",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/tests/viewTabs.test.tsx",
@@ -2336,13 +2228,7 @@
 			"path": "ui/coreShared/ts/tests/writeAction.test.ts",
 			"upstreamPath": "ui/coreShared/ts/tests/writeAction.test.ts",
 			"upstreamSha256": "0693ecb5c9a4d95bad3e0fa6bb7fa17e79aae224bd66af2a98438234d9db6a0b",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/coreShared/ts/transactions/actionAvailability.ts",
-			"upstreamPath": "ui/coreShared/ts/transactions/actionAvailability.ts",
-			"upstreamSha256": "70ab83d96813e01e38fa4dfd167aee25c624e8160737185c39f2c40de69c09be",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/transactions/actionFeedback.ts",
@@ -2354,7 +2240,7 @@
 			"path": "ui/coreShared/ts/transactions/actionGuards.ts",
 			"upstreamPath": "ui/coreShared/ts/transactions/actionGuards.ts",
 			"upstreamSha256": "95004ab36e978cc23b67f691ba052bd676553c2860b0a2ea602664c1077ffac7",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/transactions/tokenApproval.ts",
@@ -2384,19 +2270,19 @@
 			"path": "ui/coreShared/ts/transactions/writeAction.ts",
 			"upstreamPath": "ui/coreShared/ts/transactions/writeAction.ts",
 			"upstreamSha256": "d16bdd777476bb73ec694e880614d64e547836a47c11461b58b3a70415cfa48f",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/types/app.ts",
 			"upstreamPath": "ui/coreShared/ts/types/app.ts",
 			"upstreamSha256": "6908922e7f4d639dc3d64337971539dae642895bd152928aa66d9715bc99c384",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/types/components.ts",
 			"upstreamPath": "ui/coreShared/ts/types/components.ts",
 			"upstreamSha256": "ad31c19dbb4694942e45ccf7150cfdb443a2c505863e4edb5bedc79b269102bb",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/types/contracts.ts",
@@ -2432,7 +2318,7 @@
 			"path": "ui/coreShared/ts/wallet/chainTimestamp.ts",
 			"upstreamPath": "ui/coreShared/ts/wallet/chainTimestamp.ts",
 			"upstreamSha256": "5f64057147718f9f1232554c6f9e087210237149038b5754c20370ee3debb88c",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/wallet/clients.ts",
@@ -2444,7 +2330,7 @@
 			"path": "ui/coreShared/ts/wallet/injectedEthereum.ts",
 			"upstreamPath": "ui/coreShared/ts/wallet/injectedEthereum.ts",
 			"upstreamSha256": "16721415d5a1f354c398ef2f16630759202d1ac13db260c349d14f48f9610cd5",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/wallet/network.ts",
@@ -2474,7 +2360,7 @@
 			"path": "ui/coreShared/ts/wallet/rpcConfig.ts",
 			"upstreamPath": "ui/coreShared/ts/wallet/rpcConfig.ts",
 			"upstreamSha256": "1a28ee480b4d5b7d5392ea5f3b9e93ddbfd24d66272615dbfce0a6f64ff763ec",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/coreShared/ts/wallet/walletAsset.ts",
@@ -2564,7 +2450,7 @@
 			"path": "ui/zoltar/ts/app/onchainStateDependencies.ts",
 			"upstreamPath": "ui/zoltar/ts/app/onchainStateDependencies.ts",
 			"upstreamSha256": "6b6a1ffcaa4ecfc2e5ea8fc6c29978647fb09f48106679350d8b4cba5312a131",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltar/ts/index.dev.ts",
@@ -2774,37 +2660,13 @@
 			"path": "ui/zoltar/ts/tests/protocol/deployment.test.ts",
 			"upstreamPath": "ui/zoltar/ts/tests/protocol/deployment.test.ts",
 			"upstreamSha256": "0301d8e970d1f19ad3bb95158507be57129c3426bf4e4aa4e086dcfd5da4004c",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltar/ts/tests/protocol/helpers.test.ts",
 			"upstreamPath": "ui/zoltar/ts/tests/protocol/helpers.test.ts",
 			"upstreamSha256": "ccb7c781e2225f77d90ddca390ff526198a2512ae9e5a25215b5d98641609221",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoter.fork.test.ts",
-			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoter.fork.test.ts",
-			"upstreamSha256": "a6507a57a891fc4520f6ddbab8de31ce47c2afe824dfba15062c6d597a51ea87",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoter.integration.test.ts",
-			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoter.integration.test.ts",
-			"upstreamSha256": "f175ac89d2f6aedfa4860ed812886a071721644207ffc7e208ca4508c2b8de13",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoter.test.ts",
-			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoter.test.ts",
-			"upstreamSha256": "107f46e3092123ca10e74700f3fe7a36489ffab3b8068298e1fbc5ef703737e2",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoterSimulation.test.ts",
-			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoterSimulation.test.ts",
-			"upstreamSha256": "28dd90ccd6f977a88eb7fab33469b3bcabeff2721f376e2e6c6ada23befea8da",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltar/ts/tests/protocol/zoltar.test.ts",
@@ -2834,7 +2696,7 @@
 			"path": "ui/zoltarShared/package.json",
 			"upstreamPath": "ui/zoltarShared/package.json",
 			"upstreamSha256": "1f517c1831c2e7c96f5cbf1156dc9a31168c1a618e321feccb56e0d11eb3ca39",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltarShared/ts/copy/deployment.ts",
@@ -3020,7 +2882,7 @@
 			"path": "ui/zoltarShared/ts/lib/formDefaults.ts",
 			"upstreamPath": "ui/zoltarShared/ts/lib/formDefaults.ts",
 			"upstreamSha256": "b2cf47c7812b100f4e6c7f8a7f8ac97cc7c1d5b00ceab74cc610dc97828cbd4d",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltarShared/ts/lib/routing.ts",
@@ -3050,7 +2912,7 @@
 			"path": "ui/zoltarShared/ts/protocol/core.ts",
 			"upstreamPath": "ui/zoltarShared/ts/protocol/core.ts",
 			"upstreamSha256": "a1cbe3058e783d3ceb4e621aa8899199ddcce34fb05f4c09abcb10b2c88d8415",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltarShared/ts/protocol/deployment.ts",
@@ -3062,18 +2924,12 @@
 			"path": "ui/zoltarShared/ts/protocol/helpers.ts",
 			"upstreamPath": "ui/zoltarShared/ts/protocol/helpers.ts",
 			"upstreamSha256": "fb713a6bcca7dab3fa31a4fd82b0c0299396a8a6a758665c9d8fb16bf0dcb8e4",
-			"treatment": "unchanged"
+			"treatment": "adapted"
 		},
 		{
 			"path": "ui/zoltarShared/ts/protocol/tokenActions.ts",
 			"upstreamPath": "ui/zoltarShared/ts/protocol/tokenActions.ts",
 			"upstreamSha256": "9cceac0f298b7ec08eedc9f334067e2221118d8fde445aff7fc2e4689bced1f7",
-			"treatment": "unchanged"
-		},
-		{
-			"path": "ui/zoltarShared/ts/protocol/uniswapQuoter.ts",
-			"upstreamPath": "ui/zoltarShared/ts/protocol/uniswapQuoter.ts",
-			"upstreamSha256": "4949998727e27b5605b673f4e3e40e09a1970c55818c7d0ad0641d806cc9f6c7",
 			"treatment": "unchanged"
 		},
 		{
@@ -3105,6 +2961,12 @@
 			"upstreamPath": "ui/zoltarShared/tsconfig.json",
 			"upstreamSha256": "a89e1030c79e6fbff56d26da20bd34bcee95f2feb406e7c656bcf14415eec87c",
 			"treatment": "unchanged"
+		},
+		{
+			"path": "knip.json",
+			"upstreamPath": "knip.json",
+			"upstreamSha256": "bfb901e7472f172fb8dc1c0461062ab157c2794e784d72cef50b7edb13d27129",
+			"treatment": "adapted"
 		}
 	]
 }

@@ -2,7 +2,6 @@ import type { Address, Hash } from '@zoltar/core-shared/evm/ethereum'
 import { formatRefreshErrorMessage, formatWriteErrorMessage } from '../lib/errors.js'
 import { assertActiveWallet, type ActiveWalletContext } from '../wallet/assertActiveWallet.js'
 import type { WriteOperationsParameters } from '../types/app.js'
-import type { TransactionIntent } from '../types/components.js'
 import { createActiveEnvironmentGuard } from '../lib/activeEnvironment.js'
 
 type RunWriteActionParameters = {
@@ -19,34 +18,6 @@ type RunWriteActionParameters = {
 	refreshErrorFallback?: string
 	refreshState: WriteOperationsParameters['refreshState']
 	setErrorMessage: (message: string | undefined) => void
-}
-
-type BuildWriteActionConfigParameters = {
-	accountAddress: WriteOperationsParameters['accountAddress']
-	onTransactionCanceled: WriteOperationsParameters['onTransactionCanceled']
-	onTransactionFailed: WriteOperationsParameters['onTransactionFailed'] | undefined
-	onTransactionFinished: WriteOperationsParameters['onTransactionFinished']
-	onTransactionPresented: WriteOperationsParameters['onTransactionPresented']
-	onTransactionPrepared: WriteOperationsParameters['onTransactionPrepared']
-	onTransactionRequested: WriteOperationsParameters['onTransactionRequested']
-	refreshState: WriteOperationsParameters['refreshState']
-}
-
-export function buildWriteActionConfig(params: BuildWriteActionConfigParameters, errorSignal: { value: string | undefined }, missingWalletMessage: string, transactionIntent: TransactionIntent) {
-	return {
-		accountAddress: params.accountAddress,
-		onTransactionCanceled: params.onTransactionCanceled,
-		onTransactionFinished: params.onTransactionFinished,
-		onTransactionFailed: params.onTransactionFailed,
-		onTransactionRequested: () => {
-			return params.onTransactionRequested(transactionIntent)
-		},
-		refreshState: params.refreshState,
-		setErrorMessage: (message: string | undefined) => {
-			errorSignal.value = message
-		},
-		missingWalletMessage,
-	}
 }
 
 export async function runWriteAction<TResult extends { hash: Hash }>(parameters: RunWriteActionParameters, action: (walletAddress: Address, activeWallet: ActiveWalletContext) => Promise<TResult | undefined>, errorFallback: string, onSuccess?: (result: TResult, walletAddress: Address) => Promise<void> | void) {

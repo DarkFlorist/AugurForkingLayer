@@ -6,6 +6,7 @@ import { amounts } from 'micro-eth-signer'
 
 export const zeroAddress = getAddress('0x0000000000000000000000000000000000000000')
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export const zeroHash = `0x${'00'.repeat(32)}` satisfies Hash
 
 export const maxUint256 = amounts.maxUint256

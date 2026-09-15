@@ -57,6 +57,7 @@ export function formatScalarDisplayValue(value: bigint) {
 	return `${isNegative ? '-' : ''}${integerPart.toString()}.${fractionalString}`
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function getScalarOutcomeIndex(question: ScalarQuestionDetails, tickIndex: bigint) {
 	validateTickIndex(question, tickIndex)
 	return combineUint256FromTwoWithInvalid(false, question.numTicks - tickIndex, tickIndex)
@@ -87,6 +88,7 @@ export function formatScalarOutcomeLabel(question: ScalarQuestionDetails, tickIn
 	return question.answerUnit === '' ? formattedValue : `${formattedValue} ${question.answerUnit}`
 }
 
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function getScalarOutcomeIndexDescriptor(question: ScalarQuestionDetails, outcomeIndex: bigint): ScalarOutcomeIndexDescriptor {
 	if (question.numTicks <= 0n || outcomeIndex < 0n || outcomeIndex >= 1n << SCALAR_TOTAL_BITS) return { kind: 'malformed' }
 	if ((outcomeIndex & SCALAR_RESERVED_BITS_MASK) !== 0n) return { kind: 'malformed' }
@@ -98,10 +100,7 @@ export function getScalarOutcomeIndexDescriptor(question: ScalarQuestionDetails,
 	return { kind: 'tick', tickIndex: secondPart }
 }
 
-export function isValidScalarOutcomeIndex(question: ScalarQuestionDetails, outcomeIndex: bigint) {
-	return getScalarOutcomeIndexDescriptor(question, outcomeIndex).kind !== 'malformed'
-}
-
+/** @internal Exported for contract fixtures and focused regression tests. */
 export function formatScalarOutcomeIndexLabel(question: ScalarQuestionDetails, outcomeIndex: bigint) {
 	const descriptor = getScalarOutcomeIndexDescriptor(question, outcomeIndex)
 	if (descriptor.kind === 'invalid') return 'Invalid'

@@ -1,8 +1,7 @@
 /// <reference types="bun-types" />
 
 import { describe, expect, test } from 'bun:test'
-import { RpcError } from '@zoltar/core-shared/evm/ethereum'
-import { formatRefreshErrorMessage, formatWriteErrorMessage, getErrorMessage, isCloseableErrorMessage, isRecoverableContractReadError } from '../lib/errors.js'
+import { formatRefreshErrorMessage, formatWriteErrorMessage, getErrorMessage, isCloseableErrorMessage } from '../lib/errors.js'
 
 void describe('error helpers', () => {
 	void test('marks user-rejected wallet errors as closeable', () => {
@@ -53,10 +52,6 @@ void describe('error helpers', () => {
 
 	void test('formats refresh failures with appended reasons', () => {
 		expect(formatRefreshErrorMessage(new Error('RPC unavailable'), 'Reporting transaction succeeded, but refreshing reporting details failed')).toBe('Reporting transaction succeeded, but refreshing reporting details failed. Reason: RPC unavailable')
-	})
-
-	void test('classifies compatibility-layer RPC failures as recoverable contract reads', () => {
-		expect(isRecoverableContractReadError(new RpcError('HTTP 522 while calling eth_call'))).toBe(true)
 	})
 
 	void test('keeps blocking guidance errors non-closeable', () => {

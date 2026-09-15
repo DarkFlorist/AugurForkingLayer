@@ -13,29 +13,6 @@ export function hasErrorMessage(value: unknown): value is { message: string } {
 	return isObjectRecord(value) && typeof value['message'] === 'string'
 }
 
-const ignorableLogDecodeErrorNames = ['AbiEventSignatureNotFoundError', 'DecodeLogDataMismatch', 'DecodeLogTopicsMismatch']
-
-export function isIgnorableLogDecodeError(error: unknown) {
-	return error instanceof Error && ignorableLogDecodeErrorNames.includes(error.name)
-}
-
-const recoverableContractReadErrorNames = ['CallExecutionError', 'ContractFunctionExecutionError', 'ContractFunctionRevertedError', 'HttpRequestError', 'InvalidAddressError', 'RpcError', 'RpcRequestError', 'TimeoutError', 'UnknownNodeError']
-const recoverableContractReadPatterns = ['abi', 'call reverted', 'contract function', 'execution reverted', 'internal json-rpc', 'json-rpc', 'network', 'no data', 'returned no data', 'rpc', 'should not be used', 'symbol']
-
-export function isRecoverableContractReadError(error: unknown) {
-	if (!(error instanceof Error)) return false
-	if (recoverableContractReadErrorNames.includes(error.name)) return true
-	const normalizedMessage = error.message.toLowerCase()
-	return recoverableContractReadPatterns.some(pattern => normalizedMessage.includes(pattern))
-}
-
-const recoverableQuoteErrorPatterns = ['mock pricing', 'no uniswap', 'pool', 'quote', 'quoter', 'simulation mode', 'uniswap']
-
-export function isRecoverableQuoteError(error: unknown) {
-	if (isRecoverableContractReadError(error)) return true
-	return error instanceof Error && recoverableQuoteErrorPatterns.some(pattern => error.message.toLowerCase().includes(pattern))
-}
-
 function normalizeWhitespace(value: string) {
 	return value.trim().replace(/\s+/g, ' ')
 }
@@ -182,7 +159,7 @@ export function sanitizeErrorDetail(detail: string | undefined, fallbackMessage?
 	return sanitized.length > maxLength ? `${sanitized.slice(0, maxLength - 3).trimEnd()}...` : sanitized
 }
 
-export function getErrorDetail(error: unknown, fallbackMessage?: string) {
+function getErrorDetail(error: unknown, fallbackMessage?: string) {
 	const details = collectErrorDetails(error)
 	const knownTransactionErrorDetail = getKnownTransactionErrorDetail(details)
 	if (knownTransactionErrorDetail !== undefined) return knownTransactionErrorDetail

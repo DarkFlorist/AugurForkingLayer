@@ -262,10 +262,6 @@
 			"bun": "./ts/tests/walletAssetControl.test.tsx",
 			"default": "./js/tests/walletAssetControl.test.js"
 		},
-		"./*": {
-			"bun": "./ts/*.ts",
-			"default": "./js/*.js"
-		},
 		"./tests/testUtils/testRouting.js": {
 			"bun": "./ts/tests/testUtils/testRouting.ts",
 			"default": "./js/tests/testUtils/testRouting.js"
@@ -342,10 +338,6 @@
 			"bun": "./ts/components/ActionLauncherCard.tsx",
 			"default": "./js/components/ActionLauncherCard.js"
 		},
-		"./components/AddressInfo.js": {
-			"bun": "./ts/components/AddressInfo.tsx",
-			"default": "./js/components/AddressInfo.js"
-		},
 		"./components/AddressValue.js": {
 			"bun": "./ts/components/AddressValue.tsx",
 			"default": "./js/components/AddressValue.js"
@@ -353,10 +345,6 @@
 		"./components/Badge.js": {
 			"bun": "./ts/components/Badge.tsx",
 			"default": "./js/components/Badge.js"
-		},
-		"./components/ComparisonRecord.js": {
-			"bun": "./ts/components/ComparisonRecord.tsx",
-			"default": "./js/components/ComparisonRecord.js"
 		},
 		"./components/CurrencyValue.js": {
 			"bun": "./ts/components/CurrencyValue.tsx",
@@ -398,10 +386,6 @@
 			"bun": "./ts/components/IdentifierValue.tsx",
 			"default": "./js/components/IdentifierValue.js"
 		},
-		"./components/LifecycleStageBanner.js": {
-			"bun": "./ts/components/LifecycleStageBanner.tsx",
-			"default": "./js/components/LifecycleStageBanner.js"
-		},
 		"./components/LoadableValue.js": {
 			"bun": "./ts/components/LoadableValue.tsx",
 			"default": "./js/components/LoadableValue.js"
@@ -438,17 +422,9 @@
 			"bun": "./ts/components/PaginationControls.tsx",
 			"default": "./js/components/PaginationControls.js"
 		},
-		"./components/ProgressMeter.js": {
-			"bun": "./ts/components/ProgressMeter.tsx",
-			"default": "./js/components/ProgressMeter.js"
-		},
 		"./components/Question.js": {
 			"bun": "./ts/components/Question.tsx",
 			"default": "./js/components/Question.js"
-		},
-		"./components/RankedBarList.js": {
-			"bun": "./ts/components/RankedBarList.tsx",
-			"default": "./js/components/RankedBarList.js"
 		},
 		"./components/ReadOnlyDetailAccordion.js": {
 			"bun": "./ts/components/ReadOnlyDetailAccordion.tsx",
@@ -457,10 +433,6 @@
 		"./components/RouteHeader.js": {
 			"bun": "./ts/components/RouteHeader.tsx",
 			"default": "./js/components/RouteHeader.js"
-		},
-		"./components/RouteWorkflowPanel.js": {
-			"bun": "./ts/components/RouteWorkflowPanel.tsx",
-			"default": "./js/components/RouteWorkflowPanel.js"
 		},
 		"./components/ScalarOutcomePicker.js": {
 			"bun": "./ts/components/ScalarOutcomePicker.tsx",
@@ -473,10 +445,6 @@
 		"./components/StateHint.js": {
 			"bun": "./ts/components/StateHint.tsx",
 			"default": "./js/components/StateHint.js"
-		},
-		"./components/StickyObjectContext.js": {
-			"bun": "./ts/components/StickyObjectContext.tsx",
-			"default": "./js/components/StickyObjectContext.js"
 		},
 		"./components/TimestampValue.js": {
 			"bun": "./ts/components/TimestampValue.tsx",
@@ -582,17 +550,9 @@
 			"bun": "./ts/forms/integerInput.ts",
 			"default": "./js/forms/integerInput.js"
 		},
-		"./forms/required.js": {
-			"bun": "./ts/forms/required.ts",
-			"default": "./js/forms/required.js"
-		},
 		"./forms/viewState.js": {
 			"bun": "./ts/forms/viewState.ts",
 			"default": "./js/forms/viewState.js"
-		},
-		"./hooks/useErc20Loader.js": {
-			"bun": "./ts/hooks/useErc20Loader.ts",
-			"default": "./js/hooks/useErc20Loader.js"
 		},
 		"./hooks/useFormState.js": {
 			"bun": "./ts/hooks/useFormState.ts",
@@ -686,10 +646,6 @@
 			"bun": "./ts/lib/sepoliaDeploymentConfig.ts",
 			"default": "./js/lib/sepoliaDeploymentConfig.js"
 		},
-		"./lib/time.js": {
-			"bun": "./ts/lib/time.ts",
-			"default": "./js/lib/time.js"
-		},
 		"./lib/userCopy.js": {
 			"bun": "./ts/lib/userCopy.ts",
 			"default": "./js/lib/userCopy.js"
@@ -737,10 +693,6 @@
 		"./simulation/tevmWorker.js": {
 			"bun": "./ts/simulation/tevmWorker.ts",
 			"default": "./js/simulation/tevmWorker.js"
-		},
-		"./transactions/actionAvailability.js": {
-			"bun": "./ts/transactions/actionAvailability.ts",
-			"default": "./js/transactions/actionAvailability.js"
 		},
 		"./transactions/actionFeedback.js": {
 			"bun": "./ts/transactions/actionFeedback.ts",
@@ -817,6 +769,10 @@
 		"./app/hooks/useEnvironmentRevision.js": {
 			"bun": "./ts/app/hooks/useEnvironmentRevision.ts",
 			"default": "./js/app/hooks/useEnvironmentRevision.js"
+		},
+		"./*": {
+			"bun": "./ts/*.ts",
+			"default": "./js/*.js"
 		}
 	},
 	"version": "1.0.0"

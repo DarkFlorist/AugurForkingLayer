@@ -22,10 +22,6 @@ export type AbiParameter = {
 
 export type Abi = readonly AbiParameter[]
 
-export type AbiEvent = AbiParameter & { readonly inputs: readonly AbiParameter[]; readonly name: string; readonly type: 'event' }
-
-export type AbiFunction = AbiParameter & { readonly inputs: readonly AbiParameter[]; readonly name: string; readonly outputs: readonly AbiParameter[]; readonly type: 'function' }
-
 type FixedArrayValue<TValue, TLength extends number, TAccumulator extends readonly TValue[] = readonly []> = TAccumulator['length'] extends TLength ? TAccumulator : FixedArrayValue<TValue, TLength, readonly [...TAccumulator, TValue]>
 
 type AbiValueKind = 'input' | 'output'
@@ -282,8 +278,6 @@ export type TransactionLog = {
 	transactionIndex?: bigint | undefined
 }
 
-export type Log = TransactionLog
-
 export type TransactionReceipt = {
 	blockHash: Hash
 	blockNumber: bigint
@@ -303,7 +297,7 @@ export type TransactionReceipt = {
 
 export type ReplacementReason = 'cancelled' | 'replaced' | 'repriced'
 
-export type TransactionReplacement = {
+type TransactionReplacement = {
 	reason: ReplacementReason
 	replacedTransaction: Pick<BlockTransaction, 'hash'>
 	transaction: Pick<BlockTransaction, 'hash'>
@@ -344,7 +338,7 @@ export type Block = {
 	timestamp: bigint
 }
 
-export type RpcLog<TArgs = AbiValue, TEventName extends string = string> = TransactionLog & {
+type RpcLog<TArgs = AbiValue, TEventName extends string = string> = TransactionLog & {
 	args?: TArgs
 	eventName?: TEventName | undefined
 }
@@ -356,7 +350,7 @@ export type Account = {
 	type: 'json-rpc' | 'local' | string
 }
 
-export type SignTransactionParameters = {
+type SignTransactionParameters = {
 	chainId?: bigint | number | undefined
 	data?: Hex | undefined
 	gas?: bigint | number | undefined
@@ -383,7 +377,7 @@ export type ParsedTransaction = {
 
 type RpcRequestScheduler = <TValue>(method: string, operation: () => Promise<TValue>) => Promise<TValue>
 
-export type RpcFetchFn = (input: string | URL | Request, init?: RequestInit | undefined) => Promise<Response>
+type RpcFetchFn = (input: string | URL | Request, init?: RequestInit | undefined) => Promise<Response>
 
 type RpcResponseParser = (response: Response, method: string) => Promise<JsonValue>
 
@@ -420,12 +414,12 @@ type TypedTransport =
 
 export type Transport = TypedTransport
 
-export type MulticallSuccessResult<TValue> = {
+type MulticallSuccessResult<TValue> = {
 	result: TValue
 	status: 'success'
 }
 
-export type MulticallFailureResult = {
+type MulticallFailureResult = {
 	error: Error
 	status: 'failure'
 }

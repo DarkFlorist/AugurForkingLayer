@@ -9,12 +9,6 @@ type WalletActiveAppChainGuardParameters = {
 	walletRequiredReason?: string | undefined
 }
 
-type WalletConnectionActiveAppChainGuardParameters = {
-	isOnActiveAppChain: boolean
-	walletConnected: boolean
-	walletRequiredReason?: string | undefined
-}
-
 type WalletActiveAppChainGuardState = {
 	blocked: boolean
 	reason: string | undefined
@@ -26,12 +20,6 @@ function getWalletRequiredReason(walletRequiredReason: string | undefined) {
 
 export function getWalletActiveAppChainGuardState({ accountAddress, isOnActiveAppChain, walletRequiredReason }: WalletActiveAppChainGuardParameters): WalletActiveAppChainGuardState {
 	if (accountAddress === undefined) return { blocked: true, reason: getWalletRequiredReason(walletRequiredReason) }
-	if (!isOnActiveAppChain) return { blocked: true, reason: getWrongNetworkReason() }
-	return { blocked: false, reason: undefined }
-}
-
-export function getWalletConnectionActiveAppChainGuardState({ isOnActiveAppChain, walletConnected, walletRequiredReason }: WalletConnectionActiveAppChainGuardParameters): WalletActiveAppChainGuardState {
-	if (!walletConnected) return { blocked: true, reason: getWalletRequiredReason(walletRequiredReason) }
 	if (!isOnActiveAppChain) return { blocked: true, reason: getWrongNetworkReason() }
 	return { blocked: false, reason: undefined }
 }

@@ -36,10 +36,6 @@ export type ProjectArtifactPaths = {
 	readonly contractArtifactsJsonPath: string
 }
 
-export function isCoreProjectContractPath(contractPath: string) {
-	return !contractPath.startsWith('contracts/trading/')
-}
-
 export const defaultProjectArtifactPaths: ProjectArtifactPaths = {
 	abiOutputPath: ABI_OUTPUT_PATH,
 	abiSourcePath: ABI_SOURCE_PATH,
@@ -57,7 +53,7 @@ export async function copyProjectArtifacts(_options: ProjectArtifactOptions = {}
 	const compiledContracts = compiledArtifacts.contracts
 	const renderContracts = (owner: ContractProject) =>
 		Object.entries(compiledContracts)
-			.filter(([filename]) => isCoreProjectContractPath(filename) && isContractProjectSource(filename, owner))
+			.filter(([filename]) => isContractProjectSource(filename, owner))
 			.flatMap(([filename, contractFile]) => {
 				if (contractFile === undefined) throw new Error(`missing compiled contract file for ${filename}`)
 				return Object.entries(contractFile).map(([contractName, contractData]) => {

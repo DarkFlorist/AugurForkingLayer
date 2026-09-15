@@ -13,5 +13,4 @@ export function sharedPackageClosure(ids: readonly string[]) {
 
 export const appSharedPackages = {
 	zoltar: ['shared-zoltar'],
-	trading: [],
 } as const

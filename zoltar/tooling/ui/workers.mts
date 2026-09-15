@@ -2,13 +2,9 @@ import * as path from 'path'
 import { getUiAppPaths, parseUiAppIdFromProcess } from './appPaths.mts'
 import { normalizeBundlerPath } from './bundlerPaths.mts'
 import { createTevmBufferImportPlugin } from './tevmBufferImport.mts'
-import { vendor } from './vendor.mts'
 
 const appId = parseUiAppIdFromProcess('worker build')
 const appPaths = getUiAppPaths(appId)
-const artifactsAreCurrent = process.argv.includes('--artifacts-current')
-
-if (appId === 'trading' && !artifactsAreCurrent) await vendor()
 
 const WORKER_BANNER = `
 const process = globalThis.process ?? {

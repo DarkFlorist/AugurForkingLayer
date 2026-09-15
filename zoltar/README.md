@@ -44,7 +44,7 @@ bun run test:browser:workflow
 - `test:browser`: serves production assets temporarily and checks desktop/mobile boot in Chromium. Set `CHROMIUM_PATH` if Chromium is not auto-detected.
 - `test:browser:workflow`: exercises question creation, fork approval, forking, and migration in the production browser simulation.
 
-Live-mainnet quote tests remain opt-in; normal validation is deterministic and does not depend on a public RPC. Contract tests cover the fork threshold/burn rules, child universe creation, nested forks, migration balances, token authorizations, and question encoding guards.
+Normal validation is deterministic and does not depend on a public RPC. Contract tests cover the fork threshold/burn rules, child universe creation, nested forks, migration balances, token authorizations, and question encoding guards.
 
 ## Build and release
 
@@ -72,10 +72,12 @@ Other AugurForkingLayer components may consume `shared/core` and `shared/zoltar`
 
 WETH9 and Multicall3 are neutral infrastructure in `solidity/contracts/infrastructure/` (relative to the Zoltar workspace). Production Solidity contents are preserved; infrastructure source paths are normalized.
 
-See [protocol and operator notes](docs/protocol.md), [source inventory](import-manifest.json), and the [validation record](docs/validation.md).
+See [protocol and operator notes](docs/protocol.md), [upstream baseline](import-manifest.json), and the [validation record](docs/validation.md).
 
 ## Unused-code checks
 
 `knip.json` adapts the pinned upstream workspace configuration. It declares UI, worker, contract, test, and spawned build entrypoints and maps package imports to source files. The normal check includes tests; production checking excludes test roots. Selected internal exports remain available for contract fixtures and regression tests.
 
 Dependency exceptions cover packages loaded by the vendor/bundler scripts, shared workspace runtime dependencies, and the automatically selected `better-typescript-lib` definitions. Bun preload and compiler-command exceptions account for commands resolved from the workspace root. Review these exceptions when changing build tooling.
+
+To refresh the root README screenshots after a production build, run `bun tooling/ui/run-browser.mts --screenshots`. This captures desktop and mobile views from the local browser simulation into `../docs/images/`.

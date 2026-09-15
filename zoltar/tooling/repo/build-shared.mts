@@ -3,7 +3,7 @@ import { appSharedPackages, sharedPackageClosure, sharedPackages } from './share
 
 const requested = process.argv[2]
 let ids: readonly string[] = sharedPackages.map(entry => entry.id)
-if (requested !== undefined) ids = requested === 'zoltar' || requested === 'trading' ? appSharedPackages[requested] : [requested]
+if (requested !== undefined) ids = requested === 'zoltar' ? appSharedPackages[requested] : [requested]
 const packages = sharedPackageClosure(ids)
 if (packages.length === 0) throw new Error(`Unknown shared build target: ${requested}`)
 for (const entry of packages) {

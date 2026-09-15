@@ -6,12 +6,11 @@ import { repositoryRoot } from '../repo/root.mts'
 import { appSharedPackages, sharedPackageClosure } from '../repo/sharedPackages.ts'
 
 import { parseUiAppId, type UiAppId } from './appIds.mts'
-export { isUiAppId, parseUiAppId, UI_APP_IDS, type UiAppId } from './appIds.mts'
+export { parseUiAppId, UI_APP_IDS, type UiAppId } from './appIds.mts'
 export type UiPackageId = 'coreShared' | 'zoltarShared' | UiAppId
 
 const UI_PROJECT_ID_BY_PACKAGE_ID: Readonly<Record<UiPackageId, string>> = {
 	coreShared: 'ui-core',
-	trading: 'ui-trading',
 	zoltar: 'ui-zoltar',
 	zoltarShared: 'ui-zoltar-shared',
 }
@@ -54,7 +53,6 @@ export type UiAppPaths = {
 	readonly faviconSvg: string
 	readonly vendorBuildScript: string
 	readonly workersBuildScript: string
-	readonly testsBuildScript: string
 	readonly productionBuildScript: string
 	readonly projectArtifactsScript: string
 	readonly bundlerPathsScript: string
@@ -90,28 +88,11 @@ export function getUiAppPaths(appId: UiAppId): UiAppPaths {
 		faviconSvg: path.join(appRoot, 'favicon.svg'),
 		vendorBuildScript: path.join(buildRoot, 'vendor.mts'),
 		workersBuildScript: path.join(buildRoot, 'workers.mts'),
-		testsBuildScript: path.join(buildRoot, 'tests.mts'),
 		productionBuildScript: path.join(buildRoot, 'production.mts'),
 		projectArtifactsScript: path.join(buildRoot, 'projectArtifacts.mts'),
 		bundlerPathsScript: path.join(buildRoot, 'bundlerPaths.mts'),
 		devServerScript: path.join(buildRoot, 'dev-server.ts'),
 		sharedSourceRoots: sharedPackageClosure(appSharedPackages[appId]).map(entry => path.join(repositoryRoot, entry.path, 'ts')),
 		sharedGeneratedJsRoots: sharedPackageClosure(appSharedPackages[appId]).map(entry => path.join(repositoryRoot, entry.path, 'js')),
-	}
-}
-
-export function getUiCoreSharedPaths() {
-	const uiRoot = path.join(repositoryRoot, 'ui')
-	const coreSharedRoot = path.join(uiRoot, 'coreShared')
-	return {
-		repositoryRoot,
-		uiRoot,
-		coreSharedRoot,
-		coreSharedSourceRoot: path.join(coreSharedRoot, 'ts'),
-		coreSharedGeneratedJsRoot: path.join(coreSharedRoot, 'js'),
-		coreSharedTestSourceRoot: path.join(coreSharedRoot, 'ts', 'tests'),
-		coreSharedTestOutputRoot: path.join(coreSharedRoot, 'js', 'tests'),
-		sharedSourceRoots: sharedPackageClosure(appSharedPackages.zoltar).map(entry => path.join(repositoryRoot, entry.path, 'ts')),
-		sharedGeneratedJsRoots: sharedPackageClosure(appSharedPackages.zoltar).map(entry => path.join(repositoryRoot, entry.path, 'js')),
 	}
 }

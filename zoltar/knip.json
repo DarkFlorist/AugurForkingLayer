@@ -7,7 +7,6 @@
 				"tooling/contracts/{build-app-contracts,deploy-testnet,deployment-plan,run-deploy-testnet}.mts!",
 				"tooling/ui/projectArtifacts.mts!",
 				"tooling/contracts/check-artifacts.mts!",
-				"tooling/contracts/run-deploy-testnet.mts!",
 				"tooling/repo/build-shared.mts!",
 				"tooling/repo/check-boundaries.mts!",
 				"tooling/ui/apps.mts!",
@@ -16,7 +15,7 @@
 				"tooling/ui/production.mts!",
 				"tooling/ui/run-browser.mts!",
 				"tooling/ui/watch.mts!",
-				"tooling/ui/{vendor,workers,tests}.mts!"
+				"tooling/ui/{vendor,workers}.mts!"
 			],
 			"project": ["tooling/**/*.{ts,mts}!", "bun-test-setup*.ts"],
 			"ignoreDependencies": ["@preact/signals", "@tevm/memory-client", "@tevm/common", "@zoltar/core-shared", "@preact/signals-core", "abitype", "@noble/hashes", "@noble/curves", "@scure/base", "isows", "micro-eth-signer", "micro-packed", "ox", "pino"],

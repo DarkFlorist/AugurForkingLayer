@@ -1,7 +1,7 @@
 export const UI_APP_IDS = ['zoltar'] as const
-export type UiAppId = 'zoltar' | 'trading'
+export type UiAppId = (typeof UI_APP_IDS)[number]
 
-export function isUiAppId(candidate: string): candidate is UiAppId {
+function isUiAppId(candidate: string): candidate is UiAppId {
 	return UI_APP_IDS.some(app => app === candidate)
 }
 

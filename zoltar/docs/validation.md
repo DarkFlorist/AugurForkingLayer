@@ -14,7 +14,7 @@ Source baseline: `85fdf19f8962d17b6f1e0612df9a01b6c30398d4`.
 - Chromium production smoke at 1440×900 and 390×844 using `?simulate=1&simScenario=deployed#/zoltar`.
 - Production Chromium workflow: empty question form guard, question creation, REP approval, universe fork, outcome selection, child-universe deployment through REP splitting, and rendered migrated balance.
 
-UI tests and contract tests cover failure/recovery cases. Browser workflow validation uses the real production bundle and simulation worker; it does not broadcast public-chain transactions. Browser screenshots were captured locally at `/tmp/zoltar-desktop.png` and `/tmp/zoltar-mobile.png` and are not committed build inputs.
+UI tests and contract tests cover failure/recovery cases. Browser workflow validation uses the real production bundle and simulation worker; it does not broadcast public-chain transactions. README screenshots are committed under repository-root `docs/images/`. They show the two-question browser simulation and can be refreshed with `bun tooling/ui/run-browser.mts --screenshots`.
 
 ## Baseline findings
 
@@ -27,3 +27,5 @@ GitHub-hosted CI and public publishing/deployment have not run as part of local 
 ## Unused-code cleanup
 
 The remaining suite passes 1,027 tests (101 contracts, 890 UI/runtime, 36 tooling). Tests for removed functionality, including the unused quote APIs and their opt-in live-network cases, were removed with that functionality. Required contract fixtures and internal regression-test exports remain available. CI runs both Knip modes through `bun run check`.
+
+The tooling cleanup preserves all 225 existing UI package export mappings while replacing file-by-file maps with directory patterns. Separate test transpilation and unsupported Docker launchers are removed; Bun runs tests directly.

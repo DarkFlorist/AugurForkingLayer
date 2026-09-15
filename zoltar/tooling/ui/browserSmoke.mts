@@ -398,13 +398,13 @@ async function runBrowserSmokeUnlocked(appId: UiAppId, baseUrl: string, options:
 	if (chromiumPath === undefined) throw new Error('Chromium is required for the browser smoke check. Set CHROMIUM_PATH or install Chromium.')
 	const route = process.env['UI_BROWSER_ROUTE'] ?? ''
 	if (route !== '' && !route.startsWith('#')) throw new Error(`Invalid UI_BROWSER_ROUTE '${route}'; expected an empty value or a hash route.`)
-	const simulationScenario = process.env['UI_SIMULATION_SCENARIO'] ?? (appId === 'trading' ? 'trading-funded' : 'baseline')
+	const simulationScenario = process.env['UI_SIMULATION_SCENARIO'] ?? 'baseline'
 	const pageUrl = `${baseUrl.replace(/\/$/, '')}/?simulate=1&simScenario=${encodeURIComponent(simulationScenario)}${route}`
 	const viewport = parseViewport(process.env['UI_VIEWPORT'])
 	const session = await createDevToolsSession(chromiumPath, pageUrl, viewport)
 	try {
 		const { send, issues } = session
-		const applicationTitles: Record<UiAppId, string> = { trading: 'Trading', zoltar: 'Zoltar' }
+		const applicationTitles: Record<UiAppId, string> = { zoltar: 'Zoltar' }
 		const applicationTitle = applicationTitles[appId]
 		const readyText = process.env['UI_BROWSER_READY_TEXT']
 		await send('Runtime.enable')
@@ -476,7 +476,7 @@ async function main() {
 	const appId = parseUiAppIdFromProcess('the browser smoke check')
 	const paths = getUiAppPaths(appId)
 	void paths
-	const ports: Record<UiAppId, number> = { trading: 4163, zoltar: 4153 }
+	const ports: Record<UiAppId, number> = { zoltar: 4153 }
 	const explicitBaseUrl = process.env['UI_DEV_SERVER_URL']
 	if (appId !== undefined && explicitBaseUrl === undefined) {
 		throw new Error(`Set UI_DEV_SERVER_URL to the running ${appId} dev server base URL (expected http://localhost:${ports[appId]} from bun run app:serve:${appId}).`)

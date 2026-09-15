@@ -30,7 +30,6 @@ globalThis.global ??= globalThis
 
 const APP_TITLES: Record<string, string> = {
 	zoltar: 'Zoltar',
-	trading: 'Trading',
 }
 
 function createBrowserVendorAliasPlugin() {
@@ -75,7 +74,6 @@ async function writeProductionIndexHtml(paths: UiAppPaths) {
 	if (appTitle === undefined) throw new Error(`No production title recorded for ${appId}`)
 	html = html.replace('<html lang="en">', `<html lang="en" data-product="${appId}">`)
 	html = html.replace('Zoltar', appTitle)
-	if (appId === 'trading') html = html.replace('<link rel="stylesheet" href="./css/index.css" />', '<link rel="stylesheet" href="./css/index.css" />\n\t\t<link rel="stylesheet" href="./css/app.css" />')
 	await fs.mkdir(paths.appDistRoot, { recursive: true })
 	await fs.writeFile(path.join(paths.appDistRoot, 'index.html'), html)
 }
@@ -120,16 +118,6 @@ export async function buildProductionBundle() {
 		copyStaticAsset(path.join(paths.coreSharedCssRoot, 'tokens.css'), path.join(paths.appDistRoot, 'css', 'tokens.css')),
 		...['base.css', 'protocol-surfaces.css', 'reporting-visualizations.css', 'application-surfaces.css', 'controls-and-responsive.css', 'visual-foundation.css', 'protocol-apps.css'].map(stylesheet => copyStaticAsset(path.join(paths.coreSharedCssRoot, stylesheet), path.join(paths.appDistRoot, 'css', stylesheet))),
 		copyStaticAsset(paths.faviconSvg, path.join(paths.appDistRoot, 'favicon.svg')),
-		...(appId === 'trading'
-			? [
-					copyStaticAsset(path.join(paths.appRoot, 'css', 'app.css'), path.join(paths.appDistRoot, 'css', 'app.css')),
-					import(path.join(paths.appRoot, 'build', 'core-deployments.mts')).then(async module => {
-						const writer = module['writeCoreDeploymentRegistry']
-						if (typeof writer !== 'function') throw new Error('Trading core deployment registry writer is missing')
-						await writer(path.join(paths.appDistRoot, 'core-deployments.json'))
-					}),
-				]
-			: []),
 	])
 }
 

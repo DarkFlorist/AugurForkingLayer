@@ -1,0 +1,69 @@
+/// <reference types="bun-types" />
+
+import { installDomTestLifecycle } from './testUtils/domTestLifecycle.js'
+import { describe, expect, test } from 'bun:test'
+import { TimestampValue } from '../components/TimestampValue.js'
+import { formatTimestamp } from '../lib/formatters.js'
+import { ChainTimestampContext } from '../wallet/chainTimestamp.js'
+import { renderIntoDocument } from './testUtils/renderIntoDocument.js'
+
+describe('TimestampValue', () => {
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+
+	installDomTestLifecycle({
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+		},
+	})
+
+	test('prefers an explicit current timestamp over the shared chain timestamp context', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<ChainTimestampContext.Provider value={900n}>
+				<TimestampValue currentTimestamp={1_000n} timestamp={1_060n} />
+			</ChainTimestampContext.Provider>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		expect(document.body.textContent?.includes('(in 1m)')).toBe(true)
+		expect(document.body.textContent?.includes('(in 2m)')).toBe(false)
+	})
+
+	test('uses the shared chain timestamp context when no explicit timestamp is provided', async () => {
+		const renderedComponent = await renderIntoDocument(
+			<ChainTimestampContext.Provider value={900n}>
+				<TimestampValue timestamp={1_060n} />
+			</ChainTimestampContext.Provider>,
+		)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		expect(document.body.textContent?.includes('(in 2m)')).toBe(true)
+	})
+
+	test('uses wall-clock relative time when no chain timestamp is available', async () => {
+		const renderedComponent = await renderIntoDocument(<TimestampValue timestamp={840n} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		expect(document.body.textContent?.includes(formatTimestamp(840n))).toBe(true)
+		expect(document.body.querySelector('.timestamp-value-relative')?.textContent).toContain('ago')
+	})
+
+	test('renders loading timestamps with an accessible spinner', async () => {
+		const renderedComponent = await renderIntoDocument(<TimestampValue loading timestamp={undefined} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const loadingStatus = document.body.querySelector('[role="status"].timestamp-value')
+		expect(loadingStatus?.textContent).toContain('Loading…')
+		expect(loadingStatus?.querySelector('.spinner')).not.toBeNull()
+	})
+
+	test('renders an invalid timestamp without crashing', async () => {
+		const invalidTimestamp = 10n ** 30n
+		const renderedComponent = await renderIntoDocument(<TimestampValue timestamp={invalidTimestamp} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const invalidValue = document.body.querySelector('.timestamp-value.error')
+		expect(invalidValue?.textContent).toContain(`Invalid timestamp (${invalidTimestamp.toString()})`)
+		expect(document.body.querySelector('time')).toBeNull()
+	})
+})

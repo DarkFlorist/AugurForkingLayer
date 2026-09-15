@@ -1,0 +1,34 @@
+{
+	"description": "Zoltar question and universe operations interface",
+	"name": "@zoltar/ui-zoltar",
+	"private": true,
+	"repository": {},
+	"license": "Unlicense",
+	"type": "module",
+	"devDependencies": {
+		"better-typescript-lib": "2.11.0",
+		"bun-types": "1.4.2",
+		"typescript": "5.8.2",
+		"@zoltar/zoltar-shared": "workspace:1.0.0"
+	},
+	"dependencies": {
+		"@preact/signals": "2.0.1",
+		"@zoltar/ui-core-shared": "workspace:1.0.0",
+		"@zoltar/ui-zoltar-shared": "workspace:1.0.0",
+		"preact": "10.26.4",
+		"@tevm/memory-client": "1.0.0-rc.151",
+		"@tevm/common": "1.0.0-rc.151",
+		"@zoltar/core-shared": "workspace:1.0.0"
+	},
+	"scripts": {
+		"generate": "bun ../../tooling/contracts/build-app-contracts.mts zoltar && bun ../../tooling/repo/build-shared.mts zoltar && bun ../../tooling/ui/vendor.mts zoltar --scoped-artifacts",
+		"vendor": "bun ../../tooling/ui/vendor.mts zoltar",
+		"build:workers": "bun ../../tooling/ui/workers.mts zoltar",
+		"build:tests": "bun ../../tooling/ui/tests.mts zoltar",
+		"build": "bun ../../tooling/ui/apps.mts zoltar",
+		"build:prod": "bun run build && bun ../../tooling/ui/production.mts zoltar",
+		"watch": "bun ../../tooling/ui/watch.mts zoltar",
+		"serve": "bun ../../tooling/ui/dev-server.ts zoltar"
+	},
+	"version": "1.0.0"
+}

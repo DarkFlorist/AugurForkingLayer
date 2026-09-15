@@ -1,0 +1,215 @@
+/// <reference types="bun-types" />
+
+import { beforeEach, describe, expect, test } from 'bun:test'
+import { zeroAddress } from '@zoltar/core-shared/evm/ethereum'
+import { findNextDeployableStep, getDeploymentSections, getDeploymentStepAvailability, getDeployNextMissingAvailability, getPrerequisiteLabel } from '@zoltar/ui-zoltar-shared/features/deployment/lib/deployment.js'
+import { createConnectedReadClient } from '@zoltar/ui-core-shared/wallet/clients.js'
+import type { InjectedEthereum } from '@zoltar/ui-core-shared/wallet/injectedEthereum.js'
+import { getDeploymentSteps, loadDeploymentStatusOracleSnapshot } from '@zoltar/ui-zoltar-shared/protocol/deployment.js'
+import { getMulticall3Address } from '@zoltar/ui-zoltar-shared/protocol/zoltarDeploymentHelpers.js'
+import { loadZoltarUniverseSummary } from '@zoltar/ui-zoltar-shared/protocol/zoltar.js'
+import type { DeploymentStatus, ReadClient } from '@zoltar/ui-core-shared/types/contracts.js'
+import { AnvilWindowEthereum } from '../../../../../../solidity/ts/testSupport/simulator/AnvilWindowEthereum'
+import { useIsolatedAnvilNode } from '../../../../../../solidity/ts/testSupport/simulator/useIsolatedAnvilNode'
+import { createWriteClient, type WriteClient as SolidityWriteClient } from '../../../../../../solidity/ts/testSupport/simulator/utils/clients'
+import { TEST_ADDRESSES } from '../../../../../../solidity/ts/testSupport/simulator/utils/constants'
+import { ensureProxyDeployerDeployed, setupTestAccounts } from '../../../../../../solidity/ts/testSupport/simulator/utils/utilities'
+import { installActiveEnvironmentForTesting } from '@zoltar/ui-core-shared/lib/activeEnvironment.js'
+import { SEPOLIA_NETWORK_PROFILE } from '@zoltar/ui-core-shared/wallet/networkProfile.js'
+import { createFakeBackend } from '@zoltar/ui-core-shared/tests/testUtils/fakeBackend.js'
+import { SEPOLIA_REP_ALLOCATIONS } from '@zoltar/zoltar-shared/deployment/sepoliaRepAllocations'
+import type { WriteClient as UiWriteClient } from '@zoltar/ui-core-shared/types/contracts.js'
+import { GenesisReputationToken_GenesisReputationToken, Zoltar_Zoltar } from '@zoltar/ui-core-shared/contractArtifact.js'
+
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
+
+function installInjectedEthereum(mockWindow: AnvilWindowEthereum) {
+	const globalWindow = globalThis as typeof globalThis & { window?: Window }
+	if (globalWindow.window === undefined) globalWindow.window = globalThis as Window & typeof globalThis
+	globalWindow.window.ethereum = mockWindow as InjectedEthereum
+}
+
+function createStep(id: DeploymentStatus['id'], deployed: boolean, dependencies: DeploymentStatus['id'][] = []) {
+	return {
+		address: ZERO_ADDRESS,
+		dependencies,
+		deploy: async () => '0x0',
+		deployed,
+		id,
+		label: id,
+	} satisfies DeploymentStatus
+}
+
+const { getAnvilWindowEthereum } = useIsolatedAnvilNode()
+
+void describe('deployment helpers', () => {
+	let mockWindow: AnvilWindowEthereum
+	let writeClient: SolidityWriteClient
+	let readClient: ReadClient
+
+	beforeEach(async () => {
+		mockWindow = getAnvilWindowEthereum()
+		writeClient = createWriteClient(mockWindow, TEST_ADDRESSES[0])
+		installInjectedEthereum(mockWindow)
+		readClient = createConnectedReadClient()
+		await setupTestAccounts(mockWindow)
+		await ensureProxyDeployerDeployed(writeClient)
+	})
+
+	void test('getPrerequisiteLabel reports missing dependency ids', () => {
+		const steps = [createStep('proxyDeployer', true), createStep('zoltar', false, ['securityPoolFactory'])]
+
+		expect(getPrerequisiteLabel(steps, 1)).toBe('securityPoolFactory')
+	})
+
+	void test('findNextDeployableStep blocks steps with missing dependency ids', () => {
+		const steps = [createStep('zoltar', false, ['securityPoolFactory'])]
+
+		expect(findNextDeployableStep(steps)).toBe(undefined)
+	})
+
+	void test('getDeployNextMissingAvailability disables when no wallet or wrong network is available', () => {
+		const nextMissingStep = createStep('zoltarQuestionData', false)
+
+		expect(
+			getDeployNextMissingAvailability({
+				accountAddress: undefined,
+				busyStepId: undefined,
+				deployNextMissingPending: false,
+				isOnActiveAppChain: true,
+				nextMissingStep,
+			}),
+		).toEqual({ disabled: true, reason: 'Connect wallet to continue.' })
+
+		expect(
+			getDeployNextMissingAvailability({
+				accountAddress: zeroAddress,
+				busyStepId: undefined,
+				deployNextMissingPending: false,
+				isOnActiveAppChain: false,
+				nextMissingStep,
+			}),
+		).toEqual({ disabled: true, reason: 'Switch to Sepolia.' })
+	})
+
+	void test('getDeploymentStepAvailability blocks undeployed steps behind prerequisites and allows ready steps', () => {
+		const blockedStep = createStep('zoltar', false, ['zoltarQuestionData'])
+		expect(
+			getDeploymentStepAvailability({
+				accountAddress: zeroAddress,
+				busyStepId: undefined,
+				isOnActiveAppChain: true,
+				prerequisiteLabel: 'Zoltar Question Data',
+				step: blockedStep,
+			}),
+		).toEqual({ disabled: true, reason: 'Requires Zoltar Question Data' })
+
+		const readyStep = createStep('zoltarQuestionData', false)
+		expect(
+			getDeploymentStepAvailability({
+				accountAddress: zeroAddress,
+				busyStepId: undefined,
+				isOnActiveAppChain: true,
+				prerequisiteLabel: undefined,
+				step: readyStep,
+			}),
+		).toEqual({ disabled: false, reason: undefined })
+	})
+
+	void test('getDeploymentSteps includes the deployment status oracle as a proxy deployer step', () => {
+		const deploymentSteps = getDeploymentSteps()
+		const deploymentStatusOracleStep = deploymentSteps.find(step => step.id === 'deploymentStatusOracle')
+
+		expect(deploymentSteps.map(step => step.id)).toEqual(['proxyDeployer', 'deploymentStatusOracle', 'weth', 'reputationToken', 'multicall3', 'zoltarQuestionData', 'zoltar'])
+		expect(deploymentStatusOracleStep?.dependencies).toEqual(['proxyDeployer'])
+		expect(deploymentStatusOracleStep?.label).toBe('Deployment Status Oracle')
+		expect(deploymentSteps.find(step => step.id === 'zoltarQuestionData')?.dependencies).toEqual(['proxyDeployer'])
+	})
+
+	void test('getDeploymentSections groups the deployment status oracle with proxy deployer', () => {
+		const deploymentStatuses = getDeploymentSteps().map(step => ({
+			...step,
+			deployed: false,
+		}))
+		const sections = getDeploymentSections(deploymentStatuses)
+		const proxyDeployerSection = sections.find(section => section.title === 'Utilities')
+
+		expect(proxyDeployerSection?.steps.map(step => step.id)).toEqual(['proxyDeployer', 'deploymentStatusOracle', 'weth', 'multicall3'])
+	})
+
+	void test('deploys Sepolia WETH and allocated REP before wiring REP into Zoltar', async () => {
+		const resetEnvironment = installActiveEnvironmentForTesting(createFakeBackend({ profile: SEPOLIA_NETWORK_PROFILE }))
+		try {
+			const deploymentSteps = getDeploymentSteps()
+			const deployableIds = ['weth', 'reputationToken', 'zoltarQuestionData', 'zoltar'] as const
+			for (const stepId of deployableIds) {
+				const step = deploymentSteps.find(candidate => candidate.id === stepId)
+				if (step === undefined) throw new Error(`Expected ${stepId} Sepolia deployment step`)
+				await step.deploy(writeClient as unknown as UiWriteClient)
+			}
+
+			expect(await readClient.getCode({ address: SEPOLIA_NETWORK_PROFILE.wethAddress })).not.toBeUndefined()
+			expect(await readClient.getCode({ address: SEPOLIA_NETWORK_PROFILE.genesisRepTokenAddress })).not.toBeUndefined()
+			expect(
+				await readClient.readContract({
+					abi: GenesisReputationToken_GenesisReputationToken.abi,
+					address: SEPOLIA_NETWORK_PROFILE.genesisRepTokenAddress,
+					functionName: 'getTotalTheoreticalSupply',
+					args: [],
+				}),
+			).toBe(SEPOLIA_REP_ALLOCATIONS.reduce((total, allocation) => total + allocation.amount, 0n))
+			for (const allocation of SEPOLIA_REP_ALLOCATIONS) {
+				expect(
+					await readClient.readContract({
+						abi: GenesisReputationToken_GenesisReputationToken.abi,
+						address: SEPOLIA_NETWORK_PROFILE.genesisRepTokenAddress,
+						functionName: 'balanceOf',
+						args: [allocation.address],
+					}),
+				).toBe(allocation.amount)
+			}
+
+			const zoltarStep = deploymentSteps.find(step => step.id === 'zoltar')
+			if (zoltarStep === undefined) throw new Error('Expected Sepolia Zoltar deployment step')
+			expect(
+				await readClient.readContract({
+					abi: Zoltar_Zoltar.abi,
+					address: zoltarStep.address,
+					functionName: 'getRepToken',
+					args: [0n],
+				}),
+			).toBe(SEPOLIA_NETWORK_PROFILE.genesisRepTokenAddress)
+		} finally {
+			resetEnvironment()
+		}
+	})
+
+	void test('getMulticall3Address matches the deterministic Multicall3 deployment step', () => {
+		const multicall3Step = getDeploymentSteps().find(step => step.id === 'multicall3')
+
+		expect(multicall3Step?.address).toBe(getMulticall3Address())
+	})
+
+	void test('loadDeploymentStatusOracleSnapshot returns the proxy deployer when the oracle is missing', async () => {
+		const snapshot = await loadDeploymentStatusOracleSnapshot(readClient)
+
+		expect(snapshot.applicationDeploymentComplete).toBe(false)
+		expect(snapshot.deploymentStatuses.find(step => step.id === 'proxyDeployer')?.deployed).toBe(true)
+		expect(snapshot.deploymentStatuses.find(step => step.id === 'deploymentStatusOracle')?.deployed).toBe(false)
+	})
+
+	void test('loadZoltarUniverseSummary returns undefined for an unknown universe id', async () => {
+		let callCount = 0
+		const mockReadClient = createConnectedReadClient()
+		const multicall: ReadClient['multicall'] = async () => {
+			callCount += 1
+			return [zeroAddress, [0n, 0n, 0n, zeroAddress, 0n], 0n, 0n] as never
+		}
+		mockReadClient.multicall = multicall
+
+		const universe = await loadZoltarUniverseSummary(mockReadClient, 123456789n)
+
+		expect(universe).toBe(undefined)
+		expect(callCount).toBe(1)
+	})
+})

@@ -1,0 +1,35 @@
+name: Zoltar CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: zoltar-ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: zoltar
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: ./.github/actions/setup-zoltar
+      - run: bun run build:prod
+      - run: bun run compile-contracts
+      - run: bun run check
+      - run: bun run test
+      - run: bun run check:artifacts
+      - name: Browser smoke at desktop and mobile widths
+        run: bun run test:browser
+      - name: Check tracked generated output
+        run: git diff --exit-code && git diff --check
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zoltar-ui
+          path: zoltar/ui/zoltar/dist
+          if-no-files-found: error

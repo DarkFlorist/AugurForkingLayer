@@ -1,0 +1,287 @@
+/// <reference types="bun-types" />
+
+import { installDomTestLifecycle } from './testUtils/domTestLifecycle.js'
+import { describe, expect, mock, test } from 'bun:test'
+import { render } from 'preact'
+import { act } from 'preact/test-utils'
+import { CurrencyValue } from '../components/CurrencyValue.js'
+import { fireEvent, waitFor, within } from './testUtils/queries'
+import { renderIntoDocument } from './testUtils/renderIntoDocument.js'
+
+describe('CurrencyValue', () => {
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+	let setClientWidth = (_nextWidth: number) => undefined
+	let setMeasureWidth = (_nextWidth: number) => undefined
+	let triggerResizeObservers = () => undefined
+
+	async function renderCurrencyValue(overrides: Partial<Parameters<typeof CurrencyValue>[0]> = {}) {
+		const baseProps: Parameters<typeof CurrencyValue>[0] = {
+			compactWhenOverflow: true,
+			suffix: 'ETH',
+			value: 999999990000n * 10n ** 18n,
+		}
+
+		const renderedComponent = await renderIntoDocument(<CurrencyValue {...baseProps} {...overrides} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+		return within(document.body)
+	}
+
+	installDomTestLifecycle({
+		beforeTest: domEnvironment => {
+			let currentClientWidth = 200
+			let currentMeasureWidth = 120
+			const resizeObservers: MockResizeObserver[] = []
+			const originalGetBoundingClientRect = domEnvironment.window.HTMLElement.prototype.getBoundingClientRect
+
+			// The value and its wrap shrink to fit, so the mocked width belongs to the block container around them.
+			Object.defineProperty(domEnvironment.window.HTMLElement.prototype, 'clientWidth', {
+				configurable: true,
+				get() {
+					if (this.classList.contains('currency-value') || this.classList.contains('currency-value-wrap')) return 0
+					return currentClientWidth
+				},
+			})
+
+			domEnvironment.window.HTMLElement.prototype.getBoundingClientRect = function () {
+				if (this.classList.contains('currency-value-measure')) return new domEnvironment.window.DOMRect(0, 0, currentMeasureWidth, 0)
+				return originalGetBoundingClientRect.call(this)
+			}
+
+			class MockResizeObserver implements ResizeObserver {
+				callback: ResizeObserverCallback
+
+				constructor(callback: ResizeObserverCallback) {
+					this.callback = callback
+					resizeObservers.push(this)
+				}
+
+				disconnect() {}
+
+				observe(_target: Element, _options?: ResizeObserverOptions) {}
+
+				unobserve(_target: Element) {}
+			}
+
+			Reflect.set(globalThis, 'ResizeObserver', MockResizeObserver)
+			Reflect.set(navigator, 'clipboard', {
+				writeText: mock(async () => undefined),
+			})
+
+			setClientWidth = nextWidth => {
+				currentClientWidth = nextWidth
+			}
+
+			setMeasureWidth = nextWidth => {
+				currentMeasureWidth = nextWidth
+			}
+
+			triggerResizeObservers = () => {
+				for (const observer of resizeObservers) {
+					observer.callback([], observer)
+				}
+			}
+		},
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+			Reflect.deleteProperty(globalThis, 'ResizeObserver')
+			triggerResizeObservers = () => undefined
+			setClientWidth = (_nextWidth: number) => undefined
+			setMeasureWidth = (_nextWidth: number) => undefined
+		},
+	})
+
+	test('compacts a large balance when the normal display value does not fit', async () => {
+		setClientWidth(80)
+		setMeasureWidth(180)
+
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+		expect(copyButton.textContent).toBe('≈ 1T ETH')
+	})
+
+	test('keeps the full display value when enough width is available', async () => {
+		setClientWidth(240)
+		setMeasureWidth(180)
+
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+		expect(copyButton.textContent).toBe('≈ 999 999 990 000.00 ETH')
+	})
+
+	test('treats horizontal padding as unavailable width when deciding to compact', async () => {
+		setClientWidth(186)
+		setMeasureWidth(180)
+
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+		expect(copyButton.textContent).toBe('≈ 999 999 990 000.00 ETH')
+
+		copyButton.style.paddingLeft = '4px'
+		copyButton.style.paddingRight = '4px'
+		await act(() => {
+			triggerResizeObservers()
+		})
+
+		expect(copyButton.textContent).toBe('≈ 1T ETH')
+	})
+
+	test('keeps a value hidden inside a zero-width container from being compacted', async () => {
+		setClientWidth(0)
+		setMeasureWidth(180)
+
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+		expect(copyButton.textContent).toBe('≈ 999 999 990 000.00 ETH')
+
+		setClientWidth(240)
+		await act(() => {
+			triggerResizeObservers()
+		})
+
+		expect(copyButton.textContent).toBe('≈ 999 999 990 000.00 ETH')
+	})
+
+	test('measures a value that mounts after its loading placeholder', async () => {
+		setClientWidth(80)
+		setMeasureWidth(180)
+		const value = 999999990000n * 10n ** 18n
+
+		const renderedComponent = await renderIntoDocument(<CurrencyValue compactWhenOverflow loading suffix='ETH' value={value} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+		const documentQueries = within(document.body)
+		expect(documentQueries.queryByRole('button', { name: 'Copy exact value 999 999 990 000' })).toBeNull()
+
+		await act(() => {
+			render(<CurrencyValue compactWhenOverflow loading={false} suffix='ETH' value={value} />, renderedComponent.container)
+		})
+
+		expect(documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' }).textContent).toBe('≈ 1T ETH')
+	})
+
+	test('measures the container above its own wrap even when the wrap is a blockified flex item', async () => {
+		setClientWidth(240)
+		setMeasureWidth(180)
+
+		const renderedComponent = await renderIntoDocument(<CurrencyValue compactWhenOverflow suffix='ETH' value={999999990000n * 10n ** 18n} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+		const documentQueries = within(document.body)
+		const wrap = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' }).parentElement
+		if (!(wrap instanceof HTMLElement) || !wrap.classList.contains('currency-value-wrap')) throw new Error('Expected the value wrap')
+		wrap.style.display = 'block'
+		Object.defineProperty(wrap, 'clientWidth', { configurable: true, get: () => 60 })
+
+		await act(() => {
+			render(<CurrencyValue compactWhenOverflow suffix='ETH' value={999999990001n * 10n ** 18n} />, renderedComponent.container)
+		})
+
+		expect(documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 001' }).textContent).toBe('≈ 999 999 990 001.00 ETH')
+	})
+
+	test('re-expands from compact to full after a resize observer update', async () => {
+		setClientWidth(80)
+		setMeasureWidth(180)
+
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+		expect(copyButton.textContent).toBe('≈ 1T ETH')
+
+		setClientWidth(240)
+		await act(() => {
+			triggerResizeObservers()
+		})
+
+		expect(copyButton.textContent).toBe('≈ 999 999 990 000.00 ETH')
+	})
+
+	test('keeps the exact hover title and copy label while compacted', async () => {
+		setClientWidth(80)
+		setMeasureWidth(180)
+
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+
+		expect(copyButton.getAttribute('title')).toBe('999 999 990 000 ETH')
+		await act(() => {
+			fireEvent.click(copyButton)
+		})
+		await waitFor(() => {
+			expect(copyButton.textContent).toBe('Copied')
+		})
+		expect(copyButton.textContent).toBe('Copied')
+	})
+
+	test('clears copied feedback when the exact value changes', async () => {
+		const renderedComponent = await renderIntoDocument(<CurrencyValue value={1n * 10n ** 18n} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+		const documentQueries = within(document.body)
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 1' })
+
+		await act(() => {
+			fireEvent.click(copyButton)
+		})
+		await waitFor(() => {
+			expect(copyButton.textContent).toBe('Copied')
+		})
+
+		await act(() => {
+			render(<CurrencyValue value={2n * 10n ** 18n} />, renderedComponent.container)
+		})
+		expect(documentQueries.getByRole('button', { name: 'Copy exact value 2' }).textContent).toBe('≈ 2.00')
+	})
+
+	test('keeps an exact-precision value fully visible without an approximation marker', async () => {
+		const documentQueries = await renderCurrencyValue({
+			precision: 'exact',
+			value: 137760122n,
+		})
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 0.000000000137760122' })
+
+		expect(copyButton.textContent).toBe('0.000000000137760122 ETH')
+		expect(copyButton.textContent).not.toContain('≈')
+	})
+
+	test('shows the exact value when rounded output would collapse to zero', async () => {
+		const documentQueries = await renderCurrencyValue({
+			exactWhenRoundedToZero: true,
+			value: 1n,
+		})
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 0.000000000000000001' })
+
+		expect(copyButton.textContent).toBe('0.000000000000000001 ETH')
+		expect(copyButton.textContent).not.toContain('≈')
+	})
+
+	test('keeps maximum exact values inside the ellipsizing number-unit group', async () => {
+		const maximumUint256 = (1n << 256n) - 1n
+		const formattedMaximum = maximumUint256.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+		const documentQueries = await renderCurrencyValue({ precision: 'exact', units: 0, value: maximumUint256 })
+		const copyButton = documentQueries.getByRole('button', { name: `Copy exact value ${formattedMaximum}` })
+		const numberUnit = copyButton.querySelector('.currency-value-number-unit')
+
+		expect(numberUnit).not.toBeNull()
+		expect(numberUnit?.textContent).toContain('ETH')
+		expect(copyButton.getAttribute('title')).toBe(`${formattedMaximum} ETH`)
+	})
+
+	test('keeps the value visible and associates an announced clipboard error', async () => {
+		const clipboard = {
+			writeText: async () => {
+				throw new DOMException('clipboard unavailable', 'NotAllowedError')
+			},
+		}
+		Reflect.defineProperty(navigator, 'clipboard', { configurable: true, value: clipboard })
+		Reflect.defineProperty(window.navigator, 'clipboard', { configurable: true, value: clipboard })
+		const documentQueries = await renderCurrencyValue()
+		const copyButton = documentQueries.getByRole('button', { name: 'Copy exact value 999 999 990 000' })
+
+		await act(() => {
+			fireEvent.click(copyButton)
+		})
+		const error = await waitFor(() => documentQueries.getByRole('alert'))
+		expect(copyButton.textContent).toBe('≈ 999 999 990 000.00 ETH')
+		expect(error.textContent).toBe('Copy failed — select the value and copy it manually.')
+		expect(copyButton.getAttribute('aria-describedby')).toBe(error.id)
+		expect((documentQueries.getByLabelText('Exact value for manual copy') as HTMLInputElement).value).toBe('999 999 990 000')
+	})
+})

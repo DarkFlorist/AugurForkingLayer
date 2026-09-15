@@ -1,0 +1,31 @@
+/// <reference types="bun-types" />
+
+import { installDomTestLifecycle } from './testUtils/domTestLifecycle.js'
+import { describe, expect, test } from 'bun:test'
+import { TransactionReview } from '../components/TransactionReview.js'
+import { within } from './testUtils/queries'
+import { renderIntoDocument } from './testUtils/renderIntoDocument.js'
+
+describe('TransactionReview', () => {
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+
+	installDomTestLifecycle({
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+		},
+	})
+
+	test('keeps decision data without generic or technical-detail sections', async () => {
+		const renderedComponent = await renderIntoDocument(<TransactionReview primary={[{ label: 'You Pay', value: '1 ETH' }]} risks={['Funds remain locked until settlement.']} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const reviewHeading = within(document.body).getByRole('heading', { name: 'Transaction Review' })
+		const review = reviewHeading.closest('.transaction-review')
+		if (!(review instanceof HTMLElement)) throw new Error('Expected a transaction review')
+		expect(review.querySelector('.transaction-review-header .detail')).toBeNull()
+		expect(review.textContent).toContain('1 ETH')
+		expect(review.textContent).toContain('Funds remain locked until settlement.')
+		expect(within(review).queryByText('Technical Details')).toBeNull()
+	})
+})

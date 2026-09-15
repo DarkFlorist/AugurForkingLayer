@@ -1,0 +1,20 @@
+name: Zoltar Browser Workflow
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['zoltar/**', '.github/workflows/zoltar-browser-workflow.yml', '.github/actions/setup-zoltar/**']
+permissions:
+  contents: read
+jobs:
+  workflow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: zoltar
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: ./.github/actions/setup-zoltar
+      - run: bun run build:prod
+      - run: bun run test:browser:workflow

@@ -1,0 +1,194 @@
+/// <reference types="bun-types" />
+
+import { describe, expect, test } from 'bun:test'
+import { maxUint256 } from '@zoltar/core-shared/evm/ethereum'
+import { deriveTokenApprovalRequirement, formatTokenApprovalUnavailableMessage, parseTokenApprovalAmountInput, resolveTokenApprovalStatusMessage, shouldDisplayMaxTokenApprovalAmount } from '../transactions/tokenApproval.js'
+
+const ONE = 10n ** 18n
+// Approved amounts above uint200 are displayed as unlimited.
+const maxUint200 = 2n ** 200n - 1n
+
+describe('token approval helpers', () => {
+	test('derives the approval requirement and exact default target from required and approved amounts', () => {
+		const requirement = deriveTokenApprovalRequirement(25n * ONE, 24n * ONE)
+
+		expect(requirement.requiredAmount).toBe(25n * ONE)
+		expect(requirement.approvedAmount).toBe(24n * ONE)
+		expect(requirement.neededAmount).toBe(ONE)
+		expect(requirement.targetAmount).toBe(25n * ONE)
+		expect(requirement.hasSufficientApproval).toBe(false)
+	})
+
+	test('marks zero or fully covered requirements as satisfied', () => {
+		expect(deriveTokenApprovalRequirement(0n, undefined)).toEqual({
+			approvedAmount: undefined,
+			hasSufficientApproval: true,
+			neededAmount: 0n,
+			requiredAmount: 0n,
+			targetAmount: undefined,
+		})
+		expect(deriveTokenApprovalRequirement(25n * ONE, 25n * ONE).hasSufficientApproval).toBe(true)
+	})
+
+	test('parses blank approval input as the default exact-target mode', () => {
+		expect(parseTokenApprovalAmountInput('', 'Approval amount', 18)).toEqual({ kind: 'default' })
+		expect(parseTokenApprovalAmountInput('   ', 'Approval amount', 18)).toEqual({ kind: 'default' })
+	})
+
+	test('parses max approval input as unlimited allowance', () => {
+		expect(parseTokenApprovalAmountInput('max', 'Approval amount', 18)).toEqual({
+			amount: maxUint256,
+			kind: 'max',
+		})
+		expect(parseTokenApprovalAmountInput('MAX', 'Approval amount', 18)).toEqual({
+			amount: maxUint256,
+			kind: 'max',
+		})
+	})
+
+	test.each([
+		{ amount: undefined, expected: false, label: 'unavailable' },
+		{ amount: 0n, expected: false, label: 'zero' },
+		{ amount: maxUint200 - 1n, expected: false, label: 'below maxUint200' },
+		{ amount: maxUint200, expected: false, label: 'maxUint200 boundary' },
+		{ amount: maxUint200 + 1n, expected: true, label: 'above maxUint200' },
+		{ amount: maxUint256, expected: true, label: 'maxUint256' },
+	])('reports $label as max display: $expected', ({ amount, expected }) => {
+		expect(shouldDisplayMaxTokenApprovalAmount(amount)).toBe(expected)
+	})
+
+	test('parses custom approval input using token decimals', () => {
+		expect(parseTokenApprovalAmountInput('1.25', 'Approval amount', 18)).toEqual({
+			amount: 125n * 10n ** 16n,
+			kind: 'custom',
+		})
+		expect(parseTokenApprovalAmountInput('12.5', 'Approval amount', 6)).toEqual({
+			amount: 12_500_000n,
+			kind: 'custom',
+		})
+	})
+
+	test('formats shared shortage and partial-approval messages in token units', () => {
+		const requirement = deriveTokenApprovalRequirement(25n * ONE, 24n * ONE)
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: undefined,
+				draftAmount: '',
+				guardMessage: undefined,
+				nextApprovalAmount: undefined,
+				requiredAmount: 25n * ONE,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBe('Need 1\u00a0more\u00a0ETH approved before submitting the initial report.')
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: undefined,
+				draftAmount: '24.5',
+				guardMessage: undefined,
+				nextApprovalAmount: 24_500_000_000_000_000_000n,
+				requiredAmount: 25n * ONE,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBe('Approving 24.5\u00a0ETH will still leave 0.5\u00a0more\u00a0ETH needed before submitting the initial report.')
+	})
+
+	test('resolveTokenApprovalStatusMessage hides loading-only approval states', () => {
+		const requirement = deriveTokenApprovalRequirement(25n * ONE, undefined)
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: undefined,
+				draftAmount: '',
+				guardMessage: undefined,
+				nextApprovalAmount: requirement.targetAmount,
+				requiredAmount: requirement.requiredAmount,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBeUndefined()
+	})
+
+	test('resolveTokenApprovalStatusMessage prioritizes guard and validation messages', () => {
+		const requirement = deriveTokenApprovalRequirement(25n * ONE, 24n * ONE)
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: undefined,
+				draftAmount: '',
+				guardMessage: 'Connect a wallet before approving tokens.',
+				nextApprovalAmount: requirement.targetAmount,
+				requiredAmount: requirement.requiredAmount,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBe('Connect a wallet before approving tokens.')
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: 'Approval amount must be a decimal number.',
+				draftAmount: '24',
+				guardMessage: undefined,
+				nextApprovalAmount: 24n * ONE,
+				requiredAmount: requirement.requiredAmount,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBe('Approval amount must be a decimal number.')
+	})
+
+	test('resolveTokenApprovalStatusMessage preserves needed and partial approval copy', () => {
+		const requirement = deriveTokenApprovalRequirement(25n * ONE, 24n * ONE)
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: undefined,
+				draftAmount: '',
+				guardMessage: undefined,
+				nextApprovalAmount: requirement.targetAmount,
+				requiredAmount: requirement.requiredAmount,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBe('Need 1\u00a0more\u00a0ETH approved before submitting the initial report.')
+
+		expect(
+			resolveTokenApprovalStatusMessage({
+				actionLabel: 'submitting the initial report',
+				amountValidationMessage: undefined,
+				draftAmount: '24.5',
+				guardMessage: undefined,
+				nextApprovalAmount: 24_500_000_000_000_000_000n,
+				requiredAmount: 25n * ONE,
+				requirement,
+				tokenLabel: 'ETH',
+				tokenUnits: 18,
+			}),
+		).toBe('Approving 24.5\u00a0ETH will still leave 0.5\u00a0more\u00a0ETH needed before submitting the initial report.')
+	})
+
+	test('formats unavailable approval status messages with sanitized reasons', () => {
+		expect(
+			formatTokenApprovalUnavailableMessage({
+				actionLabel: 'depositing REP',
+				reason: 'Failed to load token approval: execution reverted',
+				tokenLabel: 'REP',
+			}),
+		).toBe('Unable to verify REP approval before depositing REP. Retry loading the approval status before continuing.')
+	})
+})

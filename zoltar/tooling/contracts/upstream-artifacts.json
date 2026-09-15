@@ -1,0 +1,97 @@
+{
+	"contracts/Constants.sol:Constants": {
+		"abi": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+		"creation": "34b15988275363bbd9cca1f0492dfb36a23bb73b4e22f72cc308d511514c9b90",
+		"runtime": "404760f93266d9513faeb5d141a820e9cff5d24c78deff83cbeb78b45983fb20"
+	},
+	"contracts/Context.sol:Context": {
+		"abi": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/DeploymentStatusOracle.sol:DeploymentStatusOracle": {
+		"abi": "e8ac184649f3c4243940683baf8c87acf49b84dfc43b5ef72c0c0433b11e0a0f",
+		"creation": "be69fdd8158974567636c8fda2321375e2e7079d7917db6b1a350250d2348ea2",
+		"runtime": "7661c9c4c9b8f8aef4b26a2be08afda40085e81e7ff4931139e77956a3be918f"
+	},
+	"contracts/ERC20.sol:ERC20": {
+		"abi": "9a4c82384eb61f1d2d3a5c1d48d64ffdcaf1ae8207f2ffb989e545ab6c3cdcc0",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/GenesisReputationToken.sol:GenesisReputationToken": {
+		"abi": "95e3c6f38e23864a2f19d3f9406bd54fad9487199380cad148aecd782362fcd2",
+		"creation": "5154e5bd39962c9db163a411de928bf872f41e41c10d06574a793b6805032f32",
+		"runtime": "720b954b0ba91fe71d48e44ca1c805d429863ea942cc50f7e0eaf5636cb606d3"
+	},
+	"contracts/IERC20.sol:IERC20": {
+		"abi": "b0ef9de0a9fdd62763b2980492eda95517b2cec57420efd8f3ba4bea1d9b75c5",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/IERC20Metadata.sol:IERC20Metadata": {
+		"abi": "9a4c82384eb61f1d2d3a5c1d48d64ffdcaf1ae8207f2ffb989e545ab6c3cdcc0",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/IExternalGenesisReputationToken.sol:IExternalGenesisReputationToken": {
+		"abi": "2bf5188f6235a5d01f252d8af0007fa8165758a02c06808a721b2cf04402c68f",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/ReputationToken.sol:ReputationToken": {
+		"abi": "1f1e3be75415cf7d734df647d4bb35fe3afb5650e074ee578e7bc9d1ecff19c1",
+		"creation": "515788c475c25e8ef4264971c5793cdcdeca963b6a8b5096e427b9200100f2d9",
+		"runtime": "f01243c3af3a63f06cb4e2657d61d095bafca64c3e439eede1b8f20404540f0f"
+	},
+	"contracts/SafeERC20Ops.sol:SafeERC20Ops": {
+		"abi": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+		"creation": "34b15988275363bbd9cca1f0492dfb36a23bb73b4e22f72cc308d511514c9b90",
+		"runtime": "404760f93266d9513faeb5d141a820e9cff5d24c78deff83cbeb78b45983fb20"
+	},
+	"contracts/ScalarOutcomes.sol:ScalarOutcomes": {
+		"abi": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+		"creation": "34b15988275363bbd9cca1f0492dfb36a23bb73b4e22f72cc308d511514c9b90",
+		"runtime": "404760f93266d9513faeb5d141a820e9cff5d24c78deff83cbeb78b45983fb20"
+	},
+	"contracts/Zoltar.sol:Zoltar": {
+		"abi": "decbe831d3825f4cb0b7b02fd63bbe721599a44910bc41eb39ed958dcb7bc63b",
+		"creation": "6f4895eb54ef00fb0ce02239f97254f34ab1eeaa31dbdbb9cf200ad08c852557",
+		"runtime": "689c60d60ce1bed25f24d73a56a37cd23efe1f1d9d25785450ab48ed269fa5c0"
+	},
+	"contracts/ZoltarQuestionData.sol:ZoltarQuestionData": {
+		"abi": "c5ddcb136f51b43f5948aa6797fb1c3fdd2a545fa61548fbf9ee09cbd7fc58d7",
+		"creation": "4630b16a1c7d602b24dc55ab2e7bc2dcb3e11d85df63d59a8306185a4ca6ffea",
+		"runtime": "3050a31bf8a21e81b5809ea432a38a1d3a52c3088649cd79a018fb382c9a2e7e"
+	},
+	"contracts/statoblast/Multicall3.sol:Multicall3": {
+		"abi": "ca3d33cea279f585afcf13073b865cc9689942f9b1d6d5118107f5725dd73597",
+		"creation": "14078560f34d8cbbe7e30bdc76ca3cd08812ebbf783e69e33b12849a6b9a2a99",
+		"runtime": "e20add5d5b64f58ea5d59ef221fd4b26ef9341df919b486d2899359b8113ac09"
+	},
+	"contracts/statoblast/WETH9.sol:WETH9": {
+		"abi": "d684a3981903c9e94c60a351a1afdfb16503025e27a2e75310d87aaf60f144f5",
+		"creation": "d78b818f5971075178f2e48dd147b6dd3dd156f995ec6e52441109cc0957890d",
+		"runtime": "6428707bc87df38cc3c78b402fd5f28757a8617158055dae5affd0717b07be6d"
+	},
+	"contracts/vendor/authorization/AuthorizationSignatures.sol:AuthorizationSignatures": {
+		"abi": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+		"creation": "34b15988275363bbd9cca1f0492dfb36a23bb73b4e22f72cc308d511514c9b90",
+		"runtime": "404760f93266d9513faeb5d141a820e9cff5d24c78deff83cbeb78b45983fb20"
+	},
+	"contracts/vendor/authorization/ERC20Authorization.sol:ERC20Authorization": {
+		"abi": "432f9da74496da136aab9a8b7388307b23491163e5045a83e3c657784a3e1561",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/vendor/authorization/IERC20Authorization.sol:IERC20PermitAuthorization": {
+		"abi": "ecf21ccf6d606e2e205ed35dacd1e525ac410494b75e354885a84b9ee3a47806",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	},
+	"contracts/vendor/authorization/IERC20Authorization.sol:IERC3009Authorization": {
+		"abi": "c2e72c75ae8d867633ed0250adcc95617cdd020c40c2bfc7c13ad3da0c853bf6",
+		"creation": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"runtime": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+	}
+}

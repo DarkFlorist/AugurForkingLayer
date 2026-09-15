@@ -1,0 +1,3136 @@
+{
+	"repository": "https://github.com/AugurProject/zoltar",
+	"commit": "85fdf19f8962d17b6f1e0612df9a01b6c30398d4",
+	"files": [
+		{
+			"path": ".gitignore",
+			"upstreamPath": ".gitignore",
+			"upstreamSha256": "273df0ea34a725680910144f059af559433891a64887ed5f4267759bd26d7c47",
+			"treatment": "unchanged"
+		},
+		{
+			"path": ".npmrc",
+			"upstreamPath": ".npmrc",
+			"upstreamSha256": "f202527973478a4a322ff99f090c2d2f5e4c55ade292e3cacc07b5fe33caba12",
+			"treatment": "adapted"
+		},
+		{
+			"path": "LICENSE",
+			"upstreamPath": "LICENSE",
+			"upstreamSha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "README.md",
+			"upstreamPath": "README.md",
+			"upstreamSha256": "4c2c8bbb979111ef20b45f749c86fa3077ce05368c2906d9b547439558b1fba2",
+			"treatment": "adapted"
+		},
+		{
+			"path": "UPSTREAM.md",
+			"treatment": "local addition"
+		},
+		{
+			"path": "biome.json",
+			"upstreamPath": "biome.json",
+			"upstreamSha256": "5dc4d6bc681c8e09b75179fb7e6c376995eddcf5bac646341d9540cc313e7bb4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "bun-test-setup-ui.ts",
+			"upstreamPath": "bun-test-setup-ui.ts",
+			"upstreamSha256": "8c8dfb2da36ee870244f7e4222b0afcfffb0aea2907a0c17d682d6dc77dabea3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "bun-test-setup.ts",
+			"upstreamPath": "bun-test-setup.ts",
+			"upstreamSha256": "17dabbd66223dbf0213c39d20e39858fe807f0ca05bfc9bee2e4b9c3574841c4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "bun.lock",
+			"upstreamPath": "bun.lock",
+			"upstreamSha256": "d49ad3f2e85a704cb3d2eb6dadcbe7375456007fe3e8cd631790b217b60cdb12",
+			"treatment": "adapted"
+		},
+		{
+			"path": "bunfig.toml",
+			"upstreamPath": "bunfig.toml",
+			"upstreamSha256": "80038308d33104cb0cb699cee2f5afb6eb4759bb5ce870b4ca146d89f75e2528",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "docs/protocol.md",
+			"treatment": "local addition"
+		},
+		{
+			"path": "docs/validation.md",
+			"treatment": "local addition"
+		},
+		{
+			"path": "package.json",
+			"upstreamPath": "package.json",
+			"upstreamSha256": "68a89362302898b869e1b00bd9e6e8724e8e3147b8f3826d031b99e135a07b64",
+			"treatment": "adapted"
+		},
+		{
+			"path": "shared/core/package.json",
+			"upstreamPath": "shared/core/package.json",
+			"upstreamSha256": "945965fce69b6a4666012d7eb2be44b241e828a1d4bbef7881aceae9ec98b1c0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/deployment/deploymentAddresses.ts",
+			"upstreamPath": "shared/core/ts/deployment/deploymentAddresses.ts",
+			"upstreamSha256": "9ad63a75aa5ed701bc07bc07a9cd38de3a987d31cf68a00c872e93c3fcabdfaa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/deployment/protocolConfig.ts",
+			"upstreamPath": "shared/core/ts/deployment/protocolConfig.ts",
+			"upstreamSha256": "c922089f9e1d2a8e684e4a33ed2c6c7b4045beb8c94f972c5df09340270fe63a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/errors/errorChain.test.ts",
+			"upstreamPath": "shared/core/ts/errors/errorChain.test.ts",
+			"upstreamSha256": "25558a402d9bcd8eb63ef09a45562d8897b231e28b114114bd60129dcd86ff26",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/errors/errorChain.ts",
+			"upstreamPath": "shared/core/ts/errors/errorChain.ts",
+			"upstreamSha256": "11bf46f6a7aff08f564ab50105e0cdb2c08d8fe10ee054bf732dd90a89eb1ecd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/address.test.ts",
+			"upstreamPath": "shared/core/ts/evm/address.test.ts",
+			"upstreamSha256": "d2924256c999315c6bc5024d90001423b7bbe3effda8b3a98e71c2787f6c3a56",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/address.ts",
+			"upstreamPath": "shared/core/ts/evm/address.ts",
+			"upstreamSha256": "739d2d029a9e8258f13958a2875b25859d7c6082caf752b444223ab7abcf7f52",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum.test.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum.test.ts",
+			"upstreamSha256": "604c6fb18514d845b67fd96d9bd3654acab8ae1f5a12b133ebc681c402cded4e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum.ts",
+			"upstreamSha256": "1822149cb49018a4d5d873eb8b95a0ea54de8fbdd3732cc232fe021adcd9f847",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/abi.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/abi.ts",
+			"upstreamSha256": "04459c6c9c8f61e15a7ccdd4b9521e8ed74a8497bc87c9896d9d76b590c27d28",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/abi/codec.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/abi/codec.ts",
+			"upstreamSha256": "3d7ae66b3e3bcc3861edacdba66af4d1db1f613a5fc9e4e71cf0c74943a0ee87",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/abi/events.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/abi/events.ts",
+			"upstreamSha256": "c7a13b6378b3397f07d984b890d8aaf8a9347bc196dbe38dcc6b172e81fd9085",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/abi/parser.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/abi/parser.ts",
+			"upstreamSha256": "96e976c86e923205b7a228e96592f4e62a8777ab60f5c80b2786f221b875db7d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/accounts.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/accounts.ts",
+			"upstreamSha256": "89ced35c04ddc82f6b995072bc50732e6d0156bc703d2ffa37ecdbfb8c588d11",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/chains.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/chains.ts",
+			"upstreamSha256": "9a04d61db53acaba11df587ed8679d31390ccced8202a4e5aa7f741cea66d540",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/clients.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/clients.ts",
+			"upstreamSha256": "a18d9e3adacb8aacd568f48c0345518ddabad87b77b2f645c329f096824d196d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/clients/actions.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/clients/actions.ts",
+			"upstreamSha256": "e72315a5cc60ddb7f3bca179cca2fa488367fa985296769af3cc63a4fa5b5960",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/clients/factories.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/clients/factories.ts",
+			"upstreamSha256": "a932072a66aab64dec12c09f75c20b842bf63f6b28d180a8d803d77ad98870c0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/encoding.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/encoding.ts",
+			"upstreamSha256": "6aa27218e0c99b8ed4f9a61397a0c27b67f38617f53a22a6e8cc8f19faf935c2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/errors.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/errors.ts",
+			"upstreamSha256": "4ae396ebe05dda801136fe847b109018e74a844c56d5e1dfcbafa948ac5ff70d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/rpc.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/rpc.ts",
+			"upstreamSha256": "688d0022755f55d19ed1924044ad033076d910404c450dc6c346eb7efe592d22",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/transport.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/transport.ts",
+			"upstreamSha256": "83a8099991e726aceedb08dc0a7918495542cd8a403c64e5053f1215cdfc9ed9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/ethereum/types.ts",
+			"upstreamPath": "shared/core/ts/evm/ethereum/types.ts",
+			"upstreamSha256": "a9cfd34626c79ca3da5f9301d6fa67bfc1a0005fc93af67d6522c53f96f58a44",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/logScan.test.ts",
+			"upstreamPath": "shared/core/ts/evm/logScan.test.ts",
+			"upstreamSha256": "251f2b2f9e16be772e5defa114d3c0fbd92de702eb05c5ec91696f28da4c2fa1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/logScan.ts",
+			"upstreamPath": "shared/core/ts/evm/logScan.ts",
+			"upstreamSha256": "c540745b49f892ee84c2ef4c6fc3bfb03fcf2e5b6b1423bdf82941cd2d4b86fc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/evm/multicallFailure.ts",
+			"upstreamPath": "shared/core/ts/evm/multicallFailure.ts",
+			"upstreamSha256": "4290950d7ec239c80669fb9280ec142694bfb022e30d3195880b85f169a06b53",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/math/bigint.test.ts",
+			"upstreamPath": "shared/core/ts/math/bigint.test.ts",
+			"upstreamSha256": "5d039d62dbb8ce035ce141df5c44e44542205e8e2f999fbc03567ed26a93c93a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/math/bigint.ts",
+			"upstreamPath": "shared/core/ts/math/bigint.ts",
+			"upstreamSha256": "46e838387d2a001666072ed3d82c31007485fb3c95ec43728e35eadb822ad549",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/serialization/bigInt.test.ts",
+			"upstreamPath": "shared/core/ts/serialization/bigInt.test.ts",
+			"upstreamSha256": "f11af93357b6f8b88480d3fec2f58baec35e07f08232ca28f125f7542c60bcff",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/serialization/bigInt.ts",
+			"upstreamPath": "shared/core/ts/serialization/bigInt.ts",
+			"upstreamSha256": "e814e2b2b65bf878e6dc3f883c4b9d75b6d75ae74619d2c7c2a4ae049c19571d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/serialization/sortStringArrayByKeccak.test.ts",
+			"upstreamPath": "shared/core/ts/serialization/sortStringArrayByKeccak.test.ts",
+			"upstreamSha256": "ca20e2e460a1f29f46d3b6dafecfc87979f05113de542bac2c66e9baff130415",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/ts/serialization/sortStringArrayByKeccak.ts",
+			"upstreamPath": "shared/core/ts/serialization/sortStringArrayByKeccak.ts",
+			"upstreamSha256": "b919703e6333242e9801d7ae94b0031ba0f6884ed8f10d118210dedbbd091d73",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/core/tsconfig.json",
+			"upstreamPath": "shared/core/tsconfig.json",
+			"upstreamSha256": "65e45950484534fc16ec581b007bcb53d4c26ddc59993a4d4792c7e2dbdb035c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/tsconfig.base.json",
+			"upstreamPath": "shared/tsconfig.base.json",
+			"upstreamSha256": "06aecc07a911e8b1df0127e8938b8676a1a5a3a113772622bd89d13c657f1456",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/tsconfig.strict.json",
+			"upstreamPath": "shared/tsconfig.strict.json",
+			"upstreamSha256": "ab6501f2c99cd4a8e5ede0a468f4cdf8eaf9eed477545b32bc61f566bead0de5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/package.json",
+			"upstreamPath": "shared/zoltar/package.json",
+			"upstreamSha256": "0d4e2ec849ea9ade26bc383b4c4c3bd5fe96d1d9915ec0bca8d01c1063964d3f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/constants.ts",
+			"upstreamPath": "shared/zoltar/ts/constants.ts",
+			"upstreamSha256": "52abd55dad0aee66c7233d1353a1e1990a0dcb422b394bbdbe94df27774b6ef5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/deployment/deploymentAddresses.test.ts",
+			"upstreamPath": "shared/zoltar/ts/deployment/deploymentAddresses.test.ts",
+			"upstreamSha256": "775838f077aceb6d3fd51a2a5409e1d70a9e5f65105dac63ea83be7d9f2d7cad",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/deployment/deploymentAddresses.ts",
+			"upstreamPath": "shared/zoltar/ts/deployment/deploymentAddresses.ts",
+			"upstreamSha256": "a63f1f49c9d2d2e9dcd8a20b0f905f8b6ec7cf587dbded412aafb55a02e09afb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/deployment/sepoliaRepAllocations.test.ts",
+			"upstreamPath": "shared/zoltar/ts/deployment/sepoliaRepAllocations.test.ts",
+			"upstreamSha256": "297e1f43c9441a2a6081482c9342703938efbaba965b4294ceec1912fc2d739c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/deployment/sepoliaRepAllocations.ts",
+			"upstreamPath": "shared/zoltar/ts/deployment/sepoliaRepAllocations.ts",
+			"upstreamSha256": "8331bb1e745ea0c1456a5aaff4b413f9fda30c2759bb6c8f048f6e4348a59a4d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/questions/scalarOutcome.test.ts",
+			"upstreamPath": "shared/zoltar/ts/questions/scalarOutcome.test.ts",
+			"upstreamSha256": "7fdaeb800f1c7a3c40eb40482e917a67570ad0d856023204d3acf6365b4737fa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/questions/scalarOutcome.ts",
+			"upstreamPath": "shared/zoltar/ts/questions/scalarOutcome.ts",
+			"upstreamSha256": "97d9faf86a27fa8b1e1b5d90a8cbedd962a460caab3ce675280babce61a454ad",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/ts/testing/scalarOutcomeParityFixtures.ts",
+			"upstreamPath": "shared/zoltar/ts/testing/scalarOutcomeParityFixtures.ts",
+			"upstreamSha256": "822cb507ff70165887e9d1c3f7dc9c92ec44dfe0fe28094f7e3eeaef7f4c5315",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "shared/zoltar/tsconfig.json",
+			"upstreamPath": "shared/zoltar/tsconfig.json",
+			"upstreamSha256": "06e7d1ca40ff03af540fdde016c56eabf7803733d1dfa3c441fc099a5962e726",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/Constants.sol",
+			"upstreamPath": "solidity/contracts/Constants.sol",
+			"upstreamSha256": "f941d443e252b94531645da04b50d2e7f18ab46c186dc288d66eebe47994e452",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/Context.sol",
+			"upstreamPath": "solidity/contracts/Context.sol",
+			"upstreamSha256": "dfd25f4eb2809f0aaeedd6dc0d3bdd4b4ca2da16cf0f2cf526eff694f63be484",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/DeploymentStatusOracle.sol",
+			"upstreamPath": "solidity/contracts/DeploymentStatusOracle.sol",
+			"upstreamSha256": "e53a9301bb14fc074401e33274606072db5c90f3eae2d2547fec90d91b15eafa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/ERC20.sol",
+			"upstreamPath": "solidity/contracts/ERC20.sol",
+			"upstreamSha256": "3ad9d91f5c606d3f26fcd0c384b5999ff8b4b6f03550fde0553abcd8334077f4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/GenesisReputationToken.sol",
+			"upstreamPath": "solidity/contracts/GenesisReputationToken.sol",
+			"upstreamSha256": "f896d9f48d1f7e7b0c5b94428e6e1182a3d1e6bee825069090e499fe8fcb8385",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/IERC20.sol",
+			"upstreamPath": "solidity/contracts/IERC20.sol",
+			"upstreamSha256": "23d76705e20e82e499cdde40abb45ca580344f315bf1c02e7db161316af8e3df",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/IERC20Metadata.sol",
+			"upstreamPath": "solidity/contracts/IERC20Metadata.sol",
+			"upstreamSha256": "de4ed2e5660d96864deb88fbfb1d3aa0d0def3bced27e4ed9ef4c06e5ef13fc4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/IExternalGenesisReputationToken.sol",
+			"upstreamPath": "solidity/contracts/IExternalGenesisReputationToken.sol",
+			"upstreamSha256": "a5a5f87684534c861fcd677c40e0b2ed7c0947bd11b8530c7d96ed5f11fd6572",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/README.md",
+			"upstreamPath": "solidity/contracts/README.md",
+			"upstreamSha256": "dafb8c43b1dbaa2563ec4df5afc7a8c0ac74ed0274b4ccbaf620f5f0922986f7",
+			"treatment": "adapted"
+		},
+		{
+			"path": "solidity/contracts/ReputationToken.sol",
+			"upstreamPath": "solidity/contracts/ReputationToken.sol",
+			"upstreamSha256": "dda8d02d82e98931f8148f481f456eaba26e9801de1c5a8b34d7bd330cbc36c6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/SafeERC20Ops.sol",
+			"upstreamPath": "solidity/contracts/SafeERC20Ops.sol",
+			"upstreamSha256": "a9b1272ac45066602635ff4a76fa6ae2d509da9a46547c21a9d5a89b8b057db9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/ScalarOutcomes.sol",
+			"upstreamPath": "solidity/contracts/ScalarOutcomes.sol",
+			"upstreamSha256": "9ebe73474cf99997ee2bf98b9fb552149469c7160ea7275780a96dd42c73249c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/Zoltar.sol",
+			"upstreamPath": "solidity/contracts/Zoltar.sol",
+			"upstreamSha256": "4deb73622e2e13cefe6cb112547eb3fb5e831030139cc5f498f26d4ac080cbbd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/ZoltarQuestionData.sol",
+			"upstreamPath": "solidity/contracts/ZoltarQuestionData.sol",
+			"upstreamSha256": "bef4767d63c4b10af95b069916d127a2a5ad82f2666b6585edee442a5470c4a8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/statoblast/Multicall3.sol",
+			"upstreamPath": "solidity/contracts/statoblast/Multicall3.sol",
+			"upstreamSha256": "8039b165e6fb87c004eeadb6f5e75537f7a1ebe23c71475bbbf5f02c7cd7571c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/statoblast/WETH9.sol",
+			"upstreamPath": "solidity/contracts/statoblast/WETH9.sol",
+			"upstreamSha256": "a9b5ab106af033074c8452204f21dfdb3bc7c9b540892cfce797e301183a700f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/test/RepV2GenesisMock.sol",
+			"upstreamPath": "solidity/contracts/test/RepV2GenesisMock.sol",
+			"upstreamSha256": "7c9e66deb565e30dca232563f11ad4ddeb0b95fd27e97df4587e3995c7cac94f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/test/statoblast/FalseReturningERC20.sol",
+			"upstreamPath": "solidity/contracts/test/statoblast/FalseReturningERC20.sol",
+			"upstreamSha256": "26fae158c9d42fec25e7ea6d909cdd755746759c178a77ce70134c322a9bcdcd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/test/statoblast/OpenOracleAdversarialHarnesses.sol",
+			"upstreamPath": "solidity/contracts/test/statoblast/OpenOracleAdversarialHarnesses.sol",
+			"upstreamSha256": "e5a3adc5de2f5dfbfd4a75b787c7c339b092f873b84b2ccfe86e6062b6986bae",
+			"treatment": "adapted"
+		},
+		{
+			"path": "solidity/contracts/vendor/authorization/AuthorizationSignatures.sol",
+			"upstreamPath": "solidity/contracts/vendor/authorization/AuthorizationSignatures.sol",
+			"upstreamSha256": "859235ba9a55ff1af7a099a7803a8d74757520669c4c8d865dd86fe5cd372c55",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/vendor/authorization/ERC20Authorization.sol",
+			"upstreamPath": "solidity/contracts/vendor/authorization/ERC20Authorization.sol",
+			"upstreamSha256": "a963dc6c9ce11749e9ee0dfe809a2eb4ffc34fa396b29f3b46e7d544545fc768",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/vendor/authorization/IERC20Authorization.sol",
+			"upstreamPath": "solidity/contracts/vendor/authorization/IERC20Authorization.sol",
+			"upstreamSha256": "bbcf9849601278c7ee40e76a88fd2ebb25f5ab3f9d07ecf3c6d85ed9c537c23d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/contracts/vendor/authorization/README.md",
+			"upstreamPath": "solidity/contracts/vendor/authorization/README.md",
+			"upstreamSha256": "e0c5486a0d2d376dd9c04ad45712db2f51cd158a215fa30bd834eec6322a3795",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/package.json",
+			"upstreamPath": "solidity/package.json",
+			"upstreamSha256": "745dc2a9b7bfcf7cb71f2d128591f559241bd6c5a1b3afb0078b14b7759abbcb",
+			"treatment": "adapted"
+		},
+		{
+			"path": "solidity/ts/abi/abis.ts",
+			"upstreamPath": "solidity/ts/abi/abis.ts",
+			"upstreamSha256": "3cc65bc67df114ee017f1e737f2dbb73951ba7a9d622155f2969ec48b0f09f19",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/compile.ts",
+			"upstreamPath": "solidity/ts/compile.ts",
+			"upstreamSha256": "e53cf919660ac102cb91d4ea0d18ac15402e1d52de14c18f447aeef0a51a8dfd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/contractProjects.ts",
+			"upstreamPath": "solidity/ts/contractProjects.ts",
+			"upstreamSha256": "c1a5736847760cae0cbed7c98597a4ab81bdff270fec4c8043194a9ddab4d810",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/coverage/coverageConfig.ts",
+			"upstreamPath": "solidity/ts/testSupport/coverage/coverageConfig.ts",
+			"upstreamSha256": "47419d6edb5ecbaba0da0dc95b259e73aa4ff635338932e284d1cb758f33845d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/coverage/reporter.ts",
+			"upstreamPath": "solidity/ts/testSupport/coverage/reporter.ts",
+			"upstreamSha256": "1bf45d7d07b91cb177872588f888f630853a86c100052c473f84fe8aeabc5939",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/coverage/sourceMapCoverageGaps.ts",
+			"upstreamPath": "solidity/ts/testSupport/coverage/sourceMapCoverageGaps.ts",
+			"upstreamSha256": "48ba255159becd3efc759b46e04c26147498b16e97a0484e8e5220f1d681d3d8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/coverage/sourceMapParser.ts",
+			"upstreamPath": "solidity/ts/testSupport/coverage/sourceMapParser.ts",
+			"upstreamSha256": "c3055a88e4165b85a1cf399ddd78ef6770ec2bde1d0a99f84100f71ddf851410",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/coverage/traceToSource.ts",
+			"upstreamPath": "solidity/ts/testSupport/coverage/traceToSource.ts",
+			"upstreamSha256": "1b44fb0088a9f11d84eb853706664888bb080db5de06c5a7654610af34c5a7aa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/deployContract.ts",
+			"upstreamPath": "solidity/ts/testSupport/deployContract.ts",
+			"upstreamSha256": "79765f7ee0ad01542baa998995e0e6f1ac68972232ec9104bf8844a612850956",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/AnvilWindowEthereum.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/AnvilWindowEthereum.ts",
+			"upstreamSha256": "3daa86463deb8047f7c9ce6cc5888c94d180da5cd172b09b20acf49dbfacdead",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/anvilNode.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/anvilNode.ts",
+			"upstreamSha256": "6f1c1d70992a79c140782f9e047ca85fafe702be054b8d6ca27b73503feab1ac",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/types/types.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/types/types.ts",
+			"upstreamSha256": "47b84f83ed6dddc240dc0440af5c1d18709cdb137fbc15cb13a8f1da3c1e8b85",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/types/wire-types.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/types/wire-types.ts",
+			"upstreamSha256": "f0588530381ccb751e28fe2ff2c9a5607382f7759f82178f047ac0dbb462e9a4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/useIsolatedAnvilNode.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/useIsolatedAnvilNode.ts",
+			"upstreamSha256": "a037ce9a7295e1962a638f1877d7af637f5540c9116b6ded9c8eca5b54ea47bb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/array-utils.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/array-utils.ts",
+			"upstreamSha256": "e6aa6de94d5f747db844ebe6cd0dca64f7d76efa0f73bb9b4d4b558c95108e36",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/assert.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/assert.ts",
+			"upstreamSha256": "406551ed6e4fd7e836a2ec2967fc014e1e5c04a1d3c69fbe61ca52bcb879bbb9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/bigint.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/bigint.ts",
+			"upstreamSha256": "3dfb4c10f2a93cbb2333ebbea3dc101ad7231da53c64e72475652085324a8e16",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/clients.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/clients.ts",
+			"upstreamSha256": "454d87bd383311881046476e5dab3b90a41d70d58464c9c8315552ffa075220c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/constants.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/constants.ts",
+			"upstreamSha256": "877f3eb819fbd45f53a68c8852fa3f004d1b077502ac2e9b5ce84b19b3d2207d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/contracts/pagination.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/contracts/pagination.ts",
+			"upstreamSha256": "14a132a129b75a179afc1216ae4ebe47a8ea51401aa0aaad75da6065c3f10b38",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/contracts/scalarOutcome.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/contracts/scalarOutcome.ts",
+			"upstreamSha256": "04739ae4bacb7446aa9622cc816f637009c79c302b5b1948aaf9a788c6970a08",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/contracts/zoltar.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/contracts/zoltar.ts",
+			"upstreamSha256": "071a3c8577c6d38d78c8ea70950a47cf710de19d52b29fdc341db168befd5f57",
+			"treatment": "adapted"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/contracts/zoltarQuestionData.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/contracts/zoltarQuestionData.ts",
+			"upstreamSha256": "30f494e3de39b72f0f4e4f7d7ea4c63006ee1283292159f08d8030616ceeaca4",
+			"treatment": "adapted"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/testUtils.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/testUtils.ts",
+			"upstreamSha256": "f717222c3a7e2b425f7263a365940650f111cef4a2acd38ef399d92a74edba2f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/testSupport/simulator/utils/utilities.ts",
+			"upstreamPath": "solidity/ts/testSupport/simulator/utils/utilities.ts",
+			"upstreamSha256": "25a3b29266f30bdf5fe87467e65ef6ed84cc55c3bf662355482e1c8b4c5e4bb3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/anvilWindowEthereum.test.ts",
+			"upstreamPath": "solidity/ts/tests/anvilWindowEthereum.test.ts",
+			"upstreamSha256": "f98d09f47e28f126cb5ae78a9cc6ead33bd703f3ff75a78b347ce09ea0ea5904",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/genesisReputationToken.test.ts",
+			"upstreamPath": "solidity/ts/tests/genesisReputationToken.test.ts",
+			"upstreamSha256": "f9859aa2344fb34d01b7720e1b8a0dd007da357aaa5f900c107e74db5104e023",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/multicall3.test.ts",
+			"upstreamPath": "solidity/ts/tests/multicall3.test.ts",
+			"upstreamSha256": "92e3eb7dad981a7da2426fdac086f424b82adcb18a0e2488b083396537d76a0b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/questionData.test.ts",
+			"upstreamPath": "solidity/ts/tests/questionData.test.ts",
+			"upstreamSha256": "c56e05cfd68a70dc73bea6312f905573311426a53847196e3c5ff8a6b1dcd12c",
+			"treatment": "adapted"
+		},
+		{
+			"path": "solidity/ts/tests/reputationAuthorization.test.ts",
+			"upstreamPath": "solidity/ts/tests/reputationAuthorization.test.ts",
+			"upstreamSha256": "b02e5b751f1e4d2f22a87d383075adc96a35aa7c271952c7530693a1c884c3af",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/useIsolatedAnvilNode.test.ts",
+			"upstreamPath": "solidity/ts/tests/useIsolatedAnvilNode.test.ts",
+			"upstreamSha256": "44c3e863ff1c97d7e6027d939f1dffe4b6e3cc457868b57a6e99913eda70907c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/weth9.test.ts",
+			"upstreamPath": "solidity/ts/tests/weth9.test.ts",
+			"upstreamSha256": "bec2ce36918b456b4450fceec2b28f35b90202a1847a58ce474e7ccf85a25c48",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/tests/zoltar.test.ts",
+			"upstreamPath": "solidity/ts/tests/zoltar.test.ts",
+			"upstreamSha256": "2aa928fc8cac6f57a33be59bfb1396a6e01ed21986232fa55cb569483e236157",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/types/bun-test.d.ts",
+			"upstreamPath": "solidity/ts/types/bun-test.d.ts",
+			"upstreamSha256": "460d5c67817b5e88dfb07ea1104bc70e6f3bd228dafad4b2e959d176cd2ebb40",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/ts/types/index.d.ts",
+			"upstreamPath": "solidity/ts/types/index.d.ts",
+			"upstreamSha256": "0f55bbdd791405f1d2de4c55ccb86146335319e15f38fd9d1d592b6ea6a4e0b7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "solidity/tsconfig-compile.json",
+			"upstreamPath": "solidity/tsconfig-compile.json",
+			"upstreamSha256": "15377b2d1b5e81fa5f93dcf283685a238b3626b27d503e48a402ec7e79e7b6f9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/contracts/build-app-contracts.mts",
+			"upstreamPath": "tooling/contracts/build-app-contracts.mts",
+			"upstreamSha256": "074a9cb71aca848433c404393b15e866b1f5c737d2d648c90260a09306709713",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/contracts/check-artifacts.mts",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tooling/contracts/deploy-testnet.mts",
+			"upstreamPath": "tooling/contracts/deploy-testnet.mts",
+			"upstreamSha256": "f1531400f67a14e4ca01966e35e0532b9fd597d08f8471cd5b6792ca044cb6e9",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/contracts/deploy-testnet.test.ts",
+			"upstreamPath": "tooling/contracts/deploy-testnet.test.ts",
+			"upstreamSha256": "63ae0f7e5b3df8a7410d80694599c2efae58fe728648551080fd35736de541a2",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/contracts/deployment-local.test.ts",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tooling/contracts/deployment-plan.mts",
+			"upstreamPath": "tooling/contracts/deployment-plan.mts",
+			"upstreamSha256": "ee2569fdf01d8328fe07f6794bf014715cacc952236e4802887390783a63583d",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/contracts/run-deploy-testnet.mts",
+			"upstreamPath": "tooling/contracts/run-deploy-testnet.mts",
+			"upstreamSha256": "e246f155a85022ec62e1a8448e8ab474b3e92139607384ab0d023d580f930fa8",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/contracts/upstream-artifacts.json",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tooling/repo/build-shared.mts",
+			"upstreamPath": "tooling/repo/build-shared.mts",
+			"upstreamSha256": "3ca8f840f7225d7e751588fefee0fdbe5ecf5776c5a760a3c24d204e4c9ad811",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/repo/check-boundaries.mts",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tooling/repo/check-boundaries.test.ts",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tooling/repo/projects.ts",
+			"upstreamPath": "tooling/repo/projects.ts",
+			"upstreamSha256": "fd6b652df7c48d2174cc04c6c2fa0af5c6c4605f9cbb28f9904bc0d4f20da0c4",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/repo/root.mts",
+			"upstreamPath": "tooling/repo/root.mts",
+			"upstreamSha256": "7431787426010034588f71665bedb3713229948ef5bd84f3afee1f85001a3e83",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/repo/sharedPackages.ts",
+			"upstreamPath": "tooling/repo/sharedPackages.ts",
+			"upstreamSha256": "9a80a9e7a3fe35e8f5abc225eebb8710a34abd75c1908f9349cc3292184f2dd0",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/repo/walk.mts",
+			"upstreamPath": "tooling/repo/walk.mts",
+			"upstreamSha256": "46daa0b70e1b850a654a66c258e9b8c41d67d2f8893c6c22132cb833904058e8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/appIds.mts",
+			"upstreamPath": "tooling/ui/appIds.mts",
+			"upstreamSha256": "0f330401d5f0a04c8cf06c89ecc539835cb7f0508211595b9bad488450fe8413",
+			"treatment": "adapted"
+		},
+		{
+			"path": "tooling/ui/appPaths.mts",
+			"upstreamPath": "tooling/ui/appPaths.mts",
+			"upstreamSha256": "76574f286223e848b5c470fd7cb0b74c51c11442e99c197be0340d6c2d22ec95",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/apps.mts",
+			"upstreamPath": "tooling/ui/apps.mts",
+			"upstreamSha256": "3cb7e4cb68b27b2763735110e3ed3288fc10c3a1a4ee9f3681113968ce9238cc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/browserSmoke.mts",
+			"upstreamPath": "tooling/ui/browserSmoke.mts",
+			"upstreamSha256": "227bb91e236b08b35e02b39d577784c946a8362b145f9431af60707fff0a8ac0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/bundlerPaths.mts",
+			"upstreamPath": "tooling/ui/bundlerPaths.mts",
+			"upstreamSha256": "2bafad8d7ad5e777defd8c30c89db10db9ce11756f3d1362a15819afeed8d309",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/chromiumDevTools.mts",
+			"upstreamPath": "tooling/ui/chromiumDevTools.mts",
+			"upstreamSha256": "b86d0d37ef03ba4d2a97f9a2dcfe8d05c92a15362cfb23f1e261f547ba18e1a9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/chromiumPath.ts",
+			"upstreamPath": "tooling/ui/chromiumPath.ts",
+			"upstreamSha256": "5b25d946345066f693240ae43eb791fac9422d79cf9a024bbf405250e59bbc05",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/dev-server.ts",
+			"upstreamPath": "tooling/ui/dev-server.ts",
+			"upstreamSha256": "5fd7936afc642113d3f43f7dbb7bb864746821f06e192fb9936d6b5fd58e97bf",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/devToolsCommands.mts",
+			"upstreamPath": "tooling/ui/devToolsCommands.mts",
+			"upstreamSha256": "89de8260df3683f65b3420e1586a1c75f4fd9dcdb5d64d1dbdc85175631c340d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/index.production.html",
+			"upstreamPath": "tooling/ui/index.production.html",
+			"upstreamSha256": "88465dd00b989f655f99b5464cb0605f97ed5c3aa0155012ae5dac1697774eba",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/production.mts",
+			"upstreamPath": "tooling/ui/production.mts",
+			"upstreamSha256": "3fc17dd6ab35a709c06eca30e555750d42692d26e1ac0c750f87861c90674801",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/projectArtifacts.mts",
+			"upstreamPath": "tooling/ui/projectArtifacts.mts",
+			"upstreamSha256": "1f1b0cb393696addd15d80a73e2c427279d12b5d864d08840378f5bb21b43f6f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/run-browser.mts",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tooling/ui/tests.mts",
+			"upstreamPath": "tooling/ui/tests.mts",
+			"upstreamSha256": "854650a0e7253a4351d73f91a50151d7db9cebb6925b7e289236314f9af26d6a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/tevmBufferImport.mts",
+			"upstreamPath": "tooling/ui/tevmBufferImport.mts",
+			"upstreamSha256": "9095c9736c2f7fc65a77086d27584f1d88807bd82719d6cd6e8ab148268ba12d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/vendor.mts",
+			"upstreamPath": "tooling/ui/vendor.mts",
+			"upstreamSha256": "4f98acaa9e1855f3fada07e485d6bf2a2a81f4c14546d545e00842bba885ac0f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/watch.mts",
+			"upstreamPath": "tooling/ui/watch.mts",
+			"upstreamSha256": "ce11c8be23124cb52cf46ae90d958652b0240616ca49403aed374b1ac0c808ae",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/watchContractSources.mts",
+			"upstreamPath": "tooling/ui/watchContractSources.mts",
+			"upstreamSha256": "155a9750e4ca589344ae32ced1f84cfc37a0d628c3da2d1aac4d762ed366d4b1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/workers.mts",
+			"upstreamPath": "tooling/ui/workers.mts",
+			"upstreamSha256": "63eaea094c6e35dd5bfc456d9bb7e676b00dfc40f60491db19e48518992de2e7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "tooling/ui/zoltarWorkflow.mts",
+			"treatment": "local addition"
+		},
+		{
+			"path": "tsconfig.json",
+			"upstreamPath": "tsconfig.json",
+			"upstreamSha256": "750d9d2d407d2984dbb710d30f675d0ca75ca5faa0cc9530162ab2670c2e3353",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/README.md",
+			"upstreamPath": "ui/coreShared/README.md",
+			"upstreamSha256": "206ddd2f692419a9001a96da37c444d03c8fdf7c76c3aa9328e2e8bc38203a65",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/VISUAL_FOUNDATION.md",
+			"upstreamPath": "ui/coreShared/VISUAL_FOUNDATION.md",
+			"upstreamSha256": "2fef7fea9735e1d2741b4f088b4ada337fd3c069dc7569e4eae099c04c3ee454",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/application-surfaces.css",
+			"upstreamPath": "ui/coreShared/css/application-surfaces.css",
+			"upstreamSha256": "d18513299526bf36fcc6ad1e19f49437cc8fa899b66657defcf1a9539bd2d8a5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/base.css",
+			"upstreamPath": "ui/coreShared/css/base.css",
+			"upstreamSha256": "e2df55e0f6a08b212a0aefbcb21a98bc54bab1dbc8cfd064b624fdaf8f762dac",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/controls-and-responsive.css",
+			"upstreamPath": "ui/coreShared/css/controls-and-responsive.css",
+			"upstreamSha256": "84695e1e29972a5451b592dd1334de9e6d61aeff86279cc0ec92bd0f63cd0143",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/index.css",
+			"upstreamPath": "ui/coreShared/css/index.css",
+			"upstreamSha256": "f6df2a516931a62485cf2808544875384892e4897fe8d67f99a66e5d9722bbd5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/protocol-apps.css",
+			"upstreamPath": "ui/coreShared/css/protocol-apps.css",
+			"upstreamSha256": "d634ea404c004f2c5864ffa73afc26cc780a1a63a3ca50cd61663e8ab8d9e7bb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/protocol-surfaces.css",
+			"upstreamPath": "ui/coreShared/css/protocol-surfaces.css",
+			"upstreamSha256": "af2b963c8cc51429bc1f12cc4c08ea6aea957af315f07c225cfa70c0790503ca",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/reporting-visualizations.css",
+			"upstreamPath": "ui/coreShared/css/reporting-visualizations.css",
+			"upstreamSha256": "773f018ffae3a78f6c59f3cc5fd42e5b450a2e2ce17a628bc7f0812a660d11e8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/tokens.css",
+			"upstreamPath": "ui/coreShared/css/tokens.css",
+			"upstreamSha256": "894059d919591c9ebaa99a6457fb3dfd8c4d12bc33a3a418d4a697a529e3f1dd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/css/visual-foundation.css",
+			"upstreamPath": "ui/coreShared/css/visual-foundation.css",
+			"upstreamSha256": "75c808ad89ee6816d4afe74377bd4a5fab7989cb1e87aa59eb7e5eef02454f94",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/package.json",
+			"upstreamPath": "ui/coreShared/package.json",
+			"upstreamSha256": "78186d6554f99dc04547f09eba62cd52725d25b0b6e03b16d86485da1c6b6ee9",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/app/appRoot.ts",
+			"upstreamPath": "ui/coreShared/ts/app/appRoot.ts",
+			"upstreamSha256": "551bbe8609690e6504347df19a1f4518a9a7d19d7a1fc9b1a1310fc18540702a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/AppHeaderShell.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/AppHeaderShell.tsx",
+			"upstreamSha256": "b9807c0236333ec00fd40c6f9c321e7541127ced1fe2a28be49c2cc1d652b9ba",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/AppPageHeading.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/AppPageHeading.tsx",
+			"upstreamSha256": "10f052b0d6f96bb4a62686a883d89ad17b8e3a09d3b9f49a3f54a29f1a57154d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/AppSettingsMenu.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/AppSettingsMenu.tsx",
+			"upstreamSha256": "5f8cdb69ba77abf991557bb32b0c6edf4ee9d6b6105bcafac03d4256c331c3b2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/AppStatusNotices.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/AppStatusNotices.tsx",
+			"upstreamSha256": "0f444f3252bde24b3104c358f1868baea0140b62e57434576eff6cfa64ee77ec",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/ApplicationErrorNotice.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/ApplicationErrorNotice.tsx",
+			"upstreamSha256": "0398ab837a059c9bfafff349c515147444be92e52407295d0ea525fbf82b467f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/GlobalTransactionTray.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/GlobalTransactionTray.tsx",
+			"upstreamSha256": "9f95a80331136f6407caf5c49e03a7effbae0c7b1c369274071dcd4f17f59fc2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/MainnetDisabledNotice.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/MainnetDisabledNotice.tsx",
+			"upstreamSha256": "c1c45fbbb556328a53721a5755ad3a855e02459b4c8b2def09e5591f0ad7f70b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/NotFoundSection.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/NotFoundSection.tsx",
+			"upstreamSha256": "f495b6c8dec1c48fb30f6d63f71f5ab51e9ee507f30a39c904efa2b2b210577f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/ProtocolAppFrame.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/ProtocolAppFrame.tsx",
+			"upstreamSha256": "d9b72ecdb905f678723931f20f94d1dc197e8a9735d7b281c18635218b103151",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/components/RouteSubNavigation.tsx",
+			"upstreamPath": "ui/coreShared/ts/app/components/RouteSubNavigation.tsx",
+			"upstreamSha256": "7b59480e9f590bd11f6cd1175428b965052271b5bda6e9f0c60ab0c369ca16da",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/loadWalletState.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/loadWalletState.ts",
+			"upstreamSha256": "31e8885eb522b8a13c5ae52a2f9fcfc4f1a21ed96c9d42c5a0ce47faf9778bba",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/readBackendValidation.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/readBackendValidation.ts",
+			"upstreamSha256": "0aea3233eb7ec737d525cee5a108e4cc009271e6ad1ce84b5051e4eaf3619b37",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useEnvironmentRevision.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useEnvironmentRevision.ts",
+			"upstreamSha256": "4ae7f73c332d284cd5d36a0689ac2f31f66f1bef4e2441aa7274d9b342114c07",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useHashRoute.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useHashRoute.ts",
+			"upstreamSha256": "464790d7d9934f2605ca2144bf769752e7244db54910f17dcf332812ba81a50a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useMissingDeploymentRedirect.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useMissingDeploymentRedirect.ts",
+			"upstreamSha256": "4d569551916a266603462169053530dd7454eb6221cda80f3fe4dec5b0b3a40b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useOnchainState.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useOnchainState.ts",
+			"upstreamSha256": "4c779a0a0307fd3bc30a18d16e35c45c90605a9b86d7c02e6e02de92f904e491",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useProtocolAppRuntime.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useProtocolAppRuntime.ts",
+			"upstreamSha256": "c4ebc99b4bfd214d0c326be91103026ec14a3ff9c698f11e846e455ea24b9856",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useProtocolOnchainRuntime.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useProtocolOnchainRuntime.ts",
+			"upstreamSha256": "722e176d6fff5bee40f6081a014eaaf57701ac215fbdb27898d0a4898f8ac27c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useTransactionTrayController.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useTransactionTrayController.ts",
+			"upstreamSha256": "bcbd341ed89abf118e9e7dd873671edaaf8980db8f14380edbb4d9eb11e32c78",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/hooks/useUrlState.ts",
+			"upstreamPath": "ui/coreShared/ts/app/hooks/useUrlState.ts",
+			"upstreamSha256": "2b8cd8cca50fabbbd0e3224b1384a36e942f1b38ce7cc655d71612d25d74f5ce",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/lib/appRouteGate.ts",
+			"upstreamPath": "ui/coreShared/ts/app/lib/appRouteGate.ts",
+			"upstreamSha256": "3be8868afb5aceaf8ec9d3a802d8ab239d9817745af442e08acbdb1ae88912f7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/lib/appTitle.ts",
+			"upstreamPath": "ui/coreShared/ts/app/lib/appTitle.ts",
+			"upstreamSha256": "c472991fb023e3a4ac0804776e07ae2f7166fcebdfa561740e6f4a1879ebb4c6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/lib/supportedNetworkChange.ts",
+			"upstreamPath": "ui/coreShared/ts/app/lib/supportedNetworkChange.ts",
+			"upstreamSha256": "4cf1836378241394543893d4413043e14b303530d315d51c3d4ba7477f38d8c2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/app/liveReload.ts",
+			"upstreamPath": "ui/coreShared/ts/app/liveReload.ts",
+			"upstreamSha256": "58d5de68a70892b026e61be0e2714f2c5b634dfb9a7e149b94845148a3e66d42",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ActionLauncherButton.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ActionLauncherButton.tsx",
+			"upstreamSha256": "23b21eac76a84dadb0474546288f467a30637ebb0887531922bfc777e3b9708c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ActionLauncherCard.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ActionLauncherCard.tsx",
+			"upstreamSha256": "5ce1874acbab587c5fae1c299863ce463383cef23f5eb684843bdd82acb37310",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/AddressInfo.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/AddressInfo.tsx",
+			"upstreamSha256": "d33945522d361325274df59f2501c3acfd683c27edcfac67b3e2bc8b046b8c21",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/AddressValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/AddressValue.tsx",
+			"upstreamSha256": "2be4253baf7ce61e6edc5f0c3ec5415ff373f1d8bfcf9158c5b3bd4aea2e7ed3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ApprovedAmountValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ApprovedAmountValue.tsx",
+			"upstreamSha256": "32437fd3c85a2f06095d6edffc8c8ceeb12816567802a22d95ae7a61610ec733",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/Badge.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/Badge.tsx",
+			"upstreamSha256": "13677e1d5d8560e2b89f8a40628d443ca77a6432fa8101fc38ae936985a90571",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ComparisonRecord.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ComparisonRecord.tsx",
+			"upstreamSha256": "db491b3725ecd98ba4dd9646f6beaac9d880784ea700e540ee83cea5f5745925",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/CopyErrorMessage.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/CopyErrorMessage.tsx",
+			"upstreamSha256": "d168ec6b6f2095cd27a5e150cd76683aa3545ece3991b9595f397989564f1b3f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/CurrencyValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/CurrencyValue.tsx",
+			"upstreamSha256": "32280d7ba0334fbe5079aa8fd185fc37988374cd05d37c59dcd76d7e3e683a9d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/DataGrid.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/DataGrid.tsx",
+			"upstreamSha256": "461f7ca9b185ad0b6ebc1e1e9d09fbab2c5c01cb4bd0a8fd9bcd52a7cb4af503",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/EntityCard.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/EntityCard.tsx",
+			"upstreamSha256": "a91432cbe236801b7483bd28800bc5f524a1399eb8336e3bff363593cd62ba3a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/EnumDropdown.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/EnumDropdown.tsx",
+			"upstreamSha256": "0d271f73c2f1d60fe3d4d0ab499733367ec77ce9ac0d793066d65e201a7f31f9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ErrorNotice.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ErrorNotice.tsx",
+			"upstreamSha256": "cb36685f216e393e6e070e93f16037e76e0d4b4a3f3a750a3d3ab36ae38758bb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/FormInput.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/FormInput.tsx",
+			"upstreamSha256": "223221fd855d095ee6ca55473e45ff68863670c38ed1c91d4ea9f583c8130134",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/GlobalTransactionPresentationContext.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/GlobalTransactionPresentationContext.tsx",
+			"upstreamSha256": "876d2ade610ef9b09bcc486ff6325afb65967e9636207de3b819cc03b05c1725",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/HeaderMetricStrip.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/HeaderMetricStrip.tsx",
+			"upstreamSha256": "2fcf4495271fd339bb7602e734caa6d5b54bd84982a145bc6ad85ba5378a98ea",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/HeaderToolbar.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/HeaderToolbar.tsx",
+			"upstreamSha256": "a11a567aeb9435aca6701cd56bad582e304ee7153b8c248290d51f1bfe823b46",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/IdentifierValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/IdentifierValue.tsx",
+			"upstreamSha256": "b73c5abcb97c77cb380736aa18b14a32f0abd74e2533cad7be4ff4a7321d28fb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/InlineHint.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/InlineHint.tsx",
+			"upstreamSha256": "4a5a8a090e0c59bd740c97e961ddfc3e5763302cd0c586b9167be1110cc9e44e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/LifecycleStageBanner.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/LifecycleStageBanner.tsx",
+			"upstreamSha256": "9f94169d60a2f3545ecd5580866c055d29c6bddac0f4eac479a776339afb1c7f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/LoadableValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/LoadableValue.tsx",
+			"upstreamSha256": "c699334df4dc2113da92883ad699e1e83a9f805b5d02e6528e7218113e94221a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/LoadingText.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/LoadingText.tsx",
+			"upstreamSha256": "b66e4e5d8b4711c427b18036e73d32561ce1a3c39fabfccc68eb871818d2437d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/LookupFieldRow.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/LookupFieldRow.tsx",
+			"upstreamSha256": "2464c19d313f498a3ea49250fb3aa209d7758651a84dcd8b748860625b0496ef",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/MetricField.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/MetricField.tsx",
+			"upstreamSha256": "904f8ed3b2ab104ff9c1796f2eee6c4fb3b80be6cfd4f901989a2e24105d0908",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/MetricGrid.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/MetricGrid.tsx",
+			"upstreamSha256": "5662ef297e2e61bd430e730ef126563b42d52ac8d4063481811e3c04ca23d4b9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/NoticeStack.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/NoticeStack.tsx",
+			"upstreamSha256": "6ced7ee4e23a963b6d775e082e462a2088ca6a45b585c32de3863ff92a6ed616",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/OperationModal.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/OperationModal.tsx",
+			"upstreamSha256": "fef1661e05bc4be1f2229c30d9a5e409b7a7479134128977bae2fbbf3fb8e275",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/OutcomeChipRow.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/OutcomeChipRow.tsx",
+			"upstreamSha256": "cc9c576f57c9772fbd5660eb72e73989e74ea7a1f6b57031fb9e99ed78dfc78a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/OutcomeSelectionList.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/OutcomeSelectionList.tsx",
+			"upstreamSha256": "46641ceea09f17aa97feaa934db6854d01902f60292e6c90cafd1e1c777b7100",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/PaginationControls.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/PaginationControls.tsx",
+			"upstreamSha256": "b610ab721840bdd3202e88a33a916c2259c91020d0b287a9f6815f1c76653e65",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ProgressMeter.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ProgressMeter.tsx",
+			"upstreamSha256": "e0d55e00da7c0f36b8a374ac30b7df8f9f573fb084216d8b31c2745900c0761b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/Question.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/Question.tsx",
+			"upstreamSha256": "7d455865f69b8626666eff77276670ea9db2fceb98e8ed619e78c11f425c6b54",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/RankedBarList.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/RankedBarList.tsx",
+			"upstreamSha256": "56fc515ec1a98b4be62152d3a2c758624585119d7b90e639e05c308d7ecfc21d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ReadOnlyDetailAccordion.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ReadOnlyDetailAccordion.tsx",
+			"upstreamSha256": "a38769ceef5accf0a29bd2d68c88033b0f3d0de9ef1b4696d722fb18c7969e08",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/RouteHeader.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/RouteHeader.tsx",
+			"upstreamSha256": "daf8b4562963d035f3bd4c3d939d80a116f440c4c1c224c7acc68444aa6210d8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/RouteWorkflowPanel.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/RouteWorkflowPanel.tsx",
+			"upstreamSha256": "a3e347436a67eb2267ff28b6cd4d8b27b1457a1c7cba9c27ebcfbc8c2bf7f088",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ScalarOutcomePicker.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ScalarOutcomePicker.tsx",
+			"upstreamSha256": "077b4c7b46f39a669523237cd00f464b1c89eb0098fbeff3db9fe2037ed517ad",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/SectionBlock.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/SectionBlock.tsx",
+			"upstreamSha256": "54c5d3f1cc3f3df59e373900134c4446a6438fbd6b0ffea068e18cd946c609b6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/SimulationBanner.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/SimulationBanner.tsx",
+			"upstreamSha256": "d6ae5a98407ad76043cbb9365dd31de26c5aaf693dd9fd9d705536a3f87c7f7c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/StateHint.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/StateHint.tsx",
+			"upstreamSha256": "b5deead6e7bfca66522b5c14c228d5a096f3fabd810e5f72e92fb5ace80ec800",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/StickyObjectContext.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/StickyObjectContext.tsx",
+			"upstreamSha256": "18a6e1c778e0bc4c13be354ff339cddbe33bc9139f2671e32de41ef06076b977",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TabNavigation.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TabNavigation.tsx",
+			"upstreamSha256": "5ad41624383745f0b3227925a02868889d19a14727e9d6e12351052a7902c5db",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TimestampValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TimestampValue.tsx",
+			"upstreamSha256": "0e2469f5c01cda32dd59ea66b020669611e23d6559b29324a871583916434618",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TokenApprovalControl.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TokenApprovalControl.tsx",
+			"upstreamSha256": "24a1f250fec1c66e50d070fdf0f9869b500fa5a1f3b1129d49a76626468287a3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ToolbarField.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ToolbarField.tsx",
+			"upstreamSha256": "334f50edcaa4a825b47a60101d48e865536dec7dfa0e0937adc4d3dd85903c72",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionActionButton.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionActionButton.tsx",
+			"upstreamSha256": "60f7d370ab8e7674a0f00058c9861f89145647f1edbdcc19b06b11f3c4f729f7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionHashLink.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionHashLink.tsx",
+			"upstreamSha256": "85061288fdf713351019804cf059c1f6e4fafd58d96cb3316555b791a1ecb718",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionNetworkValue.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionNetworkValue.tsx",
+			"upstreamSha256": "24e5f33f9366b9133137d1fe1b53583e4d995cb7f9a4ccfdcf8378fc2a255c4b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionObjectContext.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionObjectContext.tsx",
+			"upstreamSha256": "bae2a8202981ace02ed3d3b55270070a1b8cae0c1881d72d09a1a912b7227165",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionPresentationNotice.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionPresentationNotice.tsx",
+			"upstreamSha256": "25c029add3bcdb54e17fe0eba8ee95d3ba40bb6fa61bc0267c3e855559fb943f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionReview.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionReview.tsx",
+			"upstreamSha256": "38b798b3e1792b90bb4b10c457ff6e130f060bfc5d59004023b849d5aee59e2a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/TransactionStatusCard.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/TransactionStatusCard.tsx",
+			"upstreamSha256": "9e7ac6bea33a4f0ec4b8dfc2f2b26dac75653007f52979df94efa17a521fa44c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/ViewTabs.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/ViewTabs.tsx",
+			"upstreamSha256": "e8063605badefa5479047d6eb21d5cfcf1743e732f6cdcb436414cc0588edff2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/WalletAssetControl.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/WalletAssetControl.tsx",
+			"upstreamSha256": "e7536746750de9962f6239ee85a7abdaa6a484c318fca8d647c8b1eb005fe5b0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/WalletChip.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/WalletChip.tsx",
+			"upstreamSha256": "928a53caf5e0378eb39958b23182b486bd83c384c9b9ff02087df37aa96ad5d6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/WarningSurface.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/WarningSurface.tsx",
+			"upstreamSha256": "f8fba813168b2850de561b39979dfc0a5d46fab3608445209422a0390c6a2e4f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/components/WorkflowSubsection.tsx",
+			"upstreamPath": "ui/coreShared/ts/components/WorkflowSubsection.tsx",
+			"upstreamSha256": "a5e4d9714d23915d1f3c5644e48dde84c3ca92f2b2be8c837da65aab2b75c1a7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/README.md",
+			"upstreamPath": "ui/coreShared/ts/copy/README.md",
+			"upstreamSha256": "47905a5fbf6aa23f8d3e7491c4f1fddbcf8bea98bc03c9d9e80b04ac21f28d7c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/app.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/app.ts",
+			"upstreamSha256": "6b96b13dd91291e5534b8dbf203a01302d16d09a386fa9b3e665e7b6387d0eb6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/common.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/common.ts",
+			"upstreamSha256": "7a2fc1b8b29dcefa370be38fa606235242caa67cc6d52e762f0accef81fbefaa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/marketType.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/marketType.ts",
+			"upstreamSha256": "bae16094582d6ec59ee92f39f57ca9e83fc81474b641df840b57ab5893276f12",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/pricing.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/pricing.ts",
+			"upstreamSha256": "cc0eeaa3d15377bf87aff3f71de5fd47efe66ec545c04a4c3528d2aa1bd18ab1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/simulation.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/simulation.ts",
+			"upstreamSha256": "03bb2b1ba4e1c475e4a33802a4ca203b482498acde66c0330beb69244dbd4616",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/transaction.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/transaction.ts",
+			"upstreamSha256": "b98b550a2c2bf96585b363301498a473db63f043ee01b66dbe6e95f1ae444833",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/transactionReview.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/transactionReview.ts",
+			"upstreamSha256": "40105c2787d0d04dd654a2d7334ca63d2329a6ca5aab010766a3f0815e3d6992",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/types.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/types.ts",
+			"upstreamSha256": "e5d8be73c4074fa91016c688d68c72c820904aa7c6aa627ed461607c8b7940bc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/copy/userMessages.ts",
+			"upstreamPath": "ui/coreShared/ts/copy/userMessages.ts",
+			"upstreamSha256": "9b05437bfcb7cc769830afd62ed23dc6c82eb64e61a1c3d2feb11956f5f0ff5b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/forms/decimal.ts",
+			"upstreamPath": "ui/coreShared/ts/forms/decimal.ts",
+			"upstreamSha256": "80f63736b73b17bb561c1df4c287cf76a37b81dd5cfe58ad6009b77e43eb7cdf",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/forms/formInputs.ts",
+			"upstreamPath": "ui/coreShared/ts/forms/formInputs.ts",
+			"upstreamSha256": "2831ebbc58d25bb59be5437abc49b5e24fa201288bbf4cd295fc63e42774b6a0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/forms/inputs.ts",
+			"upstreamPath": "ui/coreShared/ts/forms/inputs.ts",
+			"upstreamSha256": "ec64b0cf705ac90008964b3d976469afc189fbd71263056ae6b32b228d2948cf",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/forms/integerInput.ts",
+			"upstreamPath": "ui/coreShared/ts/forms/integerInput.ts",
+			"upstreamSha256": "0b9cbcc0c26fba3925fec2562462078bdbeedf1492e8b728cabb6b64b058204c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/forms/required.ts",
+			"upstreamPath": "ui/coreShared/ts/forms/required.ts",
+			"upstreamSha256": "176f8d2d3a87547ba21347694ad579a3844e54df047910380ac360a41054b29c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/forms/viewState.ts",
+			"upstreamPath": "ui/coreShared/ts/forms/viewState.ts",
+			"upstreamSha256": "8d83cff7446a32a79ff7265888a4028e7e8042991d322497700bed016402613f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/hooks/useCopyToClipboard.ts",
+			"upstreamPath": "ui/coreShared/ts/hooks/useCopyToClipboard.ts",
+			"upstreamSha256": "6060841e054905c8eb9e95889b2caa478ecda18abd26a03c61af6b15f28e9e0c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/hooks/useErc20Loader.ts",
+			"upstreamPath": "ui/coreShared/ts/hooks/useErc20Loader.ts",
+			"upstreamSha256": "87041b231ccf8c45a932b80b48dfd7bf34a0efd82826a8f17eb5ca747fd652a4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/hooks/useFormState.ts",
+			"upstreamPath": "ui/coreShared/ts/hooks/useFormState.ts",
+			"upstreamSha256": "4be623bf8ecd0efe62daf33d345e45c4212f927a4b01653bfd6fe3f6b1a3a974",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/hooks/useLoadController.ts",
+			"upstreamPath": "ui/coreShared/ts/hooks/useLoadController.ts",
+			"upstreamSha256": "99c796c9688510b9a12349beb4a5e092267bbe44ba4e279aedd44805416b18b2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/hooks/useModalFocusIsolation.ts",
+			"upstreamPath": "ui/coreShared/ts/hooks/useModalFocusIsolation.ts",
+			"upstreamSha256": "ccf63f9ce23bc4a4633f3dabeb6574521700cc42f08231a730a79d2a2a9562a2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/activeEnvironment.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/activeEnvironment.ts",
+			"upstreamSha256": "329acfbe224ff3032dc32bceed3611246eaabcafaeba9d3946214b5eac7d48cc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/address.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/address.ts",
+			"upstreamSha256": "2d35d0aa4d9fa14cdc74b60cf1c4f50db6913335ff9fb8dbd7921ff4d1b7405f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/assert.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/assert.ts",
+			"upstreamSha256": "3b6f6c83c9bdc3d54729bc23edbaafeaf5353bb6948487fd8dedb370828b5094",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/browserStorage.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/browserStorage.ts",
+			"upstreamSha256": "b5cbefc39ed4ebf88b86f44e3945f1e586467076ef3a736846bcde0bbae1437d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/caseInsensitive.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/caseInsensitive.ts",
+			"upstreamSha256": "311f1738977674d3f721223332e0a617fbfb711d7ee97aaf5971a81d89a318f7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/deploymentStatus.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/deploymentStatus.ts",
+			"upstreamSha256": "ca76d50e5b38f5a0d88d22d60096ac3b81a156cc2a1e94d360552210ab4166ed",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/errors.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/errors.ts",
+			"upstreamSha256": "75ed8941a68d45e9580dca3ab8525d535d0f44973585ccacce8d00122abb0eb9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/formatters.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/formatters.ts",
+			"upstreamSha256": "121c8be1390bf361e4841de499cadf586e8e02854a4dd8ac699dba5878d20d9e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/loadState.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/loadState.ts",
+			"upstreamSha256": "b383f803d6a4cbb328c2338d06127085d56145cebd82ba7994cc241b5a6c13d0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/marketType.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/marketType.ts",
+			"upstreamSha256": "0a1c1b7c4b7775f9210deb1d7075fe9fdb8e35e8df38227037d14493833c55c9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/noticeStack.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/noticeStack.ts",
+			"upstreamSha256": "efab92fe08871f11930e3cd15b91dab2f95f1e12547d8898db7bb685ab965e90",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/numericInput.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/numericInput.ts",
+			"upstreamSha256": "e7c56c08a9467d3ba702044962a615f964d8a0313bf0a031e43b471608ffe9e1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/outcomeLabels.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/outcomeLabels.ts",
+			"upstreamSha256": "86ff1850645e148dce301a49179ac54a9a836cc4177e77de8ee31af123bed777",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/pagination.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/pagination.ts",
+			"upstreamSha256": "7ea7fcf2c12fc099c32c75be495891e82d1450ae2f888a5717756327fd50b750",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/promise.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/promise.ts",
+			"upstreamSha256": "a57ef8db3350e9b1e33e82b87ba73030c0da087488c85f0593339befc828920e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/questionId.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/questionId.ts",
+			"upstreamSha256": "60e15bf7be1861570a1702afff648d78a489ff42ed9005a363e75441ea366140",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/refreshState.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/refreshState.ts",
+			"upstreamSha256": "ff99b6787f8f9b5fbeebbed35d88fd3a16f6e235eac15071be63d88dd7138b71",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/repPriceSource.tsx",
+			"upstreamPath": "ui/coreShared/ts/lib/repPriceSource.tsx",
+			"upstreamSha256": "7d4c3a1558b9f421c098d3f12c836f8b765146dff0665fcf039955286f1e3261",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/requestGuard.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/requestGuard.ts",
+			"upstreamSha256": "d144acf14a97ebea9951e0b208d7c22fdd9625f3594ed97d08e44d0c7d674b3c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/scalarOutcome.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/scalarOutcome.ts",
+			"upstreamSha256": "adc560d4e50b361b3cb1f3754ebcb9e1b5cf3e2bbcd9992a48ab202d63fb3a2e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/sepoliaDeploymentConfig.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/sepoliaDeploymentConfig.ts",
+			"upstreamSha256": "d24e092f7368a77573ff18572d114b37770f6d19be6e651d031300bba122ace7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/signalValues.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/signalValues.ts",
+			"upstreamSha256": "9f40cebe72b8a1b95f449d003c44169729b19158ccddf7d1b040c794805323da",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/time.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/time.ts",
+			"upstreamSha256": "231146f291dcfa866e4c4bedbd7f7430814ee8d63c93bb79032e71c8725cbd1c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/userCopy.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/userCopy.ts",
+			"upstreamSha256": "14f66e2cb22814cbdc7019233fc658a61c2549916167833c120579aa4c74e22b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/lib/visualMetrics.ts",
+			"upstreamPath": "ui/coreShared/ts/lib/visualMetrics.ts",
+			"upstreamSha256": "b088a6434b7ebe39c54a64c6fe0ac7c545d0bada8bb8c14c9de86a7a87489dcb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/navigation/openOracleUrlParams.ts",
+			"upstreamPath": "ui/coreShared/ts/navigation/openOracleUrlParams.ts",
+			"upstreamSha256": "d7bddcf1c46b11ba36a7a637ef2b8d873de5c2c9ab25eb4326e6f9276b137528",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/navigation/routing.ts",
+			"upstreamPath": "ui/coreShared/ts/navigation/routing.ts",
+			"upstreamSha256": "3d51b0cd27ea3b675e02759774ced6ddcceabaabca2ddb32c0b4c18701f29c71",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/navigation/urlParams.ts",
+			"upstreamPath": "ui/coreShared/ts/navigation/urlParams.ts",
+			"upstreamSha256": "f5675d642915756d000f23c218052049992391ee5cc49818215cb732078247ad",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/bootstrap.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/bootstrap.ts",
+			"upstreamSha256": "e3312cae87462e8d573d432f0ca7c8643265147a936e0421724ca426c6e7ca65",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/clock.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/clock.ts",
+			"upstreamSha256": "af61b56faa75dfb931ba78d5e370f8b8dd765aa10c7bceee150e219e9ea4f391",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/controller.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/controller.ts",
+			"upstreamSha256": "739b9bdb8aa39c902037094ac3814f08e09f939c2591c9623bf70949c9b53de5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/savedStates.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/savedStates.ts",
+			"upstreamSha256": "69f959b26e281dab50dab027d920d1fc2169ab838436512b33cd669be0684c9b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/scenarioNavigation.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/scenarioNavigation.ts",
+			"upstreamSha256": "fcbcacd52e0a5bdb5878b4b0694965be559aed96d079d80a618694a5351678e4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/scenarios.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/scenarios.ts",
+			"upstreamSha256": "6e45807ec78a794bc0fa72ce86283b5c26e3b98497c7f3b7ad13fc26fa7768dc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/simulationProvider.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/simulationProvider.ts",
+			"upstreamSha256": "32305772c9515441a8862f28b7b36617cad0c939e1a1001dc46aa83b49a5ed56",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/tevmBackend.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/tevmBackend.ts",
+			"upstreamSha256": "bdc3b6608fcf9bae5ccf22fbd00aab968d705e3dedb943f1410f2c6ef2d2b79f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/tevmEngine.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/tevmEngine.ts",
+			"upstreamSha256": "62050a7a350b7476d21828ba21fa4bd057ced0f6bcd83fb0bb300eff59db39b1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/tevmWorker.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/tevmWorker.ts",
+			"upstreamSha256": "9d4f70c20e9116c38a97121a72bb42d87e5ddac70188a044c4f9a6d30f7f2971",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/simulation/tevmWorkerProtocol.ts",
+			"upstreamPath": "ui/coreShared/ts/simulation/tevmWorkerProtocol.ts",
+			"upstreamSha256": "c474623f981530823721ed4f29a58e7d3c541607ea8ee67b53d155ca348489c6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/actionFeedback.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/actionFeedback.test.ts",
+			"upstreamSha256": "1ce3e46f6f8d90ef0e6b02736f95cf525439848c309806e973f1ae06fcca5dae",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/actionGuards.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/actionGuards.test.ts",
+			"upstreamSha256": "0c11d9eae787e1ea0e221aa3e49900ff4b186ec177a49eab78e15b6a3f10e028",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/actionLauncherButton.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/actionLauncherButton.test.tsx",
+			"upstreamSha256": "38fc9e6500701d7d4210fb15c54d8dc73a2b8418dca4ab10e66232c43c545220",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/actionLauncherCard.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/actionLauncherCard.test.tsx",
+			"upstreamSha256": "8a0ff64e09a9c29b386560e7ffdaedc7702c1d4f405a90cf73e0a3ce3ec27577",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/address.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/address.test.ts",
+			"upstreamSha256": "e2f7557b376318c428379fb2da036b38b93bb0fb98875df368e7862bb71c5c25",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/addressValue.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/addressValue.test.tsx",
+			"upstreamSha256": "c819d663cfceee5485dcd8c0616a8c8d81eae105d00b09bae27eb3676f7452ae",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/appHeaderShell.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/appHeaderShell.test.tsx",
+			"upstreamSha256": "5cef18825623e4ce03f04bbb1f2a087ce9fb080c6848656c2eec991a1ec26fbd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/appRouteGate.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/app/appRouteGate.test.ts",
+			"upstreamSha256": "b4f927ea5f0910f5a50a4cdb7e8f8ac0488e515e0fb8a278f2bb9b8f5a6fdd61",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/appStatusNotices.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/appStatusNotices.test.tsx",
+			"upstreamSha256": "fd80c42c5d77eb9bb36bf545824d5f80bfd806f6c7d98a0b9264e3d3e965c5e7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/mainnetDisabledNotice.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/mainnetDisabledNotice.test.tsx",
+			"upstreamSha256": "308dec0ab6ef9701ccf678697bf28027447a8c1900952751c049631ed2688b63",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/notFoundSection.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/notFoundSection.test.tsx",
+			"upstreamSha256": "9f52e50c5c13ef2841c986fce22e0471df8c1df00018f07c5840a29b7ee855da",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/routeSubNavigation.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/routeSubNavigation.test.tsx",
+			"upstreamSha256": "ce73504949544a9ecb1144d6de2213b8fd394b8233f7caaa0596b32e1690b788",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/supportedNetworkChange.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/app/supportedNetworkChange.test.ts",
+			"upstreamSha256": "ac22789e7672c2d655bbe6ea23aad29ec1f97cbe568776f51024bf73009ca16a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/useHashRoute.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/useHashRoute.test.tsx",
+			"upstreamSha256": "c6776a54df804858f1c2e2183ed200839cd2cde624ceed8f047b9ff464c189fa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/useOnchainState.integration.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/useOnchainState.integration.test.tsx",
+			"upstreamSha256": "cafe7dedd9e06f36a8044a1c4dd5881972958cf2e470c7456867710ae32a17f3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/useOnchainState.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/app/useOnchainState.test.ts",
+			"upstreamSha256": "e0c8a6358b5e2790c2772bfa8e336c113e029f177371250b95c2d1096ecf67f5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/useTransactionTrayController.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/useTransactionTrayController.test.tsx",
+			"upstreamSha256": "f1c94d461708ab4f20d3f6cb66ff68d0bc8f6bad1916658f9188f9955894447b",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/app/useUrlState.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/app/useUrlState.test.tsx",
+			"upstreamSha256": "3209dfb1cbdce9cc418e295447c585de8d060df4404fb0179e3363841f1f2818",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/approvedAmountValueComponent.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/approvedAmountValueComponent.test.tsx",
+			"upstreamSha256": "0cf8aace59f838f3d6615098de57fcb7bebea0bb5623f390b00d7e2e147c64f9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/assert.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/assert.test.ts",
+			"upstreamSha256": "843dd204a99ff59099cdccbe19f15c9fda7326eed2d3a810e792da7d09ae9e74",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/chainBackend.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/chainBackend.test.ts",
+			"upstreamSha256": "e0281325dc5eac60b5406094a3c5cc8ccbc8cb00bc68fa88d6b921a6f62305c2",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/components/simulationBanner.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/components/simulationBanner.test.tsx",
+			"upstreamSha256": "09462880ebc7c3b9ce58d45431628c592cf52a181647b15abef02df3cebcb04a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/copyErrorMessage.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/copyErrorMessage.test.tsx",
+			"upstreamSha256": "17bd35d7008cac77772e673fa37742ec121a14d8b36504f98fe4158303fb5cbd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/cssOwnership.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/cssOwnership.test.ts",
+			"upstreamSha256": "ccf988347367f3abafe256e626e50ae1c0feed5820f7740926b04107f9791097",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/currencyValue.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/currencyValue.test.tsx",
+			"upstreamSha256": "9d47dda304a5ac6480ae7a43f6062659dfa2a1c94494a5cdf569c7dfa35ea211",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/decimal.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/decimal.test.ts",
+			"upstreamSha256": "0ba13b43ad02cf383dac5012a35629a63ee3d5a9a4f94ff164c2592475d84666",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/enumDropdown.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/enumDropdown.test.tsx",
+			"upstreamSha256": "010dd2f3c08137b5246244a2a3e93289e996f32a85c1842e75980da7f33d2896",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/errorNotice.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/errorNotice.test.tsx",
+			"upstreamSha256": "0e8469767cf4c3b0d1e0836e7c8fa7a0ac645cdea51e85a46e71df844b9aec66",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/errors.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/errors.test.ts",
+			"upstreamSha256": "f377b669ce72f609daeaa436d6a38d986606e8cb60ba54ebb11ab93befbd9098",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/formatters.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/formatters.test.ts",
+			"upstreamSha256": "072ac973163dd260369ef4a90449cb9babba427bafb43e181be0892844004221",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/headerToolbar.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/headerToolbar.test.tsx",
+			"upstreamSha256": "2d9355ff16cb0c262a479b5b09e6b8ca5d5fd12763869f2ccf09ecee82989322",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/identifierValue.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/identifierValue.test.tsx",
+			"upstreamSha256": "f05b37224658ecc8988ee184c7591f01e3f7b90d1ebfb19d0389c990069a4ac2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/injectedEthereum.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/injectedEthereum.test.ts",
+			"upstreamSha256": "e52cce6e1abb9a906bfc4246c79ac671a8f43f40d2c021000be8a49bd5c02d52",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/inputs.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/inputs.test.ts",
+			"upstreamSha256": "5d98291712c063667cbb2b1189c6dd70d753193afe165fb8f01e038fd0403e9e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/loadState.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/loadState.test.ts",
+			"upstreamSha256": "00130adab23813c2e7bd4e48a3f17c29d3fdc4ffc8a23fd8ca3d5f7fcb5c81f9",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/loadingText.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/loadingText.test.tsx",
+			"upstreamSha256": "3288f5cddbe4d1d34bc8123b835b7ba20c8c6db21b11b1f4c5bcd2f0ac17227b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/lookupFieldRow.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/lookupFieldRow.test.tsx",
+			"upstreamSha256": "7f242b66ca9cf73c77b6bf8f30b6dd8879465e7787a4550566ad1f481bfad822",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/networkProfile.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/networkProfile.test.ts",
+			"upstreamSha256": "71f2d03ab66c0d4f9befcab022f4cfb37341d57c452208c60fce6fec7b47ac15",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/noticeStack.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/noticeStack.test.tsx",
+			"upstreamSha256": "bc27d884ad6eedcb6fd27f173daa129854e13e2e1c9ea1e567d37824739cad47",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/operationModal.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/operationModal.test.tsx",
+			"upstreamSha256": "2d01411d062a97b0d30e6cf5d0edaaca6089ac4947b431f2d3de5ab2a57d4fd9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/pagination.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/pagination.test.ts",
+			"upstreamSha256": "784b71f7455d056956fb342c916eaf27d2cbae7649b94ed780d820cc43955223",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/requestGuard.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/requestGuard.test.tsx",
+			"upstreamSha256": "716cfd0740010c2ee4bbdc4fa082b6cdadf1f120418e7a127f608ae99d60efcd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/required.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/required.test.ts",
+			"upstreamSha256": "79c0da9ca56dab72bafcfa6bc0eaadc90ab0dcebc9eaf78c9f9518a43e14834d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/routing.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/routing.test.ts",
+			"upstreamSha256": "4b1d36cd8730d23922de6ad716fe988c658e387f8d3560fe120bd0cf3aa63fba",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/rpcConfig.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/rpcConfig.test.ts",
+			"upstreamSha256": "271da0600cf6eb78c45c919e0b74ae0055d03590a1f97925ef9e0c77f7d28066",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/sectionBlock.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/sectionBlock.test.tsx",
+			"upstreamSha256": "ff103adb0ce18f61c11117212a8ec1c5a49e240ce388df78dde40b78b7f35228",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/signalValues.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/signalValues.test.ts",
+			"upstreamSha256": "f9efe7dc90f935bc04f755bcd2a9d1ec91ae249392eb39d6b5b0b5d4b241e723",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/simulation/clock.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/simulation/clock.test.ts",
+			"upstreamSha256": "f92b82caecc8e34edfad69f627833cf31c22f703d7d679b6a565fa503060eb93",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/simulation/savedStates.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/simulation/savedStates.test.ts",
+			"upstreamSha256": "ee93b492a1bb8bda13ab6fbea6a95b1abefdf3a617e3467678f3cc6ebef7f158",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/simulation/scenarios.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/simulation/scenarios.test.ts",
+			"upstreamSha256": "65ec1466a3a0422b1bbf67009c3043e45e5c514c69d05649d48c0ff359c607fc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/simulation/simulationProvider.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/simulation/simulationProvider.test.ts",
+			"upstreamSha256": "3059ddd875027b07d3b68c4a5e05e6b06d267184a5b1155186ea60cee739cec8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/simulation/testUtils.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/simulation/testUtils.ts",
+			"upstreamSha256": "2256544cbba0c07c2aff170657d0df092e282eb484872ac27778fcccde5ccd5b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/simulation/tevmBackendWorker.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/simulation/tevmBackendWorker.test.ts",
+			"upstreamSha256": "8a9900be40bf453e0dffbd8d5c7b6a5932fc83e3dbf40d9ef274d9c6a5c2b88d",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/stateHint.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/stateHint.test.tsx",
+			"upstreamSha256": "ca5bff6da7a51f7a136ed9dffc759fc612cc53a53606e82eb8793ac623da3d52",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/surfaceNesting.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/surfaceNesting.test.tsx",
+			"upstreamSha256": "be5fd3affdf4167e5d1a9c1e147cdc5ea890a3382c1daba4d769e669a329f94c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/tabNavigation.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/tabNavigation.test.tsx",
+			"upstreamSha256": "93122ffd26b0a91eb61a30e3abb791f947f0bdebef98337191a980a35a55e6fc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/coreSharedCss.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/coreSharedCss.ts",
+			"upstreamSha256": "a1871b73b2cd7805086e47fa74e160f388f1b6ece02e3c5e359cbcd54af09e14",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/deferred.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/deferred.ts",
+			"upstreamSha256": "62f1f8a0e2bf01ceb5e137ff5aa3781f5182bc968d3575e482ede66fc0564d6a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/domEnvironment.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/domEnvironment.ts",
+			"upstreamSha256": "46de54f2d22b70c5a2f2dd39d3b7c03a14ca95cb77c6925a742dd3d3158f5a8a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/domTestLifecycle.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/domTestLifecycle.ts",
+			"upstreamSha256": "8dc0b9d2c0dad88b588605403b2730756439a3896750f7b69e2efdb3042f82e9",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/fakeBackend.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/fakeBackend.ts",
+			"upstreamSha256": "d0f8e2278a20765da14ce3117072b469bddadd9929f55c0d18beec90078894f8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/fetchStub.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/fetchStub.ts",
+			"upstreamSha256": "c0b5fed4d9c1de5c668fdcdee22c6ed4aa7dac5405e46c9e5c0c7a171bca508b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/marketFixtures.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/marketFixtures.ts",
+			"upstreamSha256": "7255e24d0432de244e5f33bc16a3a3c3bdd32d9aeeb96466099e773c8f7185fa",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/protocolTestSupport.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/protocolTestSupport.ts",
+			"upstreamSha256": "cc0e12b63c7ac253f6d729628b9dc78bda01a7c96e1fb7c174982d82a594bafd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/queries.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/queries.ts",
+			"upstreamSha256": "c6d0909f9be7e2a54ad9ddd25411d7a3b5bed95ca6d075f38261306633098c95",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/renderIntoDocument.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/renderIntoDocument.tsx",
+			"upstreamSha256": "7b16a56fe85221d78d624a984101fc970f2ae26c7602c53b1ee5b6925be40d13",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/testRouting.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/testRouting.ts",
+			"upstreamSha256": "896d15e93d8f3106a8ba068d5ca92dd27dbbb2013bb3605ac4057dbf223f98e0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/testUtils/transactionActionButton.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/testUtils/transactionActionButton.ts",
+			"upstreamSha256": "9dbace1749aa176612ec2a4e7dc95b5a4432d094a86a1d008069ce6971055a77",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/time.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/time.test.ts",
+			"upstreamSha256": "b1cb1d40e37414c4bbbf49d4f2e59398d923ac0f370b822f64017473a4d13556",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/timestampValue.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/timestampValue.test.tsx",
+			"upstreamSha256": "67071e5f377d2cc0aaa2f54aff9436df94501a651db762dd45195a9dae7944a3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/tokenApproval.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/tokenApproval.test.ts",
+			"upstreamSha256": "37f98d179f28c315fb958176967af2df4199ea0ba0b04d8177d9df914ed612dc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/tokenApprovalControl.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/tokenApprovalControl.test.tsx",
+			"upstreamSha256": "3936f4edda67db2ed6c4f6bf9e0c3f16c9a7e254a4c5a9fb6120015194ca6f58",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionActionButton.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionActionButton.test.tsx",
+			"upstreamSha256": "ed853de08a25f46a40fc39606f7ee48a81ed3fb316c7cbd5b4178d2a321110ae",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionHashLink.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionHashLink.test.tsx",
+			"upstreamSha256": "4be67a8c4e15cd3c97780c9170baa391a8311367693ff83c8355b4ca5b6b6e52",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionNetworkValue.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionNetworkValue.test.tsx",
+			"upstreamSha256": "3cf13b81bb5f9d2c09a397fd01e8e300043ea993b4ada29faa654d27b0b52f49",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionPresentationHelpers.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionPresentationHelpers.test.tsx",
+			"upstreamSha256": "0c94bdeb7035a4f4f84e10008baf617b0b306fe8eebb3f9898039048e12a1e39",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionReceipt.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionReceipt.test.ts",
+			"upstreamSha256": "f5629b1953f384ceb4852becff4e85ad90e70ef0875077a53922ea94d469f139",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionReview.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionReview.test.tsx",
+			"upstreamSha256": "0fb3f8f9b2fd52ef9dbe0d92c030dc07bdef59a7014ab0280342afa119001e33",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionStatusCard.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionStatusCard.test.tsx",
+			"upstreamSha256": "950d248d9dbaa16d4aa8e894b573f7a9765c13fdc6da99b6b604b852c65175b0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/transactionTray.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/transactionTray.test.ts",
+			"upstreamSha256": "a45632fdcc35a28870f62557bbbaf3e8ccc68d831474dee9b5babe9060348310",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/urlParams.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/urlParams.test.ts",
+			"upstreamSha256": "915df9d5f37e1c2c6c1c9f9f8153cade56eb23dad26b4e99ca6c3521f43d1246",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/useCopyToClipboard.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/useCopyToClipboard.test.tsx",
+			"upstreamSha256": "72aa876cf48cd92a04dbe90b3ae59cf04db5a43faaae0d45b6b6798f90984173",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/userCopy.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/userCopy.test.ts",
+			"upstreamSha256": "533a043dccd39cce18afe5a68c5344c69e2442afc4c3b24071d752e8df025cc0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/viewState.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/viewState.test.ts",
+			"upstreamSha256": "7fd6db62201382861fea3219319ba5a0fc66e9551de7eac9009783260d2acec3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/viewTabs.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/viewTabs.test.tsx",
+			"upstreamSha256": "735c6a2d39c7bf2e44f7e34699de3d33fe62f3713a8d5cd5245f19266916a2f2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/visualMetrics.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/visualMetrics.test.ts",
+			"upstreamSha256": "0a10260d4ce3a065e9182fe59f1f62a8a1bc817d3213e19f19547597ef00b65e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/walletAsset.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/walletAsset.test.ts",
+			"upstreamSha256": "b1c18dab66f7b13c1d6a449541de5fcec48c5f4782bf572c36a9b5abbc7501a1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/walletAssetControl.test.tsx",
+			"upstreamPath": "ui/coreShared/ts/tests/walletAssetControl.test.tsx",
+			"upstreamSha256": "548adeeffa03b22d924afd19142b1200db47529e1ab50ce85c7cb9b298b2051a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/tests/writeAction.test.ts",
+			"upstreamPath": "ui/coreShared/ts/tests/writeAction.test.ts",
+			"upstreamSha256": "0693ecb5c9a4d95bad3e0fa6bb7fa17e79aae224bd66af2a98438234d9db6a0b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/actionAvailability.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/actionAvailability.ts",
+			"upstreamSha256": "70ab83d96813e01e38fa4dfd167aee25c624e8160737185c39f2c40de69c09be",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/actionFeedback.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/actionFeedback.ts",
+			"upstreamSha256": "d86bb5543532bd89051b6494be9096ee260b9d9a2dbec69ad45718715739473f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/actionGuards.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/actionGuards.ts",
+			"upstreamSha256": "95004ab36e978cc23b67f691ba052bd676553c2860b0a2ea602664c1077ffac7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/tokenApproval.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/tokenApproval.ts",
+			"upstreamSha256": "ff8e2e01b6a1226e26734695d151f27bd2f21096d5ca48618495aa497b6c8920",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/transactionPresentations.tsx",
+			"upstreamPath": "ui/coreShared/ts/transactions/transactionPresentations.tsx",
+			"upstreamSha256": "0320c9693f87cc0da395d4af3dc9a1bb25aaa09821f5bbde24858f8e9e4c1937",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/transactionReceipt.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/transactionReceipt.ts",
+			"upstreamSha256": "58463e15c929e4b380c64860d40bf466bf1022b0f5f9e31246ecee07839da72b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/transactionTray.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/transactionTray.ts",
+			"upstreamSha256": "d2d360345487451107c6987ffd4d706ede323a136a29e2f2586f1c7004844ceb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/transactions/writeAction.ts",
+			"upstreamPath": "ui/coreShared/ts/transactions/writeAction.ts",
+			"upstreamSha256": "d16bdd777476bb73ec694e880614d64e547836a47c11461b58b3a70415cfa48f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/types/app.ts",
+			"upstreamPath": "ui/coreShared/ts/types/app.ts",
+			"upstreamSha256": "6908922e7f4d639dc3d64337971539dae642895bd152928aa66d9715bc99c384",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/types/components.ts",
+			"upstreamPath": "ui/coreShared/ts/types/components.ts",
+			"upstreamSha256": "ad31c19dbb4694942e45ccf7150cfdb443a2c505863e4edb5bedc79b269102bb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/types/contracts.ts",
+			"upstreamPath": "ui/coreShared/ts/types/contracts.ts",
+			"upstreamSha256": "ca0fa3385d1f0d2433407026c877f874dcd8c4d7e43a3c639d29e8a0bb7f5235",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/types/reputation.ts",
+			"upstreamPath": "ui/coreShared/ts/types/reputation.ts",
+			"upstreamSha256": "b0f47207afb28c4717373fe74b013f2e063e864874a53a2b8ec0eeb412c0c11d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/assertActiveWallet.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/assertActiveWallet.ts",
+			"upstreamSha256": "89af10e9050fbbe918167cfe9e6f93905a65c178757703d7acd2923a447b9c8d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/chainBackend.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/chainBackend.ts",
+			"upstreamSha256": "0899cb0a83e7ebae7010ad9ac5e69f02adc70c9002706842a86c318486ed89a4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/chainId.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/chainId.ts",
+			"upstreamSha256": "d1912a14eac9b6444a98ad517e34271982d891fc2f69290abed7f4bcf7a93005",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/chainTimestamp.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/chainTimestamp.ts",
+			"upstreamSha256": "5f64057147718f9f1232554c6f9e087210237149038b5754c20370ee3debb88c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/clients.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/clients.ts",
+			"upstreamSha256": "75c00dad36a847ba6796fd9aff11da6c19bb536f6f14f5180c809aa59210fcdd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/injectedEthereum.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/injectedEthereum.ts",
+			"upstreamSha256": "16721415d5a1f354c398ef2f16630759202d1ac13db260c349d14f48f9610cd5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/network.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/network.ts",
+			"upstreamSha256": "3def25d7efa1d5ae07156fa38f58e0767a6f15e43b0399229a672e4263122d98",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/networkAvailability.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/networkAvailability.ts",
+			"upstreamSha256": "fcf421478e9788f2f0f4b9a84d23537b235c98e2088085eb0769d8556ac2f401",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/networkProfile.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/networkProfile.ts",
+			"upstreamSha256": "f425909353490198d9ccd3ccd0ef6a1acb53eb799d5745e0fd60325c907c48fd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/requireWalletConnection.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/requireWalletConnection.ts",
+			"upstreamSha256": "dd097f0a450c2af53781bc6bc67d5c7d7cf90253d5d79f43d701d50e46e68925",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/rpcConfig.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/rpcConfig.ts",
+			"upstreamSha256": "1a28ee480b4d5b7d5392ea5f3b9e93ddbfd24d66272615dbfce0a6f64ff763ec",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/ts/wallet/walletAsset.ts",
+			"upstreamPath": "ui/coreShared/ts/wallet/walletAsset.ts",
+			"upstreamSha256": "1ba91aee23f8f206fcc448206248152008a8b8519e0198b6401fb50cde67e7d5",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/coreShared/tsconfig.json",
+			"upstreamPath": "ui/coreShared/tsconfig.json",
+			"upstreamSha256": "17443cd7ab97867d0fea9c3f10175de8d5f6eb11c8ee873ef3a94f0947f44ee2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/tsconfig.base.json",
+			"upstreamPath": "ui/tsconfig.base.json",
+			"upstreamSha256": "e389c12946b3ffdc59d7c6692390957b129c137cd98672dde0589e5a9dafba75",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/compose.yaml",
+			"upstreamPath": "ui/zoltar/compose.yaml",
+			"upstreamSha256": "b21490eeafeab6cf6e47fc91fb874f71b814ebf1ca7cf501e110c813b78bbc31",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/favicon.svg",
+			"upstreamPath": "ui/zoltar/favicon.svg",
+			"upstreamSha256": "e4e838c603610ba60fbeede521f32ab9a35ebb79eb8e3189dee488e8d18217bb",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/index.html",
+			"upstreamPath": "ui/zoltar/index.html",
+			"upstreamSha256": "deb0b0f2e765cbfeb22704e62499fc2740da47c82f29f85f434f89449b5de622",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/package.json",
+			"upstreamPath": "ui/zoltar/package.json",
+			"upstreamSha256": "09e76c91839225f47047e64739b676bb8dde9d459220fd221ebe178dd0337edc",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/start.bat",
+			"upstreamPath": "ui/zoltar/start.bat",
+			"upstreamSha256": "4e8f56e3c30946be51464f400415953dc8194ea898cce6a691d81d76240c7b8f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/App.tsx",
+			"upstreamPath": "ui/zoltar/ts/app/App.tsx",
+			"upstreamSha256": "d29f0a49aede904c9a4a9db06a987bfa51b021d88faec24c5b88881fffd4868e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/components/AppRouteContent.tsx",
+			"upstreamPath": "ui/zoltar/ts/app/components/AppRouteContent.tsx",
+			"upstreamSha256": "427680f8a5e6f5220dd53be0800d6d3703cc03cc046fe4d41e81c904d14f5e4e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/hooks/useAppRouteEffects.ts",
+			"upstreamPath": "ui/zoltar/ts/app/hooks/useAppRouteEffects.ts",
+			"upstreamSha256": "ca7f96b3181769b5beae5ed07f35ad8ec90a339abafcb8f9dc45253d44dddcc7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/hooks/useZoltarUrlState.ts",
+			"upstreamPath": "ui/zoltar/ts/app/hooks/useZoltarUrlState.ts",
+			"upstreamSha256": "f9ce0cca4d1e4a95c2255fa559cf1903c77b051287db98d661b6dcdb0e630460",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/lib/appPageTitle.ts",
+			"upstreamPath": "ui/zoltar/ts/app/lib/appPageTitle.ts",
+			"upstreamSha256": "80e013380fd8d201db49771b4a682285f1e99bb603281f17809a0778eaeb3333",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/lib/routeValidation.ts",
+			"upstreamPath": "ui/zoltar/ts/app/lib/routeValidation.ts",
+			"upstreamSha256": "e00eefd08779d5b2a8adbaec11a923ea43c2f79b2b0f5d889700c35b1bd27b6f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/app/onchainStateDependencies.ts",
+			"upstreamPath": "ui/zoltar/ts/app/onchainStateDependencies.ts",
+			"upstreamSha256": "6b6a1ffcaa4ecfc2e5ea8fc6c29978647fb09f48106679350d8b4cba5312a131",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/index.dev.ts",
+			"upstreamPath": "ui/zoltar/ts/index.dev.ts",
+			"upstreamSha256": "26d6be1494cdaa009a49412d37380edd2591665cdb8bda057f7355eaf68417ac",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/index.ts",
+			"upstreamPath": "ui/zoltar/ts/index.ts",
+			"upstreamSha256": "feefd34bcc4b6366306fe5a60fd02b14ce9383c42bd70c814fb49745a04c3002",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/simulation/index.ts",
+			"upstreamPath": "ui/zoltar/ts/simulation/index.ts",
+			"upstreamSha256": "a16edd1e48b309b512b3039a64a8d71f4825d11330cfb740f892f774033ad74b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/simulation/tevmWorker.ts",
+			"upstreamPath": "ui/zoltar/ts/simulation/tevmWorker.ts",
+			"upstreamSha256": "6059608644c63fc3dac4c6cdb14185315bc312c94aa767c731f21cb5d38846b3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/simulation/zoltarScenarios.ts",
+			"upstreamPath": "ui/zoltar/ts/simulation/zoltarScenarios.ts",
+			"upstreamSha256": "4cf666799dc5cebc37940cd24e0ce229779d33a6aca3f498f2787a0ee44a3949",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/appPageTitle.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/app/appPageTitle.test.tsx",
+			"upstreamSha256": "ff65e433dad8a868d1d7d111e1ecb0f271cbb8f0d378d4b93f59defadfa76e53",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/appRouteContent.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/app/appRouteContent.test.ts",
+			"upstreamSha256": "0640fbfcc914f0646f6608b37fd4d6a730739742e4462722a7e5a3288487d907",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/appRouteValidation.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/app/appRouteValidation.test.tsx",
+			"upstreamSha256": "0022822a10768c91c14a61e0bfb30b70494c52aec9ad4474971283ae1185affa",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/overviewPanels.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/app/overviewPanels.test.tsx",
+			"upstreamSha256": "69a6c045716b136c01b2befa8f4f85479a2c8acec68c18f913623b41e262f7e3",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/routeValidation.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/app/routeValidation.test.ts",
+			"upstreamSha256": "0a2b8326dda3238f39f65edaaaa3ab99733647a811adea2436ed02ea6b9a473f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/useZoltarUrlState.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/app/useZoltarUrlState.test.tsx",
+			"upstreamSha256": "2192e400e8c419d96c9ea92ee191e0791edb3aa07005045e8fce80ad44f37b2f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/app/zoltarImportGraph.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/app/zoltarImportGraph.test.ts",
+			"upstreamSha256": "f20993822bd4929d77c3052bafb43792597df2154859bfa4bb8740837d0ac25b",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/deployment/deployment.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/features/deployment/deployment.test.ts",
+			"upstreamSha256": "43d29042e9d6ac02848d0d6c3e3abd1c91434b82deb29abb9a4b52c73698f759",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/deployment/deploymentRouteContent.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/deployment/deploymentRouteContent.test.tsx",
+			"upstreamSha256": "a833824bc60193df928a4192ede807987f96cf9a2e1e57bbf313942e8a057707",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/deployment/deploymentSection.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/deployment/deploymentSection.test.tsx",
+			"upstreamSha256": "e9726ad03c54267773f24463bc3a5f03f3de460938bbb3e7317f8e32c8f9e7d1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/deployment/useDeploymentFlow.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/deployment/useDeploymentFlow.test.tsx",
+			"upstreamSha256": "d56d16326db42316f2f3cf57ed74f5c582159505f99461554896e0cb2d119312",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/questions/questionCreateSection.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/questions/questionCreateSection.test.tsx",
+			"upstreamSha256": "98ba5e5659091028fa9195696ec7a7097090f2c752d25e8bc9b6daad6df0838d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/questions/questionsView.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/questions/questionsView.test.tsx",
+			"upstreamSha256": "67232e594fe186965e6c96dd1b44449e4d0b9b2fa59a58d381afcf9396467f23",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/questions/useQuestionCreation.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/questions/useQuestionCreation.test.tsx",
+			"upstreamSha256": "86781e725c0e1a17f4ca2320fafe7e9ba92d79e42739b8661929f5516ec89260",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/forkZoltarSection.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/forkZoltarSection.test.tsx",
+			"upstreamSha256": "47255ff0a7eba244b300107aa1fe61ad1c7a41cffa736046ee39f6bfc7479617",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/migrationOutcomeUniversesSection.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/migrationOutcomeUniversesSection.test.ts",
+			"upstreamSha256": "76958993a16b70bbf26cf479caa2c1da5afec564e008c426b33f05935e2b6bbd",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/universe.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/universe.test.ts",
+			"upstreamSha256": "ac54ca87124c0fa538dfab35d0a62f10b4de8e0b13ee67d458f848616041b73c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/universeDirectorySection.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/universeDirectorySection.test.tsx",
+			"upstreamSha256": "b6d2519a8151d030118dc68e341448265b674da5d3ffacc85de39f316bd7e619",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/universeLink.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/universeLink.test.tsx",
+			"upstreamSha256": "36637fed5f99dc072b4e58ca7ee1436c8a2251b3d7b88e4d356fce5682e7d250",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/useZoltarFork.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/useZoltarFork.test.tsx",
+			"upstreamSha256": "16a1629eabf2266029877d408837105a1ac1be9217570e96881a1c4cce6301a6",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/useZoltarMigration.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/useZoltarMigration.test.tsx",
+			"upstreamSha256": "4cda0b3d92b52b7c60158b3501aa6528494297a68a0d909917cf566eb153b58d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/useZoltarUniverse.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/useZoltarUniverse.test.tsx",
+			"upstreamSha256": "6993a704db62ed3f871f5677f1ecb24e19bb3ed94a5db97b1fcc115f89856c27",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/zoltarMigrationGuards.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/zoltarMigrationGuards.test.ts",
+			"upstreamSha256": "269333e45e15c7618c10e4666ffe5ae927a5d500aeeb3ecec21a47b55274d24f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/features/universes/zoltarMigrationSection.test.tsx",
+			"upstreamPath": "ui/zoltar/ts/tests/features/universes/zoltarMigrationSection.test.tsx",
+			"upstreamSha256": "8a1e6b239b4808f1e77332d6f9040f044e8beeb334675be3407f7a4b6b7e0983",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/integration/activeEnvironment.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/integration/activeEnvironment.test.ts",
+			"upstreamSha256": "50ffb9d5ad560afb95f2b88547fbb8ca0782667ee824cea115cbcf52198c8154",
+			"treatment": "adapted"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/integration/deployedEnvironment.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/integration/deployedEnvironment.test.ts",
+			"upstreamSha256": "2935c4b37cb5f96e5412f0d03b1697b595a2288d977ca9908251364bc6c33b4c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/integration/forkedCategoricalEnvironment.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/integration/forkedCategoricalEnvironment.test.ts",
+			"upstreamSha256": "d89089568321938f7ca449291e5384a75d34db47c8065c18e75e55c8d2fcb5b6",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/integration/twoQuestionsEnvironment.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/integration/twoQuestionsEnvironment.test.ts",
+			"upstreamSha256": "8dedf67d1aafbe44fa62a3c22c9319a066fc35e00d8962303be9011dcbc78ef4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/core.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/core.test.ts",
+			"upstreamSha256": "746aa2d25fa6363b0463c8ff90d69092018ab21eddaa9eac9856b6aa098f0c01",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/deployment.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/deployment.test.ts",
+			"upstreamSha256": "0301d8e970d1f19ad3bb95158507be57129c3426bf4e4aa4e086dcfd5da4004c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/helpers.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/helpers.test.ts",
+			"upstreamSha256": "ccb7c781e2225f77d90ddca390ff526198a2512ae9e5a25215b5d98641609221",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoter.fork.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoter.fork.test.ts",
+			"upstreamSha256": "a6507a57a891fc4520f6ddbab8de31ce47c2afe824dfba15062c6d597a51ea87",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoter.integration.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoter.integration.test.ts",
+			"upstreamSha256": "f175ac89d2f6aedfa4860ed812886a071721644207ffc7e208ca4508c2b8de13",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoter.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoter.test.ts",
+			"upstreamSha256": "107f46e3092123ca10e74700f3fe7a36489ffab3b8068298e1fbc5ef703737e2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/uniswapQuoterSimulation.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/uniswapQuoterSimulation.test.ts",
+			"upstreamSha256": "28dd90ccd6f977a88eb7fab33469b3bcabeff2721f376e2e6c6ada23befea8da",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/zoltar.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/zoltar.test.ts",
+			"upstreamSha256": "fee0311acb448038f11636afcee2a14d987bf90fdebdc56aa8a79591e494192b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/protocol/zoltarForks.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/protocol/zoltarForks.test.ts",
+			"upstreamSha256": "b6eb9d49eeed2dc07cdfa30f55c1409161c5ebe79e961df62f68a2323c8360b2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/ts/tests/simulation/scenarios.test.ts",
+			"upstreamPath": "ui/zoltar/ts/tests/simulation/scenarios.test.ts",
+			"upstreamSha256": "61cbf0725d4defd0e5cac1939e4b6946920d9123199629849737fae80b5a460b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltar/tsconfig.json",
+			"upstreamPath": "ui/zoltar/tsconfig.json",
+			"upstreamSha256": "6e6ab4dc76f7d7fe2fa614a771f664da88bfa6d0d7770947b6e4424aed6b3856",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/package.json",
+			"upstreamPath": "ui/zoltarShared/package.json",
+			"upstreamSha256": "1f517c1831c2e7c96f5cbf1156dc9a31168c1a618e321feccb56e0d11eb3ca39",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/copy/deployment.ts",
+			"upstreamPath": "ui/zoltarShared/ts/copy/deployment.ts",
+			"upstreamSha256": "2effe2fa5e5501d957851f1bc2ab0795adbc891a28bfc5abf3f342c50e362c2c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/copy/market.ts",
+			"upstreamPath": "ui/zoltarShared/ts/copy/market.ts",
+			"upstreamSha256": "b04d7f8d8fcad083c13ec72cc22855ca04a668ecff7fd9315323ecb1c092e561",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/copy/zoltar.ts",
+			"upstreamPath": "ui/zoltarShared/ts/copy/zoltar.ts",
+			"upstreamSha256": "237e71498613ac72c62b65aed747e2677996b19ee7b40733b1813422ef8085e0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/README.md",
+			"upstreamPath": "ui/zoltarShared/ts/features/README.md",
+			"upstreamSha256": "fbd6f5b01bc515d0ab19873424ce2e3f223cf88c4c91153bb3b3111406777a78",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/deployment/components/DeploymentRouteContent.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/deployment/components/DeploymentRouteContent.tsx",
+			"upstreamSha256": "ba2e74b710c0e93a5436d3b8a52419397bfc37b47c9f94a80abe532420f76be0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/deployment/components/DeploymentSection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/deployment/components/DeploymentSection.tsx",
+			"upstreamSha256": "295a2f54ad898bd3702a03f4a8da97bdd7f786d83d4b3e8f81481a79b6dde65f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/deployment/hooks/useDeploymentFlow.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/deployment/hooks/useDeploymentFlow.ts",
+			"upstreamSha256": "177a5746736a363da01940eda00672eedf08f4008c8a59ba57b4da088220d2ec",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/deployment/lib/deployment.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/deployment/lib/deployment.ts",
+			"upstreamSha256": "8a52c27b767d37ec02a7fee704adb204473f0bd46b246bb3f9ffd4428d6882c4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/deployment/lib/deploymentRoute.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/deployment/lib/deploymentRoute.ts",
+			"upstreamSha256": "7f8d0c1350845983a7d1f2342c055ead3af0a8328964e89250f01b997b36dab4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/overview/OverviewPanels.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/overview/OverviewPanels.tsx",
+			"upstreamSha256": "525c78fa22ccb70fe33eefdb07ed8fb59a178b0bd261379a0f1cc6e7d5b3e950",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/questions/components/QuestionCreateSection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/questions/components/QuestionCreateSection.tsx",
+			"upstreamSha256": "6aeae18f9eea7bb67d1dedf734777db632a893a387c88597cc689cdd64861816",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/questions/components/ScalarCreatePreview.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/questions/components/ScalarCreatePreview.tsx",
+			"upstreamSha256": "33b897e3818a8e22720546fbda59bb013e9e5700276e8b90984a65c657001c33",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/questions/hooks/useQuestionCreation.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/questions/hooks/useQuestionCreation.ts",
+			"upstreamSha256": "dae2f56f909990aa437a2f1cdbd082ec5de53b3054756cd03a02227b1c06aa78",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/questions/lib/questionCreation.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/questions/lib/questionCreation.ts",
+			"upstreamSha256": "4f0778aade9a9425d0adafe6c7414e06fe61161d9175af407c6768254c2ad372",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/questions/lib/questionForm.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/questions/lib/questionForm.ts",
+			"upstreamSha256": "d9f0995fc9598b2905f94d9230158dadca4d7c42d878ae9ea07c3ade9bf9e923",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/types.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/types.ts",
+			"upstreamSha256": "acec9180473beb7e67688ff3b49f6fec80f8c301246ca815fe100bf2bd9980e2",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/components/ForkZoltarSection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/components/ForkZoltarSection.tsx",
+			"upstreamSha256": "1a5f33631b2d02749aaa8c370435fba0d54135588074a8c81a3b1a1428416516",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/components/MigrationOutcomeUniversesSection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/components/MigrationOutcomeUniversesSection.tsx",
+			"upstreamSha256": "a1b5848413955b2962ee5e22d8f9b6d749386a611236a162bce874ece938579a",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/components/UniverseDirectorySection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/components/UniverseDirectorySection.tsx",
+			"upstreamSha256": "00f37736672d79c15c075e0dc9ac5d95b662edfa1e429516b8d1e27160e4a38f",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/components/UniverseLink.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/components/UniverseLink.tsx",
+			"upstreamSha256": "a714bf8b8a98dd1fdb4a8349a505590d5810fa50944f9b5dfa94b152d4ffc4b0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/components/ZoltarMigrationSection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/components/ZoltarMigrationSection.tsx",
+			"upstreamSha256": "3854319c9edf0912842b7016497364f2cc65eecf5ed0d20a8ef31253f1695bed",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/hooks/useZoltarFork.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/hooks/useZoltarFork.ts",
+			"upstreamSha256": "46948c961ba711d18a1272e7e6ea96b0301fbcb3f54424344019ee2af597ccd3",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/hooks/useZoltarMigration.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/hooks/useZoltarMigration.ts",
+			"upstreamSha256": "aff8aa646076cc578ba97a454b7c3ce3e337d6692be81185970e98d5f9b681ef",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/hooks/useZoltarOperations.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/hooks/useZoltarOperations.ts",
+			"upstreamSha256": "c760523b164a488f0fe9e280d850c74683085afc743d7ba78c8c29ddcb65eb7c",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/hooks/useZoltarUniverse.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/hooks/useZoltarUniverse.ts",
+			"upstreamSha256": "473a24594f3c491b4567d9e2641138189945acd6c8ba90b83b667283636aa2ff",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/lib/universe.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/lib/universe.ts",
+			"upstreamSha256": "6e250b3bb872205776863b5bc1063fe77c093df3b1c9b711b77e3374964b0d6b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/universes/lib/zoltarMigrationGuards.ts",
+			"upstreamPath": "ui/zoltarShared/ts/features/universes/lib/zoltarMigrationGuards.ts",
+			"upstreamSha256": "80045b62773de4dd40b81c8dbd4d1e5a8f86c64d2e23259435dac987db80bf12",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/zoltarSurface/components/QuestionsView.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/zoltarSurface/components/QuestionsView.tsx",
+			"upstreamSha256": "db0d996524ae1a791523e3faf8c58fa9e4bbb666cb3f9bca05b4d792dd45170d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/zoltarSurface/components/ZoltarSection.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/zoltarSurface/components/ZoltarSection.tsx",
+			"upstreamSha256": "3c8f074308fa555f71ac5f18e2a1d6d3ace780ab6643ff33f3f36fcfd74d0526",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/features/zoltarTransactionPresentations.tsx",
+			"upstreamPath": "ui/zoltarShared/ts/features/zoltarTransactionPresentations.tsx",
+			"upstreamSha256": "b2b2a56e54c7279fbf8d5aa1cd23678d3c55b38623575e6008547a4c0a794879",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/lib/formDefaults.ts",
+			"upstreamPath": "ui/zoltarShared/ts/lib/formDefaults.ts",
+			"upstreamSha256": "b2cf47c7812b100f4e6c7f8a7f8ac97cc7c1d5b00ceab74cc610dc97828cbd4d",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/lib/routing.ts",
+			"upstreamPath": "ui/zoltarShared/ts/lib/routing.ts",
+			"upstreamSha256": "db8593b1fffdee5f86e4abb956448f5df488cbd01ad4cb54624961e8e6a00333",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/README.md",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/README.md",
+			"upstreamSha256": "d3fbd3bfe46c037eeb536ffe9966ebb38e25e057a4e63084b0c23a8200ec99b0",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/activeProtocolAddresses.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/activeProtocolAddresses.ts",
+			"upstreamSha256": "fd705a1d14a3046b2ca648f0d39e7346f7968ad231f1fb3270f54cf58baeed47",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/contractLabels.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/contractLabels.ts",
+			"upstreamSha256": "b281df4a660d26763666b80d3aab08686522117615a05e153f6b54f52c9e3c01",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/core.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/core.ts",
+			"upstreamSha256": "a1cbe3058e783d3ceb4e621aa8899199ddcce34fb05f4c09abcb10b2c88d8415",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/deployment.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/deployment.ts",
+			"upstreamSha256": "62b7462e98359cb9c26c648ed151641bc3708736ea958d0ff89d3699e2091e66",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/helpers.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/helpers.ts",
+			"upstreamSha256": "fb713a6bcca7dab3fa31a4fd82b0c0299396a8a6a758665c9d8fb16bf0dcb8e4",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/tokenActions.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/tokenActions.ts",
+			"upstreamSha256": "9cceac0f298b7ec08eedc9f334067e2221118d8fde445aff7fc2e4689bced1f7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/uniswapQuoter.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/uniswapQuoter.ts",
+			"upstreamSha256": "4949998727e27b5605b673f4e3e40e09a1970c55818c7d0ad0641d806cc9f6c7",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/zoltar.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/zoltar.ts",
+			"upstreamSha256": "cbca465395a2639cf56b8d75e6aa3a85513a010addeb28831b090b351f0745a1",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/zoltarDeploymentHelpers.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/zoltarDeploymentHelpers.ts",
+			"upstreamSha256": "c4d28d35ce23b1362969944864fe7b03ee48113e5ba5b1db5e812d6668692a3e",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/protocol/zoltarForks.ts",
+			"upstreamPath": "ui/zoltarShared/ts/protocol/zoltarForks.ts",
+			"upstreamSha256": "524967c89a44bb31688fe6eb839ce0e1b9d62dffd8f5f7df4766a9e9dbf2b07b",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/ts/types/app.ts",
+			"upstreamPath": "ui/zoltarShared/ts/types/app.ts",
+			"upstreamSha256": "76a2bc92fca3ab28459222f8a4805c25bd703ac30ac09e691275c81ba115b1a8",
+			"treatment": "unchanged"
+		},
+		{
+			"path": "ui/zoltarShared/tsconfig.json",
+			"upstreamPath": "ui/zoltarShared/tsconfig.json",
+			"upstreamSha256": "a89e1030c79e6fbff56d26da20bd34bcee95f2feb406e7c656bcf14415eec87c",
+			"treatment": "unchanged"
+		}
+	]
+}

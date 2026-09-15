@@ -1,0 +1,47 @@
+import type { ComponentChildren } from 'preact'
+import { LoadingText } from './LoadingText.js'
+import { useChainTimestamp } from '../wallet/chainTimestamp.js'
+import { formatRelativeTimestamp, formatTimestamp, formatTimestampDateTime, getWallClockTimestamp } from '../lib/formatters.js'
+import { getMetricPlaceholderPresentation } from '../lib/userCopy.js'
+
+type TimestampValueProps = {
+	className?: string
+	currentTimestamp?: bigint
+	loading?: boolean
+	timestamp: bigint | undefined
+	undefinedText?: ComponentChildren
+	zeroText?: ComponentChildren
+}
+
+export function TimestampValue({ className = '', currentTimestamp, loading = false, timestamp, undefinedText = getMetricPlaceholderPresentation(undefined)?.placeholder, zeroText }: TimestampValueProps) {
+	const chainCurrentTimestamp = useChainTimestamp()
+	const resolvedCurrentTimestamp = currentTimestamp ?? chainCurrentTimestamp ?? getWallClockTimestamp()
+
+	if (loading) return <LoadingText className={`timestamp-value loading ${className}`} />
+
+	if (timestamp === undefined) return <span className={`timestamp-value unavailable ${className}`}>{undefinedText}</span>
+
+	if (timestamp === 0n)
+		return (
+			<span className={`timestamp-value zero ${className}`} title={typeof zeroText === 'string' ? zeroText : undefined}>
+				{zeroText ?? formatTimestamp(timestamp)}
+			</span>
+		)
+
+	const absoluteTimestamp = formatTimestamp(timestamp)
+	const dateTime = formatTimestampDateTime(timestamp)
+	if (dateTime === undefined)
+		return (
+			<span className={`timestamp-value error ${className}`} title={absoluteTimestamp}>
+				{absoluteTimestamp}
+			</span>
+		)
+
+	const relativeTimestamp = formatRelativeTimestamp(timestamp, resolvedCurrentTimestamp)
+
+	return (
+		<time className={`timestamp-value ${className}`} dateTime={dateTime} title={absoluteTimestamp}>
+			{absoluteTimestamp} <span className='timestamp-value-relative'>({relativeTimestamp})</span>
+		</time>
+	)
+}

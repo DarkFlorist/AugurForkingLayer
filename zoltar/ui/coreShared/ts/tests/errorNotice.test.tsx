@@ -1,0 +1,55 @@
+/// <reference types='bun-types' />
+
+import { installDomTestLifecycle } from './testUtils/domTestLifecycle.js'
+import { describe, expect, test } from 'bun:test'
+import { act } from 'preact/test-utils'
+import { ErrorNotice } from '../components/ErrorNotice.js'
+import { fireEvent, within } from './testUtils/queries'
+import { renderIntoDocument } from './testUtils/renderIntoDocument.js'
+
+describe('ErrorNotice', () => {
+	let cleanupRenderedComponent: (() => Promise<void>) | undefined
+
+	installDomTestLifecycle({
+		afterTest: async () => {
+			await cleanupRenderedComponent?.()
+			cleanupRenderedComponent = undefined
+		},
+	})
+
+	test('renders nothing when no message is provided', async () => {
+		const renderedComponent = await renderIntoDocument(<ErrorNotice message={undefined} />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		expect(documentQueries.queryByRole('alert')).toBeNull()
+	})
+
+	test('dismisses a closeable error message when the close button is used', async () => {
+		const renderedComponent = await renderIntoDocument(<ErrorNotice message='user rejected the request' />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		const dismiss = documentQueries.getByRole('button', { name: 'Dismiss error' })
+		expect(documentQueries.getByText('user rejected the request')).not.toBeNull()
+		expect(dismiss).not.toBeNull()
+
+		await act(() => {
+			fireEvent.click(dismiss)
+		})
+		expect(documentQueries.queryByText('user rejected the request')).toBeNull()
+		expect(documentQueries.queryByRole('button', { name: 'Dismiss error' })).toBeNull()
+	})
+
+	test('keeps non-closeable notices visible and non-dismissible', async () => {
+		const renderedComponent = await renderIntoDocument(<ErrorNotice message='Something failed' />)
+		cleanupRenderedComponent = renderedComponent.cleanup
+
+		const documentQueries = within(document.body)
+		const alert = documentQueries.getByRole('alert')
+		expect(alert.textContent).toContain('Something failed')
+		expect(alert.getAttribute('aria-live')).toBe('assertive')
+		expect(alert.getAttribute('aria-atomic')).toBe('true')
+		expect(documentQueries.queryByRole('button', { name: 'Dismiss error' })).toBeNull()
+	})
+})

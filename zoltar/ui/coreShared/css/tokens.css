@@ -1,0 +1,204 @@
+:root {
+	color-scheme: dark;
+	--bg: rgba(8, 17, 29, 1);
+	--bg-deep: rgba(5, 10, 17, 1);
+
+	/* text hierarchy */
+	--text: rgba(231, 243, 255, 1);
+	--text-secondary: rgba(207, 221, 238, 0.9);
+	--muted: rgba(160, 181, 207, 0.76);
+	--text-muted: rgba(174, 193, 215, 0.82);
+	--value: rgba(208, 231, 245, 1);
+	--color-white: rgba(255, 255, 255, 1);
+	--color-white-08: rgba(255, 255, 255, 0.08);
+
+	/* accents */
+	--accent-zoltar: rgba(56, 213, 255, 1);
+	--accent-statoblast: rgba(160, 124, 255, 1);
+	--accent-trading: rgba(183, 238, 81, 1);
+	--accent-augurscan: rgba(45, 212, 191, 1);
+	--accent: var(--accent-zoltar);
+	--accent-strong: rgba(124, 108, 255, 1);
+	--accent-faint: color-mix(in srgb, var(--accent) 8%, transparent);
+	--accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+	--accent-medium: color-mix(in srgb, var(--accent) 16%, transparent);
+	--accent-emphasis-soft: color-mix(in srgb, var(--accent) 18%, transparent);
+
+	/* semantic borders — structural (blue-tinted, passive) */
+	--border-subtle: rgba(159, 180, 207, 0.07);
+	--border-default: rgba(159, 180, 207, 0.14);
+	--border-strong: rgba(159, 180, 207, 0.24);
+	--border-emphasis: rgba(159, 180, 207, 0.28);
+
+	/* semantic borders — interactive (accent-tinted, signals clickability) */
+	--interactive-border: color-mix(in srgb, var(--accent) 26%, transparent);
+	--interactive-border-hover: color-mix(in srgb, var(--accent) 46%, transparent);
+	--interactive-bg: var(--accent-faint);
+	--interactive-bg-hover: color-mix(in srgb, var(--accent) 14%, transparent);
+	--interactive-bg-active: color-mix(in srgb, var(--accent-strong) 14%, transparent);
+
+	/* surfaces */
+	--surface-raised: rgba(11, 22, 37, 0.9);
+	--surface-sunken: rgba(10, 20, 36, 0.22);
+	--surface-overlay: rgba(5, 11, 21, 0.86);
+	--surface-interactive: rgba(15, 31, 49, 0.92);
+	--surface-card: rgba(12, 23, 38, 0.9);
+	--surface-card-end: rgba(8, 16, 27, 0.94);
+	--surface-inset: rgba(9, 18, 31, 0.58);
+	--surface-page: rgba(8, 16, 28, 0.72);
+	--surface-section: rgba(10, 20, 34, 0.82);
+	--surface-section-opaque: rgba(10, 20, 34, 1);
+	--surface-record: rgba(12, 23, 38, 0.88);
+	--surface-row: rgba(8, 16, 28, 0.42);
+	--surface-critical: rgba(61, 14, 25, 0.72);
+
+	/* status */
+	--success: rgba(66, 232, 194, 1);
+	--success-soft: rgba(66, 232, 194, 0.12);
+	--success-border: rgba(66, 232, 194, 0.24);
+	--success-surface-gradient: linear-gradient(180deg, rgba(11, 51, 43, 0.92) 0%, rgba(8, 34, 29, 0.92) 100%);
+	--warning: rgba(245, 200, 106, 1);
+	--warning-soft: rgba(245, 200, 106, 0.12);
+	--warning-border: rgba(245, 200, 106, 0.24);
+	--warning-border-strong: rgba(245, 200, 106, 0.52);
+	--danger: rgba(255, 112, 143, 1);
+	--danger-soft: rgba(255, 112, 143, 0.12);
+	--danger-border: rgba(255, 112, 143, 0.28);
+	--danger-border-strong: rgba(255, 112, 143, 0.56);
+	--status-pending: rgba(104, 190, 255, 1);
+	--status-loading: rgba(145, 170, 199, 1);
+	--outcome-yes: rgba(91, 214, 168, 1);
+	--outcome-no: rgba(241, 130, 151, 1);
+	--outcome-invalid: rgba(191, 159, 255, 1);
+
+	/* controls */
+	--control-bg: rgba(10, 20, 36, 0.18);
+	--control-border: rgba(154, 179, 211, 0.28);
+	--input-border: rgba(154, 179, 211, 0.3);
+	--focus: color-mix(in srgb, var(--accent) 48%, transparent);
+	--focus-ring: 0 0 0 3px color-mix(in srgb, var(--accent) 38%, transparent);
+	--primary-button-bg: color-mix(in srgb, var(--accent) 88%, #123046);
+	--primary-button-bg-hover: var(--accent);
+	--primary-button-border: var(--accent);
+	--primary-button-border-hover: color-mix(in srgb, var(--accent) 78%, var(--color-white));
+	--primary-button-text: var(--bg-deep);
+	--primary-button-shadow: var(--color-white-08);
+	--disabled-control-bg: rgba(12, 28, 43, 1);
+	--disabled-control-border: rgba(154, 179, 211, 0.22);
+	--disabled-control-text: rgba(177, 196, 216, 1);
+	--disabled-primary-button-bg: color-mix(in srgb, var(--accent) 16%, var(--surface-section-opaque));
+	--disabled-primary-button-border: color-mix(in srgb, var(--accent) 35%, var(--border-default));
+	--disabled-primary-button-text: var(--text-muted);
+	--touch-target-min: 2.75rem;
+	--control-height-compact: 2.75rem;
+	--control-height: 3rem;
+
+	/* spacing */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.5rem;
+	--space-6: 2rem;
+	--space-7: 3rem;
+	--space-8: 3rem;
+
+	/* font families */
+	--font-family-sans: "Aptos", "Segoe UI", "Helvetica Neue", sans-serif;
+	--font-family-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+	--font-family-mono: "IBM Plex Mono", "Courier New", monospace;
+
+	/* type scale — fixed */
+	--font-xs: 0.75rem;
+	--font-label: 0.8125rem;
+	--font-chip: 0.8125rem;
+	--font-tab: 0.875rem;
+	--font-subtab: 0.875rem;
+	--font-caption: 0.86rem;
+	--font-address: 0.86rem;
+	--font-value: 0.96rem;
+	--font-button: 0.95rem;
+	--font-body: 1rem;
+	--font-base: 1.03rem;
+	--font-card-title: 1.12rem;
+	--font-small: 0.8125rem;
+	--font-detail: 0.88rem;
+	--font-h4: 0.96rem;
+	--font-section-title: 1.08rem;
+
+	/* type scale — responsive */
+	--font-h1: clamp(1.625rem, 3vw, 2.5rem);
+	--font-h2: clamp(1.35rem, 1.9vw, 2rem);
+	--font-h2-panel: clamp(1.18rem, 1.45vw, 1.7rem);
+	--font-h2-wallet: clamp(0.88rem, 1.05vw, 1.15rem);
+	--font-h3-section: clamp(1rem, 1.55vw, 1.35rem);
+	--font-h3-preview: clamp(1.15rem, 1.8vw, 1.8rem);
+	--font-app-title: clamp(0.95rem, 1vw, 1.1rem);
+	--font-404: clamp(4rem, 9vw, 7.8rem);
+
+	/* motion */
+	--transition-fast: 140ms ease;
+	--transition-standard: 160ms ease;
+
+	/* decorative */
+	--glow-inset: 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+	--glow-inset-subtle: 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+	--divider: linear-gradient(90deg, color-mix(in srgb, var(--accent) 24%, transparent), var(--border-subtle) 50%, color-mix(in srgb, var(--accent-strong) 20%, transparent));
+	--slider-thumb-border: rgba(231, 243, 255, 0.8);
+	--shadow-color-soft: rgba(0, 0, 0, 0.12);
+	--shadow-color-strong: rgba(0, 0, 0, 0.35);
+
+	/* notice error */
+	--danger-text: rgba(255, 229, 235, 1);
+	--notice-warning-gradient: linear-gradient(180deg, rgba(99, 77, 18, 0.96) 0%, rgba(66, 48, 11, 0.96) 100%);
+	--notice-error-gradient: linear-gradient(180deg, rgba(87, 18, 33, 0.94) 0%, rgba(59, 11, 22, 0.94) 100%);
+
+	/* elevated surfaces */
+	--surface-dropdown: rgba(5, 11, 21, 0.97);
+	--surface-modal: rgba(7, 17, 31, 0.96);
+	--surface-modal-opaque: rgba(7, 17, 31, 1);
+
+	/* simulation */
+	--simulation-text: rgba(255, 244, 218, 1);
+	--simulation-text-secondary: rgba(255, 242, 213, 0.82);
+	--simulation-border-hover: rgba(255, 236, 180, 0.56);
+
+	/* truth auction */
+	--truth-auction-track: rgba(8, 18, 31, 1);
+	--truth-auction-eth: rgba(232, 166, 68, 1);
+	--truth-auction-eth-highlight: rgba(243, 209, 123, 1);
+	--truth-auction-rep: rgba(62, 159, 120, 1);
+	--truth-auction-rep-highlight: rgba(137, 208, 168, 1);
+
+	/* component hierarchy */
+	--radius-compact: 0.25rem;
+	--radius-normal: 0.5rem;
+	--radius-overlay: 0.75rem;
+	--radius-shell: var(--radius-overlay);
+	--radius-section: var(--radius-normal);
+	--radius-panel: var(--radius-normal);
+	--radius-record: var(--radius-normal);
+	--radius-control: var(--radius-compact);
+	--divider-subtle: rgba(159, 180, 207, 0.1);
+	--divider-strong: rgba(159, 180, 207, 0.18);
+	--border-active: color-mix(in srgb, var(--accent) 58%, transparent);
+	--text-primary: var(--text);
+
+	/* Shared layout contracts; each application retains its own shell. */
+	--content-max: 90rem;
+	--gutter-desktop: 2rem;
+	--gutter-tablet: 1.5rem;
+	--gutter-mobile: 1rem;
+}
+
+:root[data-product="zoltar"] {
+	--accent: var(--accent-zoltar);
+}
+
+:root[data-product="statoblast"] {
+	--accent: var(--accent-statoblast);
+}
+
+:root[data-product="trading"] {
+	--accent: var(--accent-trading);
+}

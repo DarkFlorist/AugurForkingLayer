@@ -7,7 +7,7 @@ import assert from '../testSupport/simulator/utils/assert'
 import { createWriteClient, writeContractAndWait, type WriteClient } from '../testSupport/simulator/utils/clients'
 import { TEST_ADDRESSES } from '../testSupport/simulator/utils/constants'
 import { setupTestAccounts } from '../testSupport/simulator/utils/utilities'
-import { statoblast_Multicall3_Multicall3 } from '../types/contractArtifact'
+import { infrastructure_Multicall3_Multicall3 } from '../types/contractArtifact'
 
 describe('Multicall3', () => {
 	const { getAnvilWindowEthereum } = useIsolatedAnvilNode()
@@ -18,8 +18,8 @@ describe('Multicall3', () => {
 		await deployContract(
 			client,
 			encodeDeployData({
-				abi: statoblast_Multicall3_Multicall3.abi,
-				bytecode: `0x${statoblast_Multicall3_Multicall3.evm.bytecode.object}`,
+				abi: infrastructure_Multicall3_Multicall3.abi,
+				bytecode: `0x${infrastructure_Multicall3_Multicall3.evm.bytecode.object}`,
 			}),
 		)
 
@@ -48,30 +48,30 @@ describe('Multicall3', () => {
 		if (latestBlock.number === undefined) throw new Error('latest block number missing')
 		const previousBlockNumber = latestBlock.number - 1n
 
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getBlockHash', args: [previousBlockNumber] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getBlockNumber', args: [] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockCoinbase', args: [] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockDifficulty', args: [] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockGasLimit', args: [] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockTimestamp', args: [] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getEthBalance', args: [account] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getBasefee', args: [] }))
-		await executeCall(multicall, encodeFunctionData({ abi: statoblast_Multicall3_Multicall3.abi, functionName: 'getChainId', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getBlockHash', args: [previousBlockNumber] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getBlockNumber', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockCoinbase', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockDifficulty', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockGasLimit', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getCurrentBlockTimestamp', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getEthBalance', args: [account] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getBasefee', args: [] }))
+		await executeCall(multicall, encodeFunctionData({ abi: infrastructure_Multicall3_Multicall3.abi, functionName: 'getChainId', args: [] }))
 
 		const blockNumber = await client.readContract({
-			abi: statoblast_Multicall3_Multicall3.abi,
+			abi: infrastructure_Multicall3_Multicall3.abi,
 			address: multicall,
 			functionName: 'getBlockNumber',
 			args: [],
 		})
 		const prevrandao = await client.readContract({
-			abi: statoblast_Multicall3_Multicall3.abi,
+			abi: infrastructure_Multicall3_Multicall3.abi,
 			address: multicall,
 			functionName: 'getCurrentBlockDifficulty',
 			args: [],
 		})
 		const chainId = await client.readContract({
-			abi: statoblast_Multicall3_Multicall3.abi,
+			abi: infrastructure_Multicall3_Multicall3.abi,
 			address: multicall,
 			functionName: 'getChainId',
 			args: [],
@@ -84,7 +84,7 @@ describe('Multicall3', () => {
 
 	test('every required-success aggregate variant exposes the canonical call failure', async () => {
 		const multicall = await deployMulticall()
-		const abi = statoblast_Multicall3_Multicall3.abi
+		const abi = infrastructure_Multicall3_Multicall3.abi
 		const failingCall = { callData: '0xdeadbeef' as Hex, target: multicall }
 		const failureCases = [
 			encodeFunctionData({ abi, functionName: 'aggregate', args: [[failingCall]] }),
@@ -115,7 +115,7 @@ describe('Multicall3', () => {
 		const recipientBalanceBefore = await client.getBalance({ address: recipient })
 		const multicallBalanceBefore = await client.getBalance({ address: multicall })
 		const data = encodeFunctionData({
-			abi: statoblast_Multicall3_Multicall3.abi,
+			abi: infrastructure_Multicall3_Multicall3.abi,
 			functionName: 'aggregate3Value',
 			args: [
 				[

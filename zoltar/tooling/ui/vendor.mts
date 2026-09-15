@@ -135,7 +135,7 @@ function createDefaultVendorBuildSteps(): VendorBuildSteps {
 			const { repositoryRoot } = getUiAppPaths(app)
 			const scopedPath = path.join(repositoryRoot, 'solidity/artifacts', app, 'Contracts.json')
 			const useScoped = process.argv.includes('--scoped-artifacts')
-			await copyProjectArtifacts({ project: app, includeTrading: app === 'trading' }, useScoped ? { ...defaultProjectArtifactPaths, contractArtifactsJsonPath: scopedPath } : defaultProjectArtifactPaths)
+			await copyProjectArtifacts({ project: 'zoltar' }, useScoped ? { ...defaultProjectArtifactPaths, contractArtifactsJsonPath: scopedPath } : defaultProjectArtifactPaths)
 		},
 	}
 }

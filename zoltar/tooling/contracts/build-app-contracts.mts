@@ -6,4 +6,4 @@ import { copyProjectArtifacts, defaultProjectArtifactPaths } from '../ui/project
 const project = parseContractProject(process.argv[2] ?? '')
 const child = Bun.spawn([process.execPath, './ts/compile.ts', project], { cwd: path.join(repositoryRoot, 'solidity'), stdout: 'inherit', stderr: 'inherit' })
 if ((await child.exited) !== 0) process.exit(1)
-await copyProjectArtifacts({ project, includeTrading: project === 'trading' }, { ...defaultProjectArtifactPaths, contractArtifactsJsonPath: path.join(repositoryRoot, 'solidity/artifacts', project, 'Contracts.json') })
+await copyProjectArtifacts({ project }, { ...defaultProjectArtifactPaths, contractArtifactsJsonPath: path.join(repositoryRoot, 'solidity/artifacts', project, 'Contracts.json') })

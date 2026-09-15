@@ -6,7 +6,7 @@ import { installDomEnvironment } from './testUtils/domEnvironment.js'
 import { installTestRouting } from './testUtils/testRouting.js'
 
 const DEPLOY_ROUTE = '#/deploy'
-const OPEN_ORACLE_ROUTE = '#/open-oracle'
+const EXAMPLE_ROUTE = '#/example'
 const SECURITY_POOLS_ROUTE = '#/security-pools'
 const ZOLTAR_ROUTE = '#/zoltar'
 
@@ -90,10 +90,10 @@ describe('routing', () => {
 
 	test('returns canonical route hashes for known routes', () => {
 		expect(DEPLOY_ROUTE).toBe('#/deploy')
-		expect(OPEN_ORACLE_ROUTE).toBe('#/open-oracle')
+		expect(EXAMPLE_ROUTE).toBe('#/example')
 		expect(getRouteHash('deploy')).toBe(DEPLOY_ROUTE)
 		expect(getRouteHash('security-pools')).toBe(SECURITY_POOLS_ROUTE)
-		expect(getRouteHash('open-oracle')).toBe(OPEN_ORACLE_ROUTE)
+		expect(getRouteHash('example')).toBe(EXAMPLE_ROUTE)
 		expect(getRouteHash('zoltar')).toBe(ZOLTAR_ROUTE)
 	})
 

@@ -102,11 +102,3 @@ declare module 'solc' {
 	}
 	export default solc
 }
-
-declare module 'solc-0-8-28' {
-	const solc: {
-		compile(input: string): string
-		version(): string
-	}
-	export default solc
-}

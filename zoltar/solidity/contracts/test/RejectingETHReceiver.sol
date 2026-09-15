@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity 0.8.35;
 
-contract OpenOracleRejectingETHReceiver {
+contract RejectingETHReceiver {
 	bool public rejectETH = true;
 	bool public consumeAllGas;
 	bool public reenterOnReceive;
@@ -48,6 +48,6 @@ contract OpenOracleRejectingETHReceiver {
 				invalid()
 			}
 		}
-		require(!rejectETH, 'OpenOracle test receiver rejects ETH');
+		require(!rejectETH, 'Test receiver rejects ETH');
 	}
 }

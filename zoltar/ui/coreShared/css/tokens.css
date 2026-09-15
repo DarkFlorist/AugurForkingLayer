@@ -14,7 +14,6 @@
 
 	/* accents */
 	--accent-zoltar: rgba(56, 213, 255, 1);
-	--accent-statoblast: rgba(160, 124, 255, 1);
 	--accent-trading: rgba(183, 238, 81, 1);
 	--accent-augurscan: rgba(45, 212, 191, 1);
 	--accent: var(--accent-zoltar);
@@ -193,10 +192,6 @@
 
 :root[data-product="zoltar"] {
 	--accent: var(--accent-zoltar);
-}
-
-:root[data-product="statoblast"] {
-	--accent: var(--accent-statoblast);
 }
 
 :root[data-product="trading"] {

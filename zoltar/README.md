@@ -1,6 +1,6 @@
 # Zoltar
 
-Zoltar is a forkable oracle with a question registry, universes, and reputation-token migration. This directory is an independent copy of the Zoltar portion of AugurProject/zoltar. It does not install or build Statoblast, Trading, bots, or the explorer.
+Zoltar is a forkable oracle with a question registry, universes, and reputation-token migration. This directory is an independent copy of Zoltar from AugurProject/zoltar.
 
 ## Setup
 
@@ -47,7 +47,7 @@ Live-mainnet quote tests remain opt-in; normal validation is deterministic and d
 
 ## Build and release
 
-Workflow YAML files are staged in the repository-root `workflow/` directory and are inactive until moved to `.github/workflows/`. The setup action remains in `.github/actions/setup-zoltar/`. The workflow paths and action references already target their final locations.
+Workflow YAML files are in `.github/workflows/`; their setup action is in `.github/actions/setup-zoltar/`.
 
 `bun run build:prod` writes the static application to `ui/zoltar/dist/`, including worker and vendor assets. Serve the entire directory. Once activated, GitHub CI uploads this output as `zoltar-ui`; `zoltar-v*` tags build independently named release artifacts. Hosting, IPFS publication, and a public release destination are not configured by this extraction.
 
@@ -69,6 +69,6 @@ Runtime verification is included. Explorer source publication is not configured;
 
 Other AugurForkingLayer components may consume `shared/core` and `shared/zoltar` package exports, contract interfaces/ABIs, and documented addresses. Keep application bootstrap, routes, private UI modules, and build tooling private to Zoltar. Zoltar must never import code from a sibling component.
 
-Internal package names and source paths are preserved to minimize divergence. `ui/coreShared` retains generic types and styling used upstream by several products, but has no dependency on those products. The two production files under `solidity/contracts/statoblast/` are WETH9 and Multicall3, which upstream classifies as neutral infrastructure.
+WETH9 and Multicall3 are neutral infrastructure in `solidity/contracts/infrastructure/` (relative to the Zoltar workspace). Production Solidity contents are preserved; infrastructure source paths are normalized.
 
 See [protocol and operator notes](docs/protocol.md), [provenance](UPSTREAM.md), and the [validation record](docs/validation.md).

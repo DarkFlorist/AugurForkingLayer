@@ -150,10 +150,6 @@
 			"bun": "./ts/tests/app/useTransactionTrayController.test.tsx",
 			"default": "./js/tests/app/useTransactionTrayController.test.js"
 		},
-		"./tests/app/useUrlState.test.js": {
-			"bun": "./ts/tests/app/useUrlState.test.tsx",
-			"default": "./js/tests/app/useUrlState.test.js"
-		},
 		"./tests/approvedAmountValueComponent.test.js": {
 			"bun": "./ts/tests/approvedAmountValueComponent.test.tsx",
 			"default": "./js/tests/approvedAmountValueComponent.test.js"
@@ -325,10 +321,6 @@
 		"./app/hooks/useProtocolOnchainRuntime.js": {
 			"bun": "./ts/app/hooks/useProtocolOnchainRuntime.ts",
 			"default": "./js/app/hooks/useProtocolOnchainRuntime.js"
-		},
-		"./app/hooks/useUrlState.js": {
-			"bun": "./ts/app/hooks/useUrlState.ts",
-			"default": "./js/app/hooks/useUrlState.js"
 		},
 		"./app/lib/appRouteGate.js": {
 			"bun": "./ts/app/lib/appRouteGate.ts",
@@ -705,10 +697,6 @@
 		"./lib/visualMetrics.js": {
 			"bun": "./ts/lib/visualMetrics.ts",
 			"default": "./js/lib/visualMetrics.js"
-		},
-		"./navigation/openOracleUrlParams.js": {
-			"bun": "./ts/navigation/openOracleUrlParams.ts",
-			"default": "./js/navigation/openOracleUrlParams.js"
 		},
 		"./navigation/routing.js": {
 			"bun": "./ts/navigation/routing.ts",

@@ -60,8 +60,6 @@ describe('QuestionsView', () => {
 		expect(document.body.textContent).not.toContain('UNIVERSE')
 		expect(document.body.textContent).not.toContain('questions in the active universe')
 		expect(documentQueries.getByText(question.title)).not.toBeNull()
-		expect(document.body.textContent).not.toContain('Statoblast')
-		expect(document.body.textContent).not.toContain('Open Oracle')
 		expect(document.body.textContent).not.toContain('Security Pool')
 
 		await act(() => {

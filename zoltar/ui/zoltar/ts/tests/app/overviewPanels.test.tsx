@@ -38,7 +38,7 @@ describe('OverviewPanels', () => {
 
 	async function renderOverviewPanels(overrides: Partial<Parameters<typeof OverviewPanels>[0]> = {}) {
 		const baseProps: Parameters<typeof OverviewPanels>[0] = {
-			applicationTitle: 'Zoltar',
+			applicationTitle: 'Custom application',
 			activeUniverseId: 0n,
 			parentUniverseId: undefined,
 			accountState: {
@@ -156,8 +156,7 @@ describe('OverviewPanels', () => {
 
 	test('identifies the Zoltar application in its operations header', async () => {
 		const documentQueries = await renderOverviewPanels()
-		expect(documentQueries.getByRole('heading', { level: 2, name: 'Zoltar' })).toBeDefined()
-		expect(document.body.textContent).not.toContain('Augur Statoblast')
+		expect(documentQueries.getByRole('heading', { level: 2, name: 'Custom application' })).toBeDefined()
 	})
 
 	test('shows one concise missing-universe recovery action', async () => {
@@ -176,8 +175,8 @@ describe('OverviewPanels', () => {
 	})
 
 	test('uses the application-owned title supplied by a dependent app', async () => {
-		const documentQueries = await renderOverviewPanels({ applicationTitle: 'Augur Statoblast' })
-		expect(documentQueries.getByRole('heading', { level: 2, name: 'Augur Statoblast' })).toBeDefined()
+		const documentQueries = await renderOverviewPanels({ applicationTitle: 'Custom application' })
+		expect(documentQueries.getByRole('heading', { level: 2, name: 'Custom application' })).toBeDefined()
 		expect(document.body.textContent).not.toContain('Zoltar')
 	})
 

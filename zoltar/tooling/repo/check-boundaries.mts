@@ -3,9 +3,9 @@ import path from 'node:path'
 import ts from 'typescript'
 import { repositoryRoot } from './root.mts'
 
-const excludedPackages = /@zoltar\/(?:statoblast|open-oracle|trading|ui-statoblast|ui-trading)(?:-shared)?(?:\/|$)/
+const localPackages = new Set(['core-shared', 'zoltar-shared', 'ui-core-shared', 'ui-zoltar-shared', 'ui-zoltar', 'contracts'])
 export function checkImportBoundary(file: string, specifier: string, root = repositoryRoot): string | undefined {
-	if (excludedPackages.test(specifier)) return `${file}: excluded product import ${specifier}`
+	if (specifier.startsWith('@zoltar/') && !localPackages.has(specifier.split('/')[1] ?? '')) return `${file}: excluded product import ${specifier}`
 	if (path.isAbsolute(specifier)) return `${file}: absolute filesystem import ${specifier}`
 	if (specifier.startsWith('.')) {
 		const relative = path.relative(root, path.resolve(path.dirname(file), specifier))

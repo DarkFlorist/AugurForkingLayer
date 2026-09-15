@@ -59,7 +59,7 @@ describe('useHashRoute', () => {
 	})
 
 	test('preserves explicitly requested return context across a cross-feature handoff', async () => {
-		window.location.hash = '#/security-pools?universe=7&securityPool=0x123&securityPoolsView=operate&selectedPoolView=reporting&openOracleView=selected-report&openOracleReportId=9'
+		window.location.hash = '#/security-pools?universe=7&securityPool=0x123&securityPoolsView=operate&selectedPoolView=reporting&exampleView=selected-report&exampleItemId=9'
 		let hookState: UseHashRouteState | undefined
 		const Harness = createHarness(state => {
 			hookState = state
@@ -69,12 +69,12 @@ describe('useHashRoute', () => {
 		cleanupRenderedComponent = rendered.cleanup
 
 		await act(async () => {
-			requireState(hookState).navigate('open-oracle', new Set(['securityPool', 'securityPoolsView', 'selectedPoolView']))
+			requireState(hookState).navigate('example', new Set(['securityPool', 'securityPoolsView', 'selectedPoolView']))
 			window.dispatchEvent(new Event('hashchange'))
 			await Promise.resolve()
 		})
 
-		expect(window.location.hash).toBe('#/open-oracle?universe=7&securityPool=0x123&securityPoolsView=operate&selectedPoolView=reporting&openOracleView=selected-report&openOracleReportId=9')
+		expect(window.location.hash).toBe('#/example?universe=7&securityPool=0x123&securityPoolsView=operate&selectedPoolView=reporting&exampleView=selected-report&exampleItemId=9')
 
 		await act(async () => {
 			requireState(hookState).navigate('security-pools')

@@ -32,7 +32,7 @@ const GLOBAL_KEYS = [
 
 type GlobalKey = (typeof GLOBAL_KEYS)[number]
 
-export function installDomEnvironment(url = 'http://localhost/#/open-oracle'): InstalledDomEnvironment {
+export function installDomEnvironment(url = 'http://localhost/#/example'): InstalledDomEnvironment {
 	const window = new Window({
 		url,
 	})

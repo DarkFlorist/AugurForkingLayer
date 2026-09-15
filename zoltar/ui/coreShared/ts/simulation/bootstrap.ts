@@ -1,6 +1,6 @@
 import { createMemoryClient } from '@tevm/memory-client'
 import { encodeAbiParameters, encodeDeployData, getCreateAddress, keccak256, toHex, type Address, type Hex } from '@zoltar/core-shared/evm/ethereum'
-import { ReputationToken_ReputationToken, Zoltar_Zoltar, statoblast_WETH9_WETH9 } from '../contractArtifact.js'
+import { ReputationToken_ReputationToken, Zoltar_Zoltar, infrastructure_WETH9_WETH9 } from '../contractArtifact.js'
 import type { ReadClient, WriteClient } from '../wallet/chainBackend.js'
 import type { DeploymentStep } from '../types/contracts.js'
 import { MAINNET_WETH_ADDRESS, setRuntimeNetworkProfile, type NetworkProfile } from '../wallet/networkProfile.js'
@@ -255,7 +255,7 @@ async function deploySimulationTokens({
 	await reportBootstrapProgress(onProgress, 'Deploying simulation REP token', 0.18)
 	await memoryClient.setCode({
 		address: profile.wethAddress,
-		bytecode: `0x${statoblast_WETH9_WETH9.evm.deployedBytecode.object}`,
+		bytecode: `0x${infrastructure_WETH9_WETH9.evm.deployedBytecode.object}`,
 	})
 	await memoryClient.setStorageAt({ address: profile.wethAddress, index: storageIndex(WETH_NAME_SLOT), value: shortStringStorageValue('Wrapped Ether') })
 	await memoryClient.setStorageAt({ address: profile.wethAddress, index: storageIndex(WETH_SYMBOL_SLOT), value: shortStringStorageValue('WETH') })

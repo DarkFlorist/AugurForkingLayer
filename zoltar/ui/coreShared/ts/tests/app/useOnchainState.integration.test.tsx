@@ -1686,7 +1686,7 @@ describe('useOnchainState (integration)', () => {
 		resetEnvironment()
 	})
 
-	test('updates Statoblast deployment state when all deployment statuses are marked deployed', async () => {
+	test('updates Zoltar deployment state when all deployment statuses are marked deployed', async () => {
 		const { backend } = createBackend({
 			readClient: createReadClient({ ethBalanceAttoEth: 4n }),
 		})

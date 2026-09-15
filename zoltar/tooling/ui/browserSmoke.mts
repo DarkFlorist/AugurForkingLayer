@@ -404,7 +404,7 @@ async function runBrowserSmokeUnlocked(appId: UiAppId, baseUrl: string, options:
 	const session = await createDevToolsSession(chromiumPath, pageUrl, viewport)
 	try {
 		const { send, issues } = session
-		const applicationTitles: Record<UiAppId, string> = { statoblast: 'Augur Statoblast', trading: 'Statoblast trading', zoltar: 'Zoltar' }
+		const applicationTitles: Record<UiAppId, string> = { trading: 'Trading', zoltar: 'Zoltar' }
 		const applicationTitle = applicationTitles[appId]
 		const readyText = process.env['UI_BROWSER_READY_TEXT']
 		await send('Runtime.enable')
@@ -476,7 +476,7 @@ async function main() {
 	const appId = parseUiAppIdFromProcess('the browser smoke check')
 	const paths = getUiAppPaths(appId)
 	void paths
-	const ports: Record<UiAppId, number> = { statoblast: 12347, trading: 4163, zoltar: 4153 }
+	const ports: Record<UiAppId, number> = { trading: 4163, zoltar: 4153 }
 	const explicitBaseUrl = process.env['UI_DEV_SERVER_URL']
 	if (appId !== undefined && explicitBaseUrl === undefined) {
 		throw new Error(`Set UI_DEV_SERVER_URL to the running ${appId} dev server base URL (expected http://localhost:${ports[appId]} from bun run app:serve:${appId}).`)

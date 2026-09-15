@@ -7,12 +7,10 @@ import { appSharedPackages, sharedPackageClosure } from '../repo/sharedPackages.
 
 import { parseUiAppId, type UiAppId } from './appIds.mts'
 export { isUiAppId, parseUiAppId, UI_APP_IDS, type UiAppId } from './appIds.mts'
-export type UiPackageId = 'coreShared' | 'zoltarShared' | 'statoblastShared' | UiAppId
+export type UiPackageId = 'coreShared' | 'zoltarShared' | UiAppId
 
 const UI_PROJECT_ID_BY_PACKAGE_ID: Readonly<Record<UiPackageId, string>> = {
 	coreShared: 'ui-core',
-	statoblast: 'ui-statoblast',
-	statoblastShared: 'ui-statoblast-shared',
 	trading: 'ui-trading',
 	zoltar: 'ui-zoltar',
 	zoltarShared: 'ui-zoltar-shared',

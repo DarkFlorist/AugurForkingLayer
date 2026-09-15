@@ -1,13 +1,13 @@
 import { encodeDeployData, getCreate2Address, toHex, type Address, type Hex } from '@zoltar/core-shared/evm/ethereum'
 import { createZoltarAddressHelpers } from '@zoltar/zoltar-shared/deployment/deploymentAddresses'
 import { DEFAULT_PROTOCOL_CONFIG } from '@zoltar/core-shared/deployment/protocolConfig'
-import { Zoltar_Zoltar, ZoltarQuestionData_ZoltarQuestionData, statoblast_Multicall3_Multicall3 } from '@zoltar/ui-core-shared/contractArtifact.js'
+import { Zoltar_Zoltar, ZoltarQuestionData_ZoltarQuestionData, infrastructure_Multicall3_Multicall3 } from '@zoltar/ui-core-shared/contractArtifact.js'
 import { getRuntimeNetworkProfile, type NetworkProfile } from '@zoltar/ui-core-shared/wallet/networkProfile.js'
 import { bigintToAddress } from './helpers.js'
 
 export const PROXY_DEPLOYER_ADDRESS = bigintToAddress(0x7a0d94f55792c434d74a40883c6ed8545e406d12n)
 export const ZERO_SALT = toHex(0, { size: 32 })
-export const MULTICALL3_BYTECODE = `0x${statoblast_Multicall3_Multicall3.evm.bytecode.object}` satisfies Hex
+export const MULTICALL3_BYTECODE = `0x${infrastructure_Multicall3_Multicall3.evm.bytecode.object}` satisfies Hex
 
 export const getZoltarQuestionDataByteCode = () =>
 	encodeDeployData({

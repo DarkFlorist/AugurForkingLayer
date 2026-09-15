@@ -2,7 +2,7 @@ import { promises as fs } from 'fs'
 import * as process from 'node:process'
 import * as url from 'node:url'
 import * as path from 'path'
-import { contractProjectOwner, isContractProjectSource, type ContractProject } from '../../solidity/ts/contractProjects.ts'
+import { isContractProjectSource, type ContractProject } from '../../solidity/ts/contractProjects.ts'
 import { repositoryRoot as REPOSITORY_ROOT_PATH } from '../repo/root.mts'
 
 const UI_ROOT_PATH = path.join(REPOSITORY_ROOT_PATH, 'ui')
@@ -11,7 +11,6 @@ const ABI_OUTPUT_PATH = path.join(CORE_SHARED_ROOT_PATH, 'ts', 'abis.ts')
 const ABI_SOURCE_PATH = path.join(REPOSITORY_ROOT_PATH, 'solidity', 'ts', 'abi', 'abis.ts')
 const CONTRACT_ARTIFACT_OUTPUT_PATH = path.join(CORE_SHARED_ROOT_PATH, 'ts', 'contractArtifact.ts')
 const CONTRACT_ARTIFACTS_JSON_PATH = path.join(REPOSITORY_ROOT_PATH, 'solidity', 'artifacts', 'Contracts.json')
-const TRADING_CONTRACT_ARTIFACT_OUTPUT_PATH = path.join(UI_ROOT_PATH, 'trading', 'ts', 'generated', 'contractArtifact.ts')
 
 type CompiledContract = {
 	readonly abi?: unknown
@@ -27,7 +26,6 @@ type CompiledContractsJson = {
 }
 
 export type ProjectArtifactOptions = {
-	readonly includeTrading?: boolean
 	readonly project?: ContractProject
 }
 
@@ -35,32 +33,21 @@ export type ProjectArtifactPaths = {
 	readonly abiOutputPath: string
 	readonly abiSourcePath: string
 	readonly contractArtifactOutputPath: string
-	readonly statoblastContractArtifactOutputPath: string
 	readonly contractArtifactsJsonPath: string
-	readonly tradingContractArtifactOutputPath: string
 }
 
 export function isCoreProjectContractPath(contractPath: string) {
 	return !contractPath.startsWith('contracts/trading/')
 }
 
-function tradingRuntimeArtifact(contract: CompiledContract) {
-	return {
-		abi: contract.abi,
-		evm: { bytecode: { object: contract.evm?.bytecode?.object } },
-	}
-}
-
 export const defaultProjectArtifactPaths: ProjectArtifactPaths = {
 	abiOutputPath: ABI_OUTPUT_PATH,
 	abiSourcePath: ABI_SOURCE_PATH,
 	contractArtifactOutputPath: CONTRACT_ARTIFACT_OUTPUT_PATH,
-	statoblastContractArtifactOutputPath: path.join(UI_ROOT_PATH, 'statoblastShared', 'ts', 'contractArtifact.ts'),
 	contractArtifactsJsonPath: CONTRACT_ARTIFACTS_JSON_PATH,
-	tradingContractArtifactOutputPath: TRADING_CONTRACT_ARTIFACT_OUTPUT_PATH,
 }
 
-export async function copyProjectArtifacts(options: ProjectArtifactOptions = {}, artifactPaths = defaultProjectArtifactPaths) {
+export async function copyProjectArtifacts(_options: ProjectArtifactOptions = {}, artifactPaths = defaultProjectArtifactPaths) {
 	const solidityAbiSource = await fs.readFile(artifactPaths.abiSourcePath, 'utf8')
 	await fs.writeFile(artifactPaths.abiOutputPath, solidityAbiSource)
 
@@ -70,7 +57,7 @@ export async function copyProjectArtifacts(options: ProjectArtifactOptions = {},
 	const compiledContracts = compiledArtifacts.contracts
 	const renderContracts = (owner: ContractProject) =>
 		Object.entries(compiledContracts)
-			.filter(([filename]) => isCoreProjectContractPath(filename) && contractProjectOwner(filename) === owner && isContractProjectSource(filename, owner))
+			.filter(([filename]) => isCoreProjectContractPath(filename) && isContractProjectSource(filename, owner))
 			.flatMap(([filename, contractFile]) => {
 				if (contractFile === undefined) throw new Error(`missing compiled contract file for ${filename}`)
 				return Object.entries(contractFile).map(([contractName, contractData]) => {
@@ -86,30 +73,6 @@ export async function copyProjectArtifacts(options: ProjectArtifactOptions = {},
 			})
 
 	await fs.writeFile(artifactPaths.contractArtifactOutputPath, `${renderContracts('zoltar').join('\n\n')}\n`)
-	if (options.project !== 'zoltar') {
-		await fs.mkdir(path.dirname(artifactPaths.statoblastContractArtifactOutputPath), { recursive: true })
-		await fs.writeFile(artifactPaths.statoblastContractArtifactOutputPath, `${renderContracts('statoblast').join('\n\n')}\n`)
-	}
-
-	if (options.includeTrading !== true) return
-	const tradingContracts = Object.fromEntries(
-		Object.entries(compiledArtifacts.contracts)
-			.filter(([filename]) => filename.startsWith('contracts/trading/'))
-			.map(([filename, contractsByName]) => {
-				if (contractsByName === undefined) throw new Error(`missing compiled contract file for ${filename}`)
-				return [
-					filename,
-					Object.fromEntries(
-						Object.entries(contractsByName).map(([contractName, contract]) => {
-							if (contract === undefined) throw new Error(`missing compiled contract ${contractName} in ${filename}`)
-							return [contractName, tradingRuntimeArtifact(contract)]
-						}),
-					),
-				]
-			}),
-	)
-	await fs.mkdir(path.dirname(artifactPaths.tradingContractArtifactOutputPath), { recursive: true })
-	await fs.writeFile(artifactPaths.tradingContractArtifactOutputPath, `// Generated from solidity/artifacts/Contracts.json by tooling/ui/projectArtifacts.mts. Do not edit.\nexport const tradingContracts = ${JSON.stringify(tradingContracts)} as const\n`)
 }
 
 const currentScriptPath = url.fileURLToPath(import.meta.url)

@@ -4,13 +4,12 @@
 
 Copy Zoltar into a self-contained `zoltar/` directory, with its own Bun workspace, dependencies, contracts, UI, tooling, tests, and documentation. Keep GitHub Actions entrypoints in the repository-root `.github/`, with Zoltar-specific names and paths. Future AugurForkingLayer code should consume explicit Zoltar interfaces and package exports rather than importing application internals.
 
-Implementation lives in `zoltar/`. See `zoltar/UPSTREAM.md` and `zoltar/docs/validation.md` for the delivered scope and validation. No public-chain deployment has been performed. At the maintainer’s request, delivered workflow YAML files are staged in repository-root `workflow/` and must be moved to `.github/workflows/` to activate them.
+Implementation lives in `zoltar/`. See `zoltar/UPSTREAM.md` and `zoltar/docs/validation.md` for the delivered scope and validation. No public-chain deployment has been performed. Workflow YAML files are installed in `.github/workflows/`.
 
 ## Inspection baseline
 
 - Target: this AugurForkingLayer checkout has no tracked files or initial commit at inspection time. Its configured origin is `https://github.com/DarkFlorist/AugurForkingLayer.git`. There is no existing target architecture to integrate with yet.
 - Source: [AugurProject/zoltar](https://github.com/AugurProject/zoltar), inspected at commit [`85fdf19f8962d17b6f1e0612df9a01b6c30398d4`](https://github.com/AugurProject/zoltar/tree/85fdf19f8962d17b6f1e0612df9a01b6c30398d4).
-- The source includes Zoltar, Statoblast, Trading, bots, an explorer, and network infrastructure. Copying the entire repository would import substantially more than Zoltar.
 - Zoltar's UI is already split into `ui/zoltar`, `ui/zoltarShared`, and `ui/coreShared`; runtime libraries include `shared/core` and `shared/zoltar`.
 - Tooling uses Bun 1.4.2. The contracts package includes Solidity 0.8.35 and an aliased 0.8.28 compiler. Retain the compiler versions actually required by the selected source closure.
 - Inspection was read-only in a temporary upstream clone. Dependencies were not installed and upstream builds/tests were not run; build independence remains an implementation acceptance criterion.
@@ -21,8 +20,7 @@ Implementation lives in `zoltar/`. See `zoltar/UPSTREAM.md` and `zoltar/docs/val
 2. Keep upstream internal directory names and `@zoltar/*` package names initially. Avoid mixing extraction with cosmetic moves or protocol redesign.
 3. Zoltar owns its configuration, lockfiles, generated artifacts, network profiles, and release lifecycle. Do not introduce a repository-wide Bun workspace just to host it.
 4. Other project components may consume Solidity interfaces, generated ABIs, documented deployment data, and exported runtime packages. They must not import UI application internals or private tooling.
-5. Enforce import direction with boundary checks. Zoltar must not import future sibling applications or require Statoblast/Trading builds.
-6. Keep this as copied, locally maintained source, without a submodule or runtime dependency on the upstream checkout. Record upstream provenance and review later upstream updates explicitly.
+5. Keep this as copied, locally maintained source, without a submodule or runtime dependency on the upstream checkout. Record upstream provenance and review later upstream updates explicitly.
 
 ## Proposed layout
 
@@ -73,7 +71,7 @@ Generated directories remain ignored and reproducible. The repository root may l
 | --- | --- |
 | `solidity/contracts/Zoltar.sol`, `ZoltarQuestionData.sol`, `ReputationToken.sol`, `GenesisReputationToken.sol`, `DeploymentStatusOracle.sol` | Preserve under `zoltar/solidity/contracts/`, along with all required imports, constants, token interfaces, and authorization vendor sources. |
 | `solidity/ts/contractProjects.ts` | Use the existing Zoltar contract selection as the starting inventory, then verify production and test import closure. |
-| `solidity/contracts/statoblast/WETH9.sol` and `Multicall3.sol` | Upstream explicitly classifies these as neutral Zoltar infrastructure. Keep where required, initially retaining paths and source contents; the directory name alone is not grounds for exclusion. |
+| `solidity/contracts/infrastructure/WETH9.sol` and `Multicall3.sol` | Upstream explicitly classifies these as neutral Zoltar infrastructure. Keep where required, initially retaining paths and source contents; the directory name alone is not grounds for exclusion. |
 | `solidity/ts` | Copy Zoltar compiler, deployment, artifact schemas, test runner dependencies, helpers, tests, and relevant invariant/security coverage. Split helpers that currently deploy the entire protocol. |
 | `shared/core`, `shared/zoltar`, shared TypeScript configs | Retain local packages and relevant tests; inspect network/deployment configuration for application-specific fields. |
 | `ui/zoltar`, `ui/zoltarShared` | Retain application routes, assets, deployment/question/fork/migration operations, protocol helpers, and tests. |
@@ -83,17 +81,13 @@ Generated directories remain ignored and reproducible. The repository root may l
 | `.github/workflows`, `.github/actions` | Adapt selected CI, browser, deployment, and publishing behavior into repository-root Zoltar workflows. |
 | Protocol documentation and local-chain tooling | Retain Zoltar material and its referenced assets/runtime support; rewrite navigation and commands to match the extracted scope. |
 
-Exclude Statoblast and Trading applications and domain packages, security-pool/escalation/auction contracts, OpenOracle application functionality, bots, `augurScan`, and `reth` by default. Retain a dependency from an excluded location only when its need is demonstrated and documented. Do not blindly copy upstream agent configuration, review automation, editor settings, generated bundles, credentials, or deployment state.
 
 ## Known coupling that must be resolved
 
-- **Contracts package dependencies:** `solidity/package.json` currently declares OpenOracle, Statoblast, and Trading shared packages. Narrow the source/test graph before removing these dependencies.
 - **Shared UI build scripts:** `ui/coreShared/package.json` generates vendors and workers for all three applications. Scope these tasks to Zoltar.
-- **Shared types and routes:** `ui/coreShared/ts/types/contracts.ts` includes security-pool/OpenOracle deployment steps, and shared URL state includes other applications' routes. Separate genuinely generic support from unused product behavior; do not rely solely on package manifests.
 - **Repository orchestration:** `tooling/repo/projects.ts`, test discovery, coverage policy, TypeScript references, lint configuration, and unused-code analysis describe the entire upstream repository. Reduce them together so no removed project remains a prerequisite.
 - **Artifact generation:** upstream supports `build-app-contracts.mts zoltar`, but the full compiler/generator pipeline also produces aggregate artifacts. Make clean Zoltar generation sufficient for UI types, ABIs, simulation, deployment, and tests.
 - **Deployment configuration:** inspect deterministic addresses, constructor arguments, bytecode hashes, proxy deployment, and network profiles. Preserve Solidity source-unit paths and compiler settings where practical. Compare artifacts before assuming relocation preserves deployment addresses.
-- **Browser workflow:** the current long browser command includes a Statoblast fork/auction scenario. Extract Zoltar assertions and fixtures into an independently runnable lifecycle test.
 - **Publishing:** upstream Docker and release workflows assume a multi-application repository. Change build contexts, artifact paths, image names, tags, workflow references, and output URLs together.
 
 ## Implementation sequence

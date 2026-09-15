@@ -47,7 +47,6 @@ ui/*/ts/**/*.d.ts.map
 
 /shared/*/js/
 /shared/.freshness-hash
-/ui/statoblastShared/ts/contractArtifact.ts
 
 # Retired aggregate output from earlier checkouts
 /shared/js/

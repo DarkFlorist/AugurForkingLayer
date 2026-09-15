@@ -3,8 +3,6 @@ import type { MetricGridProps } from '../types/components.js'
 
 function getMetricGridVariantClassName(variant: MetricGridProps['variant'] = 'default') {
 	switch (variant) {
-		case 'context':
-			return 'selected-pool-context-grid'
 		case 'default':
 			return 'workflow-metric-grid'
 		case 'question':

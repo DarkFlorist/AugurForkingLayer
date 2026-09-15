@@ -8,7 +8,7 @@ export function activateSimulationBackendProfile(backend: SimulationBackend) {
 	setRuntimeNetworkProfile(backend.profile)
 }
 
-export async function createBootstrappedSimulationBackendWithRetry(scenario: SimulationScenario, maxAttempts = 2, appId: 'zoltar' | 'trading' = 'zoltar') {
+export async function createBootstrappedSimulationBackendWithRetry(scenario: SimulationScenario, maxAttempts = 2, appId: 'zoltar' = 'zoltar') {
 	let lastError: unknown = undefined
 	for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
 		const backend = await createSimulationBackend({ appId, scenario })

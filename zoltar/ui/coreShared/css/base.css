@@ -692,8 +692,7 @@ button.quiet:disabled {
 	color: var(--text-secondary);
 }
 
-.universe-link,
-.security-pool-link {
+.universe-link {
 	display: inline-flex;
 	align-items: baseline;
 	max-width: 100%;
@@ -713,16 +712,13 @@ button.quiet:disabled {
 }
 
 .universe-link:hover,
-.universe-link:focus-visible,
-.security-pool-link:hover,
-.security-pool-link:focus-visible {
+.universe-link:focus-visible {
 	color: var(--accent);
 	text-decoration: underline;
 	text-decoration-color: color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
-.universe-link:focus-visible,
-.security-pool-link:focus-visible {
+.universe-link:focus-visible {
 	outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
 	outline-offset: 2px;
 }
@@ -2407,30 +2403,6 @@ button.wallet-asset-action-pending:disabled {
 	padding-top: 0.25rem;
 }
 
-.workflow-vault-list {
-	display: grid;
-	gap: 1rem;
-}
-
-.workflow-vault-row {
-	display: grid;
-	gap: 0.75rem;
-	padding-top: 0.75rem;
-	border-top: 1px solid var(--border-default);
-}
-
-.workflow-vault-topline {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 0.75rem;
-}
-
-.workflow-vault-topline h4 {
-	line-height: 1.15;
-	letter-spacing: -0.01em;
-}
-
 .overview-summary-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2442,32 +2414,12 @@ button.wallet-asset-action-pending:disabled {
 	min-width: 0;
 }
 
-.pool-vaults {
-	display: grid;
-	gap: 1rem;
-	margin-top: 1rem;
-	padding-top: 1rem;
-	border-top: 1px solid var(--border-default);
-}
-
-.pool-vault-row {
-	display: grid;
-	gap: 0.5rem;
-	padding-top: 0.75rem;
-	border-top: 1px solid var(--border-subtle);
-}
-
 .entity-card-list {
 	display: grid;
 	gap: 1.15rem;
 }
 
 .comparison-record-list {
-	display: grid;
-	gap: var(--space-2);
-}
-
-.security-pool-overview-record {
 	display: grid;
 	gap: var(--space-2);
 }

@@ -60,12 +60,11 @@ bun run check
 bun run test
 bun run check:artifacts
 bun run test:browser
-bun run test:browser:workflow
 ```
 
 `check` runs TypeScript, formatting, lint, import-boundary checks, and Knip in normal and production modes. `test` runs the contract, UI/runtime, and tooling suites. Browser checks require Chromium; set `CHROMIUM_PATH` if it is not detected automatically.
 
-CI runs these checks and browser smoke tests on pull requests. The full browser workflow also runs on pushes to `main` or by manual dispatch.
+CI runs these checks on pull requests, including browser smoke tests and the full question-to-REP-migration workflow.
 
 ## Integration
 

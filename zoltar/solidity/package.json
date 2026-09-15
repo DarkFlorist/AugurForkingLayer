@@ -8,8 +8,6 @@
 		"compile-contracts": "bun ts/compile.ts",
 		"test": "cd .. && bun run test:contracts"
 	},
-	"keywords": [],
-	"author": "",
 	"license": "Unlicense",
 	"dependencies": {
 		"@zoltar/core-shared": "workspace:1.0.0"

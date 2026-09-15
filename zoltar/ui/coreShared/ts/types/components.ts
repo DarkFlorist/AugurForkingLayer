@@ -107,7 +107,7 @@ export type DataGridProps = {
 	dense?: boolean
 }
 
-type MetricGridVariant = 'context' | 'default' | 'question' | 'summary' | 'vault'
+type MetricGridVariant = 'default' | 'question' | 'summary' | 'vault'
 
 export type MetricGridProps = {
 	children: ComponentChildren

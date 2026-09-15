@@ -14,8 +14,6 @@
 
 	/* accents */
 	--accent-zoltar: rgba(56, 213, 255, 1);
-	--accent-trading: rgba(183, 238, 81, 1);
-	--accent-augurscan: rgba(45, 212, 191, 1);
 	--accent: var(--accent-zoltar);
 	--accent-strong: rgba(124, 108, 255, 1);
 	--accent-faint: color-mix(in srgb, var(--accent) 8%, transparent);
@@ -162,13 +160,6 @@
 	--simulation-text-secondary: rgba(255, 242, 213, 0.82);
 	--simulation-border-hover: rgba(255, 236, 180, 0.56);
 
-	/* truth auction */
-	--truth-auction-track: rgba(8, 18, 31, 1);
-	--truth-auction-eth: rgba(232, 166, 68, 1);
-	--truth-auction-eth-highlight: rgba(243, 209, 123, 1);
-	--truth-auction-rep: rgba(62, 159, 120, 1);
-	--truth-auction-rep-highlight: rgba(137, 208, 168, 1);
-
 	/* component hierarchy */
 	--radius-compact: 0.25rem;
 	--radius-normal: 0.5rem;
@@ -192,8 +183,4 @@
 
 :root[data-product="zoltar"] {
 	--accent: var(--accent-zoltar);
-}
-
-:root[data-product="trading"] {
-	--accent: var(--accent-trading);
 }

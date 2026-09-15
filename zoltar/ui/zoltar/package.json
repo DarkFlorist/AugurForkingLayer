@@ -2,7 +2,6 @@
 	"description": "Zoltar question and universe operations interface",
 	"name": "@zoltar/ui-zoltar",
 	"private": true,
-	"repository": {},
 	"license": "Unlicense",
 	"type": "module",
 	"devDependencies": {

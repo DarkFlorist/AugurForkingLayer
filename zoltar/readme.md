@@ -35,14 +35,13 @@ bun run test
 bun run check:artifacts
 bun run knip
 bun run test:browser
-bun run test:browser:workflow
 ```
 
 - `check`: TypeScript, import boundaries, formatting, lint, and both Knip modes. CI runs this command.
 - `test`: contract tests, isolated UI/runtime tests, deployment and boundary tests. UI tests use file isolation to prevent mock leakage.
 - `check:artifacts`: compares all 19 production ABIs and creation/runtime bytecodes against the recorded contract baseline. Intentional future protocol changes require reviewing and updating that baseline.
-- `test:browser`: serves production assets temporarily and checks desktop/mobile boot in Chromium. Set `CHROMIUM_PATH` if Chromium is not auto-detected.
-- `test:browser:workflow`: exercises question creation, fork approval, forking, and migration in the production browser simulation.
+- `test:browser`: runs desktop/mobile smoke checks and the full browser workflow against production assets. CI runs this command on pull requests. Set `CHROMIUM_PATH` if Chromium is not auto-detected.
+- `test:browser:smoke` and `test:browser:workflow`: run the smoke checks or the question creation, fork approval, forking, and migration workflow separately.
 
 Normal validation is deterministic and does not depend on a public RPC. Contract tests cover the fork threshold/burn rules, child universe creation, nested forks, migration balances, token authorizations, and question encoding guards.
 

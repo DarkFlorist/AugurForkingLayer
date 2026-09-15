@@ -2,7 +2,6 @@
 	"description": "Shared UI primitives, shell framework, and simulation engine",
 	"name": "@zoltar/ui-core-shared",
 	"private": true,
-	"repository": {},
 	"license": "Unlicense",
 	"type": "module",
 	"devDependencies": {
@@ -131,10 +130,6 @@
 		"./tests/transactionTray.test.js": {
 			"bun": "./ts/tests/transactionTray.test.ts",
 			"default": "./js/tests/transactionTray.test.js"
-		},
-		"./tests/inputs.test.js": {
-			"bun": "./ts/tests/inputs.test.ts",
-			"default": "./js/tests/inputs.test.js"
 		},
 		"./tests/userCopy.test.js": {
 			"bun": "./ts/tests/userCopy.test.ts",

@@ -7,8 +7,6 @@
 - `GenesisReputationToken.sol` provides genesis REP; `ReputationToken.sol` implements child REP and authorization behavior.
 - `DeploymentStatusOracle.sol` reports the installed infrastructure. WETH9 and Multicall3 provide token wrapping and read batching.
 
-The copied Solidity production sources are unchanged from the pinned revision. The protocol's economics and contract behavior are not redesigned by extraction.
-
 ## UI workflow
 
 1. Choose a network or start browser simulation, connect a wallet when using a real network, and inspect deployment status.
@@ -21,10 +19,10 @@ Use the transaction tray to inspect submitted transactions and failures. The sim
 
 ## Reference sources
 
-The pinned upstream documentation provides additional protocol detail:
+Additional protocol references:
 
 - [Zoltar explanation](https://github.com/AugurProject/zoltar/blob/85fdf19f8962d17b6f1e0612df9a01b6c30398d4/docs/explanation/zoltar.html)
 - [Zoltar contract reference](https://github.com/AugurProject/zoltar/blob/85fdf19f8962d17b6f1e0612df9a01b6c30398d4/docs/reference/contracts/zoltar.html)
 - [Question registry reference](https://github.com/AugurProject/zoltar/blob/85fdf19f8962d17b6f1e0612df9a01b6c30398d4/docs/reference/contracts/zoltarquestiondata.html)
 
-Those documents also discuss consumers outside this extracted component. The local contract source, tests, and generated ABI are authoritative for this copy.
+The local contract source, tests, and generated ABI define the behavior of this project.

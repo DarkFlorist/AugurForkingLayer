@@ -1,6 +1,6 @@
 # Zoltar
 
-Zoltar is a forkable oracle with a question registry, universes, and reputation-token migration. This directory is an independent copy of Zoltar from AugurProject/zoltar.
+Zoltar is a forkable oracle with a question registry, universes, and reputation-token migration.
 
 ## Setup
 
@@ -23,7 +23,7 @@ Open `http://localhost:4153/?simulate=1` for a walletless browser simulation, or
 
 For an external local chain, run `bun run anvil` in another terminal. The local chain uses Sepolia chain ID `11155111`; select `?network=sepolia&rpcUrl=http://127.0.0.1:8545` and configure your wallet for that local RPC. The integration tests start isolated Anvil processes automatically and require no persistent chain.
 
-The default real-network profile and deterministic addresses are inherited from upstream. Select Sepolia with `?network=sepolia`. Override RPC with `?rpcUrl=...` or the UI settings. Copying the code does not deploy new contracts or migrate onchain state.
+Select Sepolia with `?network=sepolia`. Override RPC with `?rpcUrl=...` or the UI settings. Running the UI does not deploy contracts or migrate onchain state.
 
 ## Validate
 
@@ -40,7 +40,7 @@ bun run test:browser:workflow
 
 - `check`: TypeScript, import boundaries, formatting, lint, and both Knip modes. CI runs this command.
 - `test`: contract tests, isolated UI/runtime tests, deployment and boundary tests. UI tests use file isolation to prevent mock leakage.
-- `check:artifacts`: compares all 19 production ABIs and creation/runtime bytecodes against the pinned upstream baseline. Intentional future protocol changes require reviewing and updating that baseline.
+- `check:artifacts`: compares all 19 production ABIs and creation/runtime bytecodes against the recorded contract baseline. Intentional future protocol changes require reviewing and updating that baseline.
 - `test:browser`: serves production assets temporarily and checks desktop/mobile boot in Chromium. Set `CHROMIUM_PATH` if Chromium is not auto-detected.
 - `test:browser:workflow`: exercises question creation, fork approval, forking, and migration in the production browser simulation.
 
@@ -50,7 +50,7 @@ Normal validation is deterministic and does not depend on a public RPC. Contract
 
 Workflow YAML files are in `.github/workflows/`; their setup action is in `.github/actions/setup-zoltar/`.
 
-`bun run build:prod` writes the static application to `ui/zoltar/dist/`, including worker and vendor assets. Serve the entire directory. Once activated, GitHub CI uploads this output as `zoltar-ui`; `zoltar-v*` tags build independently named release artifacts. Hosting, IPFS publication, and a public release destination are not configured by this extraction.
+`bun run build:prod` writes the static application to `ui/zoltar/dist/`, including worker and vendor assets. Serve the entire directory. Once activated, GitHub CI uploads this output as `zoltar-ui`; `zoltar-v*` tags build independently named release artifacts. Hosting, IPFS publication, and a public release destination are not configured.
 
 Generated JS, ABI/contract TypeScript modules, Solidity JSON artifacts, and production bundles are ignored. Always regenerate them from source. The tracked artifact baseline is a verification fixture, not a deployable build output.
 
@@ -72,11 +72,11 @@ Other AugurForkingLayer components may consume `shared/core` and `shared/zoltar`
 
 WETH9 and Multicall3 are neutral infrastructure in `solidity/contracts/infrastructure/` (relative to the Zoltar workspace). Production Solidity contents are preserved; infrastructure source paths are normalized.
 
-See [protocol and operator notes](docs/protocol.md), [upstream baseline](import-manifest.json), and the [validation record](docs/validation.md).
+See [protocol and operator notes](docs/protocol.md), [contract baseline](import-manifest.json), and the [validation record](docs/validation.md).
 
 ## Unused-code checks
 
-`knip.json` adapts the pinned upstream workspace configuration. It declares UI, worker, contract, test, and spawned build entrypoints and maps package imports to source files. The normal check includes tests; production checking excludes test roots. Selected internal exports remain available for contract fixtures and regression tests.
+`knip.json` defines the workspace configuration for unused-code checks. It declares UI, worker, contract, test, and spawned build entrypoints and maps package imports to source files. The normal check includes tests; production checking excludes test roots. Selected internal exports remain available for contract fixtures and regression tests.
 
 Dependency exceptions cover packages loaded by the vendor/bundler scripts, shared workspace runtime dependencies, and the automatically selected `better-typescript-lib` definitions. Bun preload and compiler-command exceptions account for commands resolved from the workspace root. Review these exceptions when changing build tooling.
 

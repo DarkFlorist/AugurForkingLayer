@@ -36,7 +36,7 @@ bun run app:serve:zoltar
 
 Open [the simulated Zoltar UI](http://localhost:4153/?simulate=1&simScenario=deployed#/zoltar). For automatic rebuilds during development, use `bun run app:watch:zoltar` instead of the serve command.
 
-See the [Zoltar README](zoltar/README.md) for wallet connections, local-chain settings, production builds, and deployment commands.
+See the [Zoltar README](zoltar/readme.md) for wallet connections, local-chain settings, production builds, and deployment commands.
 
 ## Repository layout
 
@@ -67,9 +67,9 @@ bun run test:browser:workflow
 
 CI runs these checks and browser smoke tests on pull requests. The full browser workflow also runs on pushes to `main` or by manual dispatch. See the [validation record](zoltar/docs/validation.md).
 
-## Source and integration
+## Integration
 
-The imported source is based on [AugurProject/zoltar](https://github.com/AugurProject/zoltar) at the revision recorded in the compact [upstream baseline](zoltar/import-manifest.json). The production artifact check compares all 19 contract ABIs and creation/runtime bytecodes with that baseline.
+The production artifact check compares all 19 contract ABIs and creation/runtime bytecodes with the recorded [contract baseline](zoltar/import-manifest.json).
 
 Future integrations should use Zoltar's Solidity interfaces, generated ABIs, and runtime package exports. The UI application and private build tools remain internal to the Zoltar workspace.
 

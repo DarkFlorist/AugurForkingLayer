@@ -75,7 +75,7 @@ See [protocol and operator notes](docs/protocol.md) and the [contract baseline](
 
 ## Unused-code checks
 
-`knip.json` defines the workspace configuration for unused-code checks. It declares UI, worker, contract, test, and spawned build entrypoints and maps package imports to source files. The normal check includes tests; production checking excludes test roots. Selected internal exports remain available for contract fixtures and regression tests.
+`knip.ts` defines the workspace configuration for unused-code checks. It declares UI, worker, contract, test, and spawned build entrypoints and maps package imports to source files. The normal check includes tests, test helpers, and shared fixtures; production checking excludes test roots. Dynamic vendor dependencies, TypeScript replacement libraries, and two script-parser exceptions are documented in the configuration. Selected internal exports remain available for contract fixtures and regression tests.
 
 Dependency exceptions cover packages loaded by the vendor/bundler scripts, shared workspace runtime dependencies, and the automatically selected `better-typescript-lib` definitions. Bun preload and compiler-command exceptions account for commands resolved from the workspace root. Review these exceptions when changing build tooling.
 

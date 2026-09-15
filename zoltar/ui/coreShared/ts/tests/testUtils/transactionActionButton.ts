@@ -6,7 +6,7 @@ type ButtonState = {
 	reason: string | undefined
 }
 
-export function getTransactionButtonState(scope: HTMLElement, label: string): ButtonState {
+function getTransactionButtonState(scope: HTMLElement, label: string): ButtonState {
 	const buttons = within(scope).getAllByRole('button', { name: label })
 	const button = buttons[0]
 	if (button === undefined) throw new Error(`Expected button ${label}`)

@@ -4,7 +4,7 @@ import type { SimulationScenario } from '../../simulation/scenarios.js'
 
 export type SimulationBackend = Awaited<ReturnType<typeof createSimulationBackend>>
 
-export function activateSimulationBackendProfile(backend: SimulationBackend) {
+function activateSimulationBackendProfile(backend: SimulationBackend) {
 	setRuntimeNetworkProfile(backend.profile)
 }
 
